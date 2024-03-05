@@ -30,13 +30,8 @@ export function Google(){
     );
 }
 export function Submit(){
-
-    const handleClick = () => {
-        console.log("click");
-    };
-
     return(
-        <button  className="Submit" onClick={handleClick}>Submit</button>
+        <button  className="Submit" onClick={() => callAPI("jugtejSingh")}>Submit</button>
     );
 }
 
@@ -56,4 +51,17 @@ export function RegisterButton(){
     return (
         <button className="RegisterButton">No account yet? SignUp</button>
     )
+}
+
+/* FUNCTIONS FOR SUBMITTING */
+async function callAPI(name) {
+    try{
+    let response =  await fetch('/api/route', {
+        method: 'POST', // Adjust the method as needed (GET, POST, etc.)
+        'Content-Type': 'application/json',
+        body: JSON.parse({name})
+    });}
+    catch (error){
+        console.log(error);
+    }
 }

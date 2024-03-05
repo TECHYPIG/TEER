@@ -15,7 +15,7 @@
     margin-bottom: 20px;
 }
 .Submit{
-    background-color: green;
+    background-color: rgb(5,150,105);
     width: 140px;
     height: 50px;
     font-size: 20px;
@@ -33,7 +33,7 @@
 }
 
 .RegisterButton{
-    background-color: rgb(43,200,144);
+    background-image: linear-gradient(90deg, rgb(43,200,144),rgb(5,130,105));
     width: 270px;
     height: 50px;
     font-size: 20px;

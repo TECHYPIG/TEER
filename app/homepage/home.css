@@ -1,0 +1,42 @@
+.home-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+.navbar{
+  z-index: 10;
+  width: 100%; 
+  display: flex; 
+  padding: 20px;
+  align-items: center; 
+  background-color: #389668;
+  justify-content: space-between;
+
+}
+.nav-txt{
+  display:flex;
+  color: white;
+  font-family: monospace;
+  font-size: 2rem;
+}
+.search{
+  position:fixed;
+  color: white;
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+.side-profile{
+  position:fixed;
+  top:7rem;
+  left:1rem;
+  width: 15rem; /* Set the width of the element */
+  height: 15rem; /* Set the height of the element */
+  padding: 20px; /* Add padding to create space around the contents */
+  background-color: #389668;
+  border-radius: 8px; /* Add border radius for rounded corners */
+}
+.socials{
+  flex-direction: column;
+}

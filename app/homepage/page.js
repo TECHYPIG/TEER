@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
 import styles from './Home.module.css';
+import postStyles from './Post.module.css';
 
 export default function Home() {
   return (
@@ -31,6 +32,11 @@ export default function Home() {
             <a href="#X">@X</a>
             <a href="#LinkedIn">@LinkedIn</a>
           </p>
+      </div>
+
+
+      <div className={postStyles.post}>
+
       </div>
     </main>
   );

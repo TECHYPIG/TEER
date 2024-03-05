@@ -1,4 +1,4 @@
-.home-container {
+.homecontainer {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -6,16 +6,18 @@
   background-color: white;
 }
 .navbar{
+  display: flex;
   z-index: 10;
   width: 100%; 
   display: flex; 
-  padding: 20px;
+  padding: 5px;
   align-items: center; 
   background-color: #389668;
   justify-content: space-between;
 
 }
-.nav-txt{
+.navtxt{
+  margin: 0 1rem;
   display:flex;
   color: white;
   font-family: monospace;
@@ -27,7 +29,7 @@
   font-family: monospace;
   font-size: 0.8rem;
 }
-.side-profile{
+.sideprofile{
   position:fixed;
   top:7rem;
   left:1rem;
@@ -36,6 +38,28 @@
   padding: 20px; /* Add padding to create space around the contents */
   background-color: #389668;
   border-radius: 8px; /* Add border radius for rounded corners */
+}
+.profilepic{
+  height: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.usernames{
+  text-align: left;
+  margin-left: 1rem;
+  color: white;
+  font-family: monospace;
+  font-size: 1rem;
+
+}
+.userinfo{
+  display: flex;
+  flex-direction: row;
+  color: white;
+  font-family: monospace;
+  font-size: 1rem;
+
 }
 .socials{
   flex-direction: column;

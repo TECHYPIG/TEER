@@ -1,0 +1,46 @@
+.newpost{
+    width: 28rem; 
+    height: 7rem; 
+    padding: 10px; 
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #389668;
+    border-radius: 8px;
+  }
+.profilepic{
+    height: 1.5rem;
+    width: 1.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .userinfo{
+    display: flex;
+    color: white;
+    background-color: #389668;
+    padding-bottom: 5px;
+    color: black;
+  }
+  .usernames{
+    margin-left: 1rem;
+  }
+  .newpostcontents{
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    background-color: white;
+    opacity: 95%;
+    color: black;
+    font-size: 0.5rem;
+  }
+  .postbutton{
+    color:black;
+    font-size: 0.7rem;
+    width: fit-content;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 8px;
+    background-color: white;
+    border-color: #389668;
+    border: 1px solid;
+  }

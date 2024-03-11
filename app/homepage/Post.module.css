@@ -1,0 +1,29 @@
+.post{
+    margin-top: 1rem;
+    width: 28rem; 
+    height: 21rem; 
+    padding: 20px; 
+    background-color: #389668;
+    border-radius: 8px;
+    color: black;
+  }
+  .profilepic{
+    height: 2.5rem;
+    width: 2.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .userinfo{
+    display: flex;
+    color: white;
+    background-color: #389668;
+    padding-bottom: 5px;
+    color: black;
+  }
+  .postimage{
+    width: 25rem;
+    height: 11rem;
+    margin: auto;
+    object-fit: cover;
+    border-radius: 2px;
+  }

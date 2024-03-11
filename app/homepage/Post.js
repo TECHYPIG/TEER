@@ -1,25 +1,28 @@
-import styles from './NewPost.module.css';
+import styles from './Post.module.css';
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
+import Vibe from "./vibe.jpeg"; 
 
- const NewPostContent = () => {
+const PostContent = () => {
   const h1Style = {
-    fontSize: '1rem', 
+    fontSize: '0.8rem', 
     fontWeight:'bold',
   };
   const h2Style = {
     fontSize: '0.5rem', 
   };
-    return (  
-        <div className= {styles.newpost}>
+    return ( 
+        <div className= {styles.post}>
         <div className={styles.userinfo}>
           <Image src={Piggy} className={styles.profilepic} width={30} height={30} alt='Piggy' />
             <div className={styles.usernames}>
-            <h1 style= {h1Style}> Amy Solar2</h1> 
+            <h1 style= {h1Style}> Amy Solar</h1> 
             <h2 style= {h2Style}>@amysolar</h2>
           </div>
         </div>
+        <Image src={Vibe} className={styles.postimage} alt='Vibe' />
         </div>
-    );
+     );
 }
-export default NewPostContent
+ 
+export default PostContent;

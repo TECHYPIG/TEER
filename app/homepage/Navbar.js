@@ -1,19 +1,19 @@
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
-  const searchTxt = {
+  const searchtxt = {
     fontSize: '0.8rem', 
   };
     return ( 
-        <nav className={styles.navbar}>
+        <div className={styles.navbar}>
           <p className={styles.navtxt}>
             <a href="#homepage">TEER</a>
           </p>
-          <p className={styles.Search}>
-          Search:
-          </p>
-        </nav>
-
+          <div className={styles.search}>
+        <input type='text' value= '' className={styles.searchh3}></input>
+        <button type="button">Search</button>
+        </div>
+        </div>
      );
 }
 export default Navbar;

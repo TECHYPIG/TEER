@@ -1,0 +1,15 @@
+.jobpost{
+    background-color: #389668;
+    width: 15rem;
+    height: 10rem;
+    color:black;
+    padding: 20px;
+    border-radius: 8px;
+}
+.details{
+    background-color: white;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 45px;
+}

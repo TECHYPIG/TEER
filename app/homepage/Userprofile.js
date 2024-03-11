@@ -23,10 +23,13 @@ const Userprofile = () => {
             <h2 style= {h2Style}>@amysolar</h2>
           </div>
         </div>
-          <p className={styles.userdetails}>
-            <a>Location: </a>
-            <a>Occupation: </a>
-          </p>
+          <div className={styles.userdetails}>
+            <ul>
+            <li><a>Location: </a></li>
+            <li> <a>Occupation: </a></li>
+            </ul>
+          </div>
+          <div className={styles.line}></div>
           <div className={styles.socials}>
             <a style= {h3Style}> Social Media</a>
             <ul>

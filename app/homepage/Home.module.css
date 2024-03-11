@@ -2,6 +2,18 @@
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: white;
+  background-color: #F2F3F4;
+}
+.innerdiv{
+  display:flex;
+  flex-direction: row;
+}
+.row2{
+  margin-left: 4rem;
+  margin-top: 1rem;
+}
+.row3{
+  margin-left: 4rem;
+  margin-top: 1rem;
 }
 

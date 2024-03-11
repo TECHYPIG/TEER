@@ -1,0 +1,46 @@
+.sideprofile{
+    margin-top: 3rem;
+    margin-left: 3rem;
+    width: 15rem; 
+    height: 16rem; 
+    padding-bottom: 30px; 
+    font-size: 0.7rem;
+    background-color: #389668;
+    color: black;
+    border-radius: 8px;
+  }
+  .profilepic{
+    height: 4rem;
+    width: 4rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .userinfo{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  .usernames{
+    text-align: left;
+    margin-left: 1rem;
+    font-size: 1rem;
+    padding-top: 1rem;
+  }
+.userdetails{
+  font-weight: bold;
+  padding: 10px;
+  background-color: white;
+  opacity: 95%;
+}
+.line{
+  border-bottom: 1px solid;
+  border-color: grey;
+  width: 50%;
+  margin: auto;
+}
+.socials{
+  padding: 10px;
+  background-color: white;
+  opacity: 95%;
+}

@@ -1,15 +1,25 @@
 'use client'
 import "./LoginFunctions.css"
-import React from "react"
+import React, { useState} from "react"
 import Image from "next/image"
 import profilePic from './/images/google.png'
+import Cookies from 'js-cookie';
 
-export function TextBoxes(textProp){
+export function TextBoxes(){
+    const [userName,ChangedUsername] = useState("")
+    const [passWord,ChangedPassword] = useState("")
     return(
-        <div className="TextAndBoxes">
-            <h2 className="TextAboveBox">{textProp.values}</h2>
-            <input type="Text"
-                className="TextInput"/>
+        <div className= "Form">
+            <label className="TextAboveBox">Username</label>
+            <input type="Text" className="TextInputUsername" value={userName}
+                onChange ={(e) => ChangedUsername(e.target.value)}/>
+
+            <label className="TextAboveBox">Password</label>
+            <input type="Text" className="TextInputPassword" value={passWord}
+                   onChange={(e) => ChangedPassword(e.target.value)}/>
+
+            <input  type="Submit" onClick={() =>  callAPI(userName)}
+                    className="Submit" />
         </div>
     );
 }
@@ -29,11 +39,6 @@ export function Google(){
         className="Google"/>
     );
 }
-export function Submit(){
-    return(
-        <button  className="Submit" onClick={() => callAPI("jugtejSingh")}>Submit</button>
-    );
-}
 
 /* REGISTER FUNCTIONS */
 export function RegisterText(){
@@ -49,19 +54,37 @@ export function RegisterTextBelow(){
 }
 export function RegisterButton(){
     return (
-        <button className="RegisterButton">No account yet? SignUp</button>
+        <button className="RegisterButton" onClick={checkAuthorization}>No account yet? SignUp</button>
     )
 }
 
 /* FUNCTIONS FOR SUBMITTING */
 async function callAPI(name) {
+    var response;
+    console.log(name)
     try{
-    let response =  await fetch('/api/route', {
+     response =  await fetch('/api/login', {
         method: 'POST', // Adjust the method as needed (GET, POST, etc.)
         'Content-Type': 'application/json',
-        body: JSON.parse({name})
-    });}
+        body: JSON.stringify({name})
+    })
+        const fullToken = response.headers.get("Authorization")
+        const tokenSplit = fullToken.split(" ")[1]
+        Cookies.set("accessToken", tokenSplit)
+        console.log(tokenSplit)
+    }
     catch (error){
         console.log(error);
+    }
+}
+async function checkAuthorization(){
+    try{
+       let response =  await fetch('/api/authorize', {
+           method: 'GET', // Adjust the method as needed (GET, POST, etc.)
+           'Content-Type': 'application/json'
+       })
+        console.log(await response.json())
+    } catch (error){
+        console.log(error)
     }
 }

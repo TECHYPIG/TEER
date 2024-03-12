@@ -1,4 +1,10 @@
-.TextInput{
+.TextInputPassword{
+    border-radius: 10px;
+    width: 300px;
+    height: 40px;
+    background-color: lightgrey;
+}
+.TextInputUsername{
     border-radius: 10px;
     width: 300px;
     height: 40px;
@@ -8,11 +14,10 @@
     margin-top: 0;
     font-size: 50px;
 }
-.TextAndBoxes{
-    margin-top: 20px;
-}
-.TextAboveBox{
-    margin-bottom: 20px;
+.Form{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
 }
 .Submit{
     background-color: rgb(5,150,105);
@@ -21,6 +26,8 @@
     font-size: 20px;
     border-radius: 13px;
     margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .Google{
     margin-top: 20px;
@@ -30,6 +37,7 @@
 .RegisterHere{
     font-size: 50px;
     margin-bottom: 100px;
+    color: white;
 }
 
 .RegisterButton{
@@ -39,9 +47,11 @@
     font-size: 20px;
     border-radius: 13px;
     margin-bottom: 100px;
+    color:white;
 }
 .RegisterText{
     text-align: center;
+    color: white;
     margin-bottom: 20px;
     font-size: 20px;
 }

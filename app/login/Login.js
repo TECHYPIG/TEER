@@ -8,10 +8,8 @@ export default function LoginCompiled(){
                 <SignIn />
                 <div className="TextAndBoxes">
                 <TextBoxes values="Username"/>
-                <TextBoxes values="Password"/>
                 </div>
                 <Google />
-                <Submit />
             </div>
             <div className="RegisterSide">
                 <RegisterText />

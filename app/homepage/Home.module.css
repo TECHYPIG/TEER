@@ -1,0 +1,66 @@
+.homecontainer {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+.navbar{
+  display: flex;
+  z-index: 10;
+  width: 100%; 
+  display: flex; 
+  padding: 5px;
+  align-items: center; 
+  background-color: #389668;
+  justify-content: space-between;
+
+}
+.navtxt{
+  margin: 0 1rem;
+  display:flex;
+  color: white;
+  font-family: monospace;
+  font-size: 2rem;
+}
+.search{
+  position:fixed;
+  color: white;
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+.sideprofile{
+  position:fixed;
+  top:7rem;
+  left:1rem;
+  width: 15rem; /* Set the width of the element */
+  height: 15rem; /* Set the height of the element */
+  padding: 20px; /* Add padding to create space around the contents */
+  background-color: #389668;
+  border-radius: 8px; /* Add border radius for rounded corners */
+}
+.profilepic{
+  height: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.usernames{
+  text-align: left;
+  margin-left: 1rem;
+  color: white;
+  font-family: monospace;
+  font-size: 1rem;
+
+}
+.userinfo{
+  display: flex;
+  flex-direction: row;
+  color: white;
+  font-family: monospace;
+  font-size: 1rem;
+
+}
+.socials{
+  flex-direction: column;
+}

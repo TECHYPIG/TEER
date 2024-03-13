@@ -1,15 +1,16 @@
 .jobpost{
-    background-color: #389668;
     width: 15rem;
     height: 10rem;
+    background-color: white;
     color:black;
     padding: 20px;
     border-radius: 8px;
+    border: 1px solid;
+    border-color: #389668;
 }
 .details{
-    background-color: white;
-    font-size: 0.8rem;
     border-radius: 8px;
     margin-top: 10px;
     padding: 45px;
+    font-size: 0.8rem;
 }

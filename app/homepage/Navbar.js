@@ -1,9 +1,7 @@
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
-  const searchtxt = {
-    fontSize: '0.8rem', 
-  };
+
     return ( 
         <div className={styles.navbar}>
           <p className={styles.navtxt}>

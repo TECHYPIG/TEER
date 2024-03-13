@@ -1,10 +1,11 @@
-import styles from './Home.module.css';
+import styles from './Page.module.css';
 import Navbar from './Navbar';
 import Userprofile from './Userprofile';
-import NewPostContent from './NewPost';
+import NewPostContent from './Newpost';
 import PostContent from './Post';
 import Jobpost from './Jobposting';
-import Suggestedfollowers from './Suggestedfollowers';
+import Newfollow from './Newfollow';
+
 
 export default function Home() {
   return (
@@ -18,7 +19,7 @@ export default function Home() {
       </div>
       <div className= {styles.row3}>
       <Jobpost></Jobpost>
-      <Suggestedfollowers></Suggestedfollowers>
+      <Newfollow></Newfollow>
       </div>
     </div>
     </div>

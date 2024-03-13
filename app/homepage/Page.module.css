@@ -7,13 +7,16 @@
 .innerdiv{
   display:flex;
   flex-direction: row;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  
 }
 .row2{
-  margin-left: 4rem;
+  margin-left: 3rem;
   margin-top: 1rem;
 }
 .row3{
-  margin-left: 4rem;
+  margin-left: 3rem;
   margin-top: 1rem;
 }
 

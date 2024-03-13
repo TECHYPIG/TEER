@@ -1,31 +1,40 @@
 .sideprofile{
-    margin-top: 3rem;
-    margin-left: 3rem;
+    margin-top: 1rem;
     width: 15rem; 
-    height: 16rem; 
+    height: 25rem; 
     padding-bottom: 30px; 
     font-size: 0.7rem;
-    background-color: #389668;
+    background-color: white;
     color: black;
     border-radius: 8px;
-  }
-  .profilepic{
-    height: 4rem;
-    width: 4rem;
-    object-fit: cover;
-    border-radius: 50%;
+    border: 1px solid;
+    border-color: #389668;
+
   }
   .userinfo{
     display: flex;
     flex-direction: row;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid;
+    background-color: #389668;
+    border-color: black;
+    border-radius: 3px;
+    margin: 10px;
+    /* border-radius: 8px; */
+  }
+  .picon{
+    display: flex;
+  }
+  .profilepic{
+    height: 2.5rem;
+    width: 2.5rem;
+    object-fit: cover;
+    border-radius: 50%;
   }
   .usernames{
     text-align: left;
     margin-left: 1rem;
     font-size: 1rem;
-    padding-top: 1rem;
   }
 .userdetails{
   font-weight: bold;

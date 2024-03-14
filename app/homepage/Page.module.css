@@ -1,7 +1,7 @@
 .homecontainer {
-  display: flex;
-  min-height: 100vh;
+  display:flex;
   flex-direction: column;
+  min-height: 100vh;
   background-color: #F2F3F4;
 }
 .innerdiv{
@@ -9,7 +9,6 @@
   flex-direction: row;
   margin-left: 3rem;
   margin-right: 3rem;
-  
 }
 .row2{
   margin-left: 3rem;

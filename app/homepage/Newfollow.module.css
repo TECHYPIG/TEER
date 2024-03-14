@@ -2,16 +2,16 @@
     width: 15rem;
     height: 20rem;
     margin-top: 3rem;
-    background-color: white;
-    color:black;
     padding: 20px;
-    border-radius: 8px;
+    background-color: white;
     border: 1px solid;
+    border-radius: 8px;
     border-color: #389668;
+    color:black;
 }
 .profilepic{
-    height: 2rem;
     width: 2rem;
+    height: 2rem;
     margin-top: 1rem;
     object-fit: cover;
     border-radius: 50%;

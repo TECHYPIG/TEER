@@ -5,42 +5,42 @@
     padding-left: 20px;
     padding-right: 20px;
     background-color: white;
-    border-radius: 8px;
     border: 1px solid;
+    border-radius: 8px;
     border-color: #389668;
+    color: black;
   }
 .profilepic{
-    height: 1.5rem;
     width: 1.5rem;
+    height: 1.5rem;
     object-fit: cover;
     border-radius: 50%;
   }
   .userinfo{
     display: flex;
-    color: black;
     padding-bottom: 5px;
-    color: black;
   }
   .usernames{
     margin-left: 1rem;
   }
-  .newpostcontents{
+  .postinfoh3{
     padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 5px;
+    padding-right: 16rem;
     background-color: #F2F3F4;
-    opacity: 95%;
-    color: black;
-    font-size: 0.5rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
   }
   .postbutton{
-    color:black;
-    font-size: 0.7rem;
     width: fit-content;
     margin: auto;
+    margin-top: 5px;
+    padding: 1px;
     padding-left: 25px;
     padding-right: 25px;
-    border-radius: 8px;
     background-color: #389668;
     border: 1px solid;
+    border-color: #389668;
+    border-radius: 8px;
+    color:black;
+    font-size: 0.7rem;
   }

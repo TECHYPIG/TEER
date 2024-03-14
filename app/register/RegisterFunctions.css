@@ -15,7 +15,7 @@
     margin-top: 30px;
 }
 .Right{
-    margin-left: 3.5vw;
+    margin-left: 4vw;
 }
 .Submit{
     background-color: rgb(5,150,105);
@@ -24,7 +24,7 @@
     font-size: 20px;
     border-radius: 13px;
     margin-left: 18vw;
-    margin-top: 100px;
+    margin-top: 1vh;
 }
 Label{
     font-size: 20px;
@@ -34,4 +34,11 @@ Label{
     border-radius: 10px;
     width: 250px;
     background-color: lightgrey;
+}
+.passwordsDontMatch{
+    text-align: center;
+    margin-top: 6vh;
+}
+.passwordsDontMatchNone{
+display: none;
 }

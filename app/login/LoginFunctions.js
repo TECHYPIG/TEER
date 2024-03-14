@@ -4,6 +4,7 @@ import React, { useState} from "react"
 import Image from "next/image"
 import profilePic from './/images/google.png'
 import Cookies from 'js-cookie';
+import Link from "next/link";
 
 export function TextBoxes(){
     const [userName,ChangedUsername] = useState("")
@@ -18,7 +19,7 @@ export function TextBoxes(){
             <input type="Text" className="TextInputPassword" value={passWord}
                    onChange={(e) => ChangedPassword(e.target.value)}/>
 
-            <input  type="Submit" onClick={() =>  callAPI(userName)}
+            <input  type="Submit" onClick={() =>  callAPI(userName, passWord)}
                     className="Submit" />
         </div>
     );
@@ -54,20 +55,23 @@ export function RegisterTextBelow(){
 }
 export function RegisterButton(){
     return (
-        <button className="RegisterButton" onClick={checkAuthorization}>No account yet? SignUp</button>
+        <Link href={"/register"}>
+        <button className="RegisterButton">No account yet? SignUp</button>
+        </Link>
     )
 }
 
 /* FUNCTIONS FOR SUBMITTING */
-async function callAPI(name) {
+async function callAPI(name, password) {
     var response;
-    console.log(name)
     try{
      response =  await fetch('/api/login', {
         method: 'POST', // Adjust the method as needed (GET, POST, etc.)
         'Content-Type': 'application/json',
-        body: JSON.stringify({name})
+        body: JSON.stringify({name : name,
+                                    password : password})
     })
+        console.log(response.json())
         const fullToken = response.headers.get("Authorization")
         const tokenSplit = fullToken.split(" ")[1]
         Cookies.set("accessToken", tokenSplit)

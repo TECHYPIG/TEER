@@ -1,21 +1,22 @@
 .homecontainer {
   display:flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
   background-color: #F2F3F4;
 }
 .innerdiv{
   display:flex;
   flex-direction: row;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin-left: 1rem;
+  /* margin-right: rem; */
 }
 .row2{
-  margin-left: 3rem;
+  margin-left: 2rem;
   margin-top: 1rem;
 }
 .row3{
-  margin-left: 3rem;
+  margin-left: 2rem;
   margin-top: 1rem;
 }
 

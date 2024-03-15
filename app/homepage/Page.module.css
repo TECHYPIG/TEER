@@ -1,0 +1,22 @@
+.homecontainer {
+  display:flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #F2F3F4;
+}
+.innerdiv{
+  display:flex;
+  flex-direction: row;
+  margin-left: 1rem;
+  /* margin-right: rem; */
+}
+.row2{
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+.row3{
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+

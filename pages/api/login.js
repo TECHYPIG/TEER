@@ -1,11 +1,14 @@
-import {PrismaClient} from '@prisma/client'
+import prisma from "./prismaClient"
 var jwt = require('jsonwebtoken');
 import 'dotenv/config'
-const prisma = new PrismaClient()
+import crypto from "crypto";
 
 
 export default async function handler(req, res) {
     const name = JSON.parse(req.body).name; //Opening a json object
+    let inputtedPassword = JSON.parse(req.body).password; //Opening a json object
+
+    inputtedPassword = crypto.createHash("sha256").update(inputtedPassword).digest('hex')
 
     let password = await prisma.users.findUnique({
         where: {
@@ -16,13 +19,18 @@ export default async function handler(req, res) {
         }
     });
     if (password != null) {
+        password = password.Password
+        if(password === inputtedPassword){
+            let token = jwt.sign({username: name}, process.env.ACCESS_TOKEN)
+            res.setHeader('Authorization', `Bearer ${token}`);
+            res.status(200).json({"accessToken" : 1})
+        }
+        else{
+            return res.status(500).json({"accessToken" : 0});
+        }
         //Accessing the output from the database
         //Add in the functionality to compare passwords, Else respond with incorrect password
-        let token = jwt.sign({username: name}, process.env.ACCESS_TOKEN)
-        res.setHeader('Authorization', `Bearer ${token}`);
-        res.status(200).json({"accessToken" : 1})
     } else {
-        console.log("There is an issue");
         return res.status(500).json({"accessToken" : 0});
     }
 }

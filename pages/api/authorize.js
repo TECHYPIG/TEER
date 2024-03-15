@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import 'dotenv/config'
-export default async function authorize(req,res,next){
+export default async function authorize(req,res){
     const tokenNotSplit = req.headers["cookie"]
     const token = tokenNotSplit.split("=")[1]
     console.log(token);
@@ -12,5 +12,4 @@ export default async function authorize(req,res,next){
             res.status(200).json({decodedUsername : decoded.username})
         });
     }
-    next()
 }

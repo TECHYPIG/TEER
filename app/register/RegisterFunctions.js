@@ -21,13 +21,14 @@ export function RegisterInputs(){
     const [dontMatch, ChangedDontMatch] = useState("")
 
     return(
-        <div>
-            <div className="MainFlex">
+        <div className="MainFlex">
+            <div className="InnerFlex">
+
              <div className="Left">
                 <div className="Flex">
                     <label>Username</label>
                     <input type="text" className="Input" value={username}
-                           onChange ={event => onChangeFunction(event,changedUsername)}/>
+                           onChange ={event => onChangeFunctionUsername(event,changedUsername)}/>
                 </div>
                  <div className="Flex">
                      <label>Email</label>
@@ -40,6 +41,7 @@ export function RegisterInputs(){
                             onChange ={event => onChangeFunction(event,changedPassword)}/>
                  </div>
             </div>
+
             <div className="Right">
                 <div className="Flex">
                     <label>First Name</label>
@@ -58,22 +60,72 @@ export function RegisterInputs(){
                 </div>
             </div>
         </div>
-            <div className={"passwordsDontMatch"}>
-            <h5>{dontMatch}</h5>
-            </div>
-       <input type="submit" onClick={() => registerInformation(username,password,confirmPassword,age,firstName,email,ChangedDontMatch)}
+            <div className="passwordsDontMatch"><h5>{dontMatch}</h5></div>
+       <input type="submit" onClick={async function inside (){
+           var value = await registerInformation(username,password,confirmPassword,age,firstName,email,ChangedDontMatch);
+           switch (value) {
+               case 0:
+                   ChangedDontMatch("Your passwords do not match")
+                   break;
+               case 10:
+                   ChangedDontMatch("Username is empty");
+                   break;
+               case 20:
+                   ChangedDontMatch("Password is empty");
+                   break;
+               case 30:
+                   ChangedDontMatch("Your Confirmed Password is empty");
+                   break;
+               case 40:
+                   ChangedDontMatch("Age is empty");
+                   break;
+               case 50:
+                   ChangedDontMatch("First name is empty");
+                   break;
+               case 60:
+                   ChangedDontMatch("email is empty");
+                   break;
+           }
+       }}
               className="Submit" value="Submit"/>
     </div>
     );
 }
+
 function onChangeFunction(event, inputState){
     inputState(event.target.value)
 }
+function onChangeFunctionUsername(event, inputState){
+    let x = event.target.value
+    inputState(x)
+    var matches = x.match(/\d+/g);
+    if (matches != null) {
+        
+    }
+}
 async function registerInformation(username,password,confirmPassword,age,firstName,email,ChangedDontMatch){
-    console.log("You clicked me")
+    if(username === ""){
+        return 10
+    }
+    if(password === ""){
+        return 20
+    }
+    if(confirmPassword === ""){
+        return 30
+    }
+    if(age === ""){
+        return 40
+    }
+    if(firstName === ""){
+        return 50
+    }
+    if(email === ""){
+        return 60
+    }
+
     var response;
     if (password !== confirmPassword){
-        ChangedDontMatch("Your passwords do not match")
+        return 0;
     } else{
         ChangedDontMatch("")
         let hashedPassword = crypto.createHash("sha256").update(password).digest('hex')
@@ -86,7 +138,7 @@ async function registerInformation(username,password,confirmPassword,age,firstNa
                                                 age : age,
                                                 firstName : firstName,
                                                 email : email})
-                })
+                });
             }
             catch (error){
                 console.log(error);

@@ -1,7 +1,6 @@
-import {PrismaClient} from '@prisma/client'
+import prisma from "./prismaClient"
 var jwt = require('jsonwebtoken');
 import 'dotenv/config'
-const prisma = new PrismaClient()
 import crypto from "crypto";
 
 
@@ -20,24 +19,18 @@ export default async function handler(req, res) {
         }
     });
     if (password != null) {
-        console.log(password.Password)
-        console.log(inputtedPassword)
         password = password.Password
-        if(password == inputtedPassword){
-            console.log(inputtedPassword)
+        if(password === inputtedPassword){
             let token = jwt.sign({username: name}, process.env.ACCESS_TOKEN)
             res.setHeader('Authorization', `Bearer ${token}`);
             res.status(200).json({"accessToken" : 1})
         }
         else{
-            console.log("Password isnt correct");
             return res.status(500).json({"accessToken" : 0});
         }
         //Accessing the output from the database
         //Add in the functionality to compare passwords, Else respond with incorrect password
     } else {
-        console.log(password)
-        console.log("User not found");
         return res.status(500).json({"accessToken" : 0});
     }
 }

@@ -1,7 +1,8 @@
 .Register{
     width: 70vw;
     height: 80vh;
-    margin-left: 15vw;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 10vh;
     display: flex;
     overflow: hidden;
@@ -9,11 +10,6 @@
 }
 .ImageSection{
     position: relative;
-    object-fit: cover;
     width: 25vw;
     height: 100vh;
-}
-.MainRegister{
-    display: flex;
-    flex-direction: column;
 }

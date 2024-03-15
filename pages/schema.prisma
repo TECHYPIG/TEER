@@ -12,6 +12,5 @@ model Users {
   Firstname String
   Password  String
   Username  String @unique
-  Age       Int
   Email     String @unique
 }

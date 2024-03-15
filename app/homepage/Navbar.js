@@ -8,8 +8,8 @@ const Navbar = () => {
             <a href="#homepage">TEER</a>
           </p>
           <div className={styles.search}>
-        <input type='text' value= '' className={styles.searchh3}></input>
-        <button type="button">Search</button>
+            <input type='text' value= '' className={styles.searchh3}></input>
+            <button type="button" className={styles.searchbutton}>Search</button>
         </div>
         </div>
      );

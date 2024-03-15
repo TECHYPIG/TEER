@@ -25,12 +25,12 @@
   }
   .postinfo{
     padding-top: 0.5rem ;
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
     background-color: #F2F3F4;
     border-radius: 15px;
   }
   .postimage{
-    width: 20rem;
+    width: 25rem;
     height: 20rem;
     margin: auto;
     margin-top: 0.5rem;

@@ -1,8 +1,7 @@
 .sideprofile{
-    margin-top: 1rem;
     min-width: 15rem; 
     height: 25rem; 
-    padding-bottom: 30px; 
+    margin-top: 1rem;
     background-color: white;
     border: 1px solid;
     border-color: #389668;
@@ -21,9 +20,6 @@
     border-radius: 3px;
     /* border-radius: 8px; */
   }
-  .picon{
-    display: flex;
-  }
   .profilepic{
     width: 2.5rem;
     height: 2.5rem;
@@ -39,7 +35,9 @@
     text-align: left;
   }
 .userdetails{
+  display: flex;
   padding: 10px;
+  margin-left: 20px;
   background-color: white;
   opacity: 95%;
   font-weight: bold;
@@ -51,6 +49,7 @@
   border-color: grey;
 }
 .socials{
+  margin-left: 80px;
   padding: 10px;
   background-color: white;
   opacity: 95%;

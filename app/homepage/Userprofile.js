@@ -16,6 +16,7 @@ const Userprofile = () => {
     const h3Style = {
       fontSize: '0.9rem', 
       fontWeight:'bold',
+      marginLeft: '70px',
     };
     return ( 
         <div className={styles.sideprofile}>
@@ -29,13 +30,13 @@ const Userprofile = () => {
         </div>
           <div className={styles.userdetails}>
             <ul>
-            <li><a><IoLocationOutline className={styles.picons} size={30}/>Location: </a></li>
+            <li><IoLocationOutline className={styles.picons} size={30}/>Location:</li>
             <li> <a><IoIdCardOutline className={styles.picons} size={30}/>Occupation: </a></li>
             </ul>
           </div>
           <div className={styles.line}></div>
+          <a style= {h3Style}> Social Media</a>
           <div className={styles.socials}>
-            <a style= {h3Style}> Social Media</a>
             <ul>
             <li><a href="https://www.instagram.com/"><SlSocialInstagram className={styles.picons} size={30}/>Instagram</a></li>
             <li><a href="https://twitter.com/"><SlSocialTwitter className={styles.picons} size={30}/>Twitter</a></li>

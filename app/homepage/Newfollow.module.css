@@ -1,12 +1,12 @@
 .nfollow{
-    width: 15rem;
-    height: 20rem;
+    width: 90%;
+    height: 30%;
     margin-top: 1rem;
     padding: 20px;
     background-color: white;
-    border: 1px solid;
+    /* border: 1px solid;
     border-radius: 8px;
-    border-color: #389668;
+    border-color: #389668; */
     color:black;
 }
 .profilepic{

@@ -1,21 +1,25 @@
 .homecontainer {
   display:flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
+  max-width: 100vw;
+  height: 100%;
   background-color: #F2F3F4;
+  flex:1;
 }
 .innerdiv{
   display:flex;
+  flex:1;
   flex-direction: row;
-  margin-left: 1rem;
-  /* margin-right: rem; */
+  margin-left: 2rem;
 }
 .row2{
+  flex:1;
   margin-left: 2rem;
   margin-top: 1rem;
 }
 .row3{
+  flex:1;
   margin-left: 2rem;
   margin-top: 1rem;
 }

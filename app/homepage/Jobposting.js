@@ -1,9 +1,9 @@
-import style from './Jobposting.module.css';
+import styles from './Jobposting.module.css';
 
 const Jobpost = () => {
 
     return ( 
-        <div className={style.jobpost}>
+        <div className={styles.jobpost}>
         <p> Job post</p>
         </div>
      );

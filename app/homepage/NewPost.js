@@ -1,9 +1,8 @@
 import styles from './Newpost.module.css';
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
-import useState from 'react';
 
- const NewPostContent = () => {
+ const Newpostcontent = () => {
   const h1Style = {
     fontSize: '0.7rem', 
     fontWeight:'bold',
@@ -29,4 +28,4 @@ import useState from 'react';
         </div>
     );
 }
-export default NewPostContent
+export default Newpostcontent

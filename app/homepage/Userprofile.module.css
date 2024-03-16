@@ -1,24 +1,19 @@
 .sideprofile{
-    min-width: 15rem; 
-    height: 25rem; 
+    width: 20%; 
+    height: 25%; 
     margin-top: 1rem;
     background-color: white;
-    border: 1px solid;
-    border-color: #389668;
-    border-radius: 8px;
     color: black;
     font-size: 0.7rem;
   }
   .userinfo{
     display: flex;
-    flex-direction: row;
     margin: 10px;
     padding: 5px;
     background-color: #389668;
     border: 1px solid;
     border-color: black;
     border-radius: 3px;
-    /* border-radius: 8px; */
   }
   .profilepic{
     width: 2.5rem;
@@ -26,20 +21,13 @@
     object-fit: cover;
     border-radius: 50%;
   }
-  .userinfo{
-    display: flex;
-    color: black;
-  }
   .usernames{
     margin-left: 1rem;
     text-align: left;
   }
 .userdetails{
-  display: flex;
   padding: 10px;
-  margin-left: 20px;
   background-color: white;
-  opacity: 95%;
   font-weight: bold;
 }
 .line{
@@ -49,8 +37,10 @@
   border-color: grey;
 }
 .socials{
-  margin-left: 80px;
-  padding: 10px;
+  padding: 5%;
   background-color: white;
   opacity: 95%;
+}
+.picon{
+ margin-bottom: 60px;
 }

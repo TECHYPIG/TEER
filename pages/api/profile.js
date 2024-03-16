@@ -8,10 +8,11 @@ export default async function handler(req, res) {
     const { method, body } = req;
 
     switch (method) {
+        //get logged in user and all user details
         case 'GET':
             try {
                 // Extract JWT token from request headers
-                const token = headers.authorization?.replace('Bearer ', '');
+               const token = Cookies.get('accessToken');
                 if (!token) {
                     return res.status(401).json({ error: 'Unauthorized' });
                 }
@@ -39,16 +40,17 @@ export default async function handler(req, res) {
                 res.status(500).json({ error: 'Internal Server Error' });
             }
             break;
+            //add or update logged in user details
             case 'POST':
                 try {
-                    // Extract JWT token from request headers
-                    const token = headers.authorization?.replace('Bearer ', '');
+                        // Retrieve access token from cookies
+                    const token = Cookies.get('accessToken');
                     if (!token) {
                         return res.status(401).json({ error: 'Unauthorized' });
                     }
                     
                     // Verify JWT token
-                    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+                    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
                     if (!decodedToken) {
                         return res.status(401).json({ error: 'Unauthorized' });
                     }
@@ -69,8 +71,8 @@ export default async function handler(req, res) {
                     res.status(500).json({ error: 'Internal Server Error' });
                 }
             break;
-        default:
-            res.setHeader('Allow', ['GET', 'POST']);
-            res.status(405).end(`Method ${method} Not Allowed`);
+            default:
+                res.setHeader('Allow', ['GET', 'POST', 'PUT']);
+                res.status(405).end(`Method ${method} Not Allowed`);
     }
 }

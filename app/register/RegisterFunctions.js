@@ -25,60 +25,66 @@ export function RegisterInputs(){
 
     return(
         <div className="MainFlex">
-            <div className="InnerFlex">
-
-             <div className="Left">
+             <div className="Row">
                 <div className="Flex">
                     <label>Username</label>
                     <input type="text" className="Input" value={username}
                            onChange ={event => onChangeFunctionUsername(event,changedUsername)}/>
                 </div>
-                 <div className="Flex">
+                 <div className="Flex MarginLeft">
                      <label>Email</label>
                      <input type="text" className="Input" value={email}
                             onChange ={event => onChangeFunction(event,changedEmail)}/>
                  </div>
+             </div>
+
+            <div className="Row">
                  <div className="Flex">
                      <label>Location</label>
                      <select  className="Input" onChange ={event => onChangeFunction(event,changedLocation)}>
                          {locations}
                      </select>
                  </div>
-                 <div className="Flex">
+                 <div className="Flex MarginLeft">
                      <label>Password</label>
                      <input type="text" className="Input" value={password}
                             onChange ={event => onChangeFunction(event,changedPassword)}/>
 
                  </div>
-            </div>
+                </div>
 
-            <div className="Right">
+            <div className="Row">
                 <div className="Flex">
                     <label>Full Name</label>
                     <input type="text" className="Input" value={fullName}
                            onChange ={event => onChangeFunction(event,changedFullname)}/>
                 </div>
-                <div className="Flex">
+                <div className="Flex MarginLeft">
                     <label>Birth Date</label>
                     <input type="date" className="Input" onChange ={event => onChangeFunction(event,changedBirthDate)}/>
                 </div>
-                    <div className="Flex">
+            </div>
+
+            <div className="Row">
+                <div className="Flex">
                         <label>Gender</label>
                         <select className="Input" value={gender} onChange ={event => onChangeFunction(event,changedGender)}>
+                            <option key="SelectOne">Select One</option>
                             <option key="Male">Male</option>
                             <option key="Female">Female</option>
                             <option key="Others">Others</option>
                             <option key="PreferNotToSay">Prefer Not To Say</option>
                         </select>
                     </div>
-                <div className="Flex">
+                <div className="Flex MarginLeft">
                     <label>Confirm Password</label>
                     <input type="text" className="Input" value={confirmPassword}
                            onChange ={event => onChangeFunction(event,changedConfirmPassword)}/>
                 </div>
                 </div>
-            </div>
+
             <div className="passwordsDontMatch"><h5>{dontMatch}</h5></div>
+
        <input type="submit" onClick={async function inside (){
            let value = await registerInformation(username,location, password,confirmPassword,birthDate,fullName,gender,email,ChangedDontMatch);
            switch (value) {
@@ -87,6 +93,9 @@ export function RegisterInputs(){
                    break;
                case 10:
                    ChangedDontMatch("Username is empty");
+                   break;
+               case 10:
+                   ChangedDontMatch("Username is too short");
                    break;
                case 20:
                    ChangedDontMatch("Password is empty");
@@ -109,6 +118,12 @@ export function RegisterInputs(){
                case 80:
                    ChangedDontMatch("Email is empty");
                    break;
+               case 100:
+                   ChangedDontMatch("Please write Fullname as 'FirstName' 'Surname'");
+                   break;
+               case 101:
+                   ChangedDontMatch("Please do not write middle name");
+                   break;
            }
        }}
               className="Submit" value="Submit"/>
@@ -128,6 +143,9 @@ async function registerInformation(username,location, password,confirmPassword,b
     if(username === ""){
         return 10
     }
+    if(username.length < 5){
+        return 11
+    }
     if(password === ""){
         return 20
     }
@@ -143,7 +161,7 @@ async function registerInformation(username,location, password,confirmPassword,b
     if(location === "Select One"){
         return 60
     }
-    if(gender === ""){
+    if(gender === "Select One"){
         return 70
     }
     if(email === ""){
@@ -153,8 +171,11 @@ async function registerInformation(username,location, password,confirmPassword,b
     var surname
     let nameSplit = fullName.split(" ");
     if(nameSplit[1] === undefined){
-        return 100
-    } else{
+        return 100;}
+    else if(nameSplit[2] !== undefined){
+         return 101;
+        }
+     else{
        firstname = nameSplit[0];
         surname = nameSplit[1];
     }
@@ -180,8 +201,15 @@ async function registerInformation(username,location, password,confirmPassword,b
                                                 gender : gender,
                                                 location : location})
                 });
-                console.log("returnedValue")
-                console.log(response)
+
+                let x = response.json();
+                if (x === 100){
+                    ChangedDontMatch("You have been registered succesfully")
+                }else if(x===101){
+                    ChangedDontMatch("Please change your username or email")
+                } else{
+                    ChangedDontMatch("There was an issue,Please try again in a bit")
+                }
             }
             catch (error){
                 console.log(error);

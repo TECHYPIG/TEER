@@ -1,6 +1,6 @@
 .post{
-    width: 30rem; 
-    height: 30rem; 
+    width: 100%; 
+    height: 75%; 
     margin-top: 1rem;
     margin-bottom: 2rem;
     padding: 20px; 
@@ -24,6 +24,7 @@
     margin-left: 1rem;
   }
   .postinfo{
+    padding: 10%;
     padding-top: 0.5rem ;
     padding-bottom: 0.5rem;
     background-color: #F2F3F4;

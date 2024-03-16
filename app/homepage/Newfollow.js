@@ -1,4 +1,4 @@
-import style from './Newfollow.module.css';
+import styles from './Newfollow.module.css';
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
 
@@ -12,11 +12,11 @@ const Newfollow = () => {
       };
 
     return ( 
-        <div className={style.nfollow}>
+        <div className={styles.nfollow}>
             <h3>You may like...</h3>
-        <div className={style.accounts}>
-        <Image src={Piggy} className={style.profilepic} width={30} height={30} alt='Piggy' />
-        <div className={style.usernames}>
+        <div className={styles.accounts}>
+        <Image src={Piggy} className={styles.profilepic} width={30} height={30} alt='Piggy' />
+        <div className={styles.usernames}>
 
           </div>
         </div>

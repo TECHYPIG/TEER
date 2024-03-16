@@ -1,8 +1,9 @@
 import styles from './Userprofile.module.css';
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
-import { IoAccessibilityOutline, IoLocationOutline, IoIdCardOutline } from "react-icons/io5";
 import { SlSocialTwitter, SlSocialInstagram, SlSocialLinkedin } from "react-icons/sl";
+import { CiLocationOn } from "react-icons/ci";
+import { PiBriefcaseLight } from "react-icons/pi";
 
 
 const Userprofile = () => {
@@ -30,17 +31,17 @@ const Userprofile = () => {
         </div>
           <div className={styles.userdetails}>
             <ul>
-            <li><IoLocationOutline className={styles.picons} size={30}/>Location:</li>
-            <li> <a><IoIdCardOutline className={styles.picons} size={30}/>Occupation: </a></li>
+            <li className={styles.picons}><CiLocationOn size={24}/></li>
+            <li  className={styles.picons}> <PiBriefcaseLight size={24}/></li>
             </ul>
           </div>
           <div className={styles.line}></div>
-          <a style= {h3Style}> Social Media</a>
+          <a style= {h3Style}></a>
           <div className={styles.socials}>
             <ul>
-            <li><a href="https://www.instagram.com/"><SlSocialInstagram className={styles.picons} size={30}/>Instagram</a></li>
-            <li><a href="https://twitter.com/"><SlSocialTwitter className={styles.picons} size={30}/>Twitter</a></li>
-            <li><a href="https://www.linkedin.com/"><SlSocialLinkedin className={styles.picons} size={30}/>LinkedIn</a></li>
+            <li><a href="https://www.instagram.com/"><SlSocialInstagram className={styles.picons} size={22}/>Instagram</a></li>
+            <li><a href="https://twitter.com/"><SlSocialTwitter className={styles.picons} size={22}/>Twitter</a></li>
+            <li><a href="https://www.linkedin.com/"><SlSocialLinkedin className={styles.picons} size={22}/>LinkedIn</a></li>
             </ul>
           </div>
       </div>

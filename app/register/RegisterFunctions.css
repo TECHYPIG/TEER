@@ -2,20 +2,18 @@
     display: flex;
     flex-direction: column;
     margin-top: 2vh;
+    justify-content: center;
 }
-.MainFlex {
-    margin-left: 5vw;
+.MarginLeft{
+    margin-left: 2vw;
 }
-.InnerFlex{
+.Row{
     display: flex;
     flex-direction: row;
 }
-.Right{
-    margin-left: 5%;
-}
 .RegisterSign{
+    margin-top: 4vh;
     font-size: 30px;
-    margin-left: 15vw;
 }
 .Submit{
     background-color: rgb(5,150,105);
@@ -23,9 +21,8 @@
     height: 50px;
     font-size: 20px;
     border-radius: 13px;
-    margin-top: 5vh;
-    margin-left: 12.5vw;
     cursor: pointer;
+    margin-top: 5vh;
 }
 label{
     font-size: 20px;
@@ -38,8 +35,10 @@ label{
 }
 .passwordsDontMatch{
     text-align: center;
+    color: red;
 }
-.OuterFlex{
+.MainFlex{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }

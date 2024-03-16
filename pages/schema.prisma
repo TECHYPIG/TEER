@@ -21,25 +21,29 @@ model Users {
   Bio       String
   CreateAt  DateTime @default(now())
   Posts     Post[]   @relation("userPosts")
-  Following String []
-  Block     String
+  Comments  Comment[] @relation("userComments")
+  Following String[] @default([])
+  Block     String[] @default([])
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   String
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  user      Users    @relation("userPosts", fields: [userId], references: [id])
+  published Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  likes     Users[]   @relation("likedPosts", references: [id])
+  user      Users     @relation("userPosts", fields: [userId], references: [id])
   userId    String
-  Comments  Comment[] 
-  Like      Users     @relation("userPosts", fields: [userId], references: [id])
-
+  Comments  Comment[] @relation("postComments")
 }
 
 model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      Users
   content   String
+  createdAt DateTime @default(now())
+  user      Users    @relation("userComments", fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation("postComments", fields: [postId], references: [id])
+  postId    String
 }

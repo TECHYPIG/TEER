@@ -64,37 +64,54 @@ function Profile(props) {
 
 
     const [posts, setPosts] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [userDetails, setUserDetails] = useState({
+        Firstname: '',
+        Surname: '',
+        Username: '',
+        Email: '',
+        Role: '',
+        Location: '',
+        Gender: '',
+        Birthday: '',
+        Bio: '',
+        CreatedAt: ''
+    });
 
     useEffect(() => {
         // Fetch post details when the component mounts
         fetchPosts();
-        fetchUserDetails();
 
     }, []);
 
-    const fetchUserDetails = async () => {
-        try {
-            const token = Cookies.get('accessToken'); // Retrieve access token from cookies
-            if (!token) {
-                throw new Error('No access token found');
+    useEffect(() => {
+        async function fetchUserDetails() {
+            try {
+                const token = Cookies.get("accessToken");
+                //console.log(Cookies.get())
+                if (!token) {
+                    throw new Error('No access token found');
+                }
+                
+                const response = await fetch('/api/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                }
+                const userData = await response.json();
+                setUserDetails(userData);
+                console.log(userData) 
+            } catch (error) {
+                console.error('Error fetching user details:', error);
+                // Handle error
             }
-    
-            const response = await fetch('/api/profile', {
-                headers: {
-                    'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch user details');
-            }
-            const userData = await response.json();
-            setUsers([userData]); // Assuming the response is an object containing user details
-    
-        } catch (error) {
-            console.error('Error fetching user details:', error);
         }
-    };
+
+        fetchUserDetails();
+    }, []);
 
     const fetchPosts = async () => {
         try {
@@ -145,21 +162,19 @@ function Profile(props) {
                     {/* <img class="h-16 w-16 rounded-full mx-auto"
                                 src={profilePic}
                                 alt=""/> */}
-                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1" id="username" >John Doe</h1>
-                    <h3 class="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
-                    <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
-                        consectetur adipisicing elit.
-                        Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
+                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1" id="username" > {userDetails.Username}</h1>
+                    <h3 class="text-gray-600 font-lg text-semibold leading-6">{userDetails.Role}</h3>
+                    <p class="text-sm text-gray-500 hover:text-gray-600 leading-6"> {userDetails.Bio}</p>
                     <ul
                         class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                         <li class="flex items-center py-3">
                             <span>Location</span>
                             <span class="ml-auto"><span
-                                    class="bg-green-600 py-1 px-2 rounded text-white text-sm">Newcastle, UK</span></span>
+                                    class="bg-green-600 py-1 px-2 rounded text-white text-sm">{userDetails.Location}</span></span>
                         </li>
                         <li class="flex items-center py-3">
                             <span>Member since</span>
-                            <span class="ml-auto">Nov 07, 2016</span>
+                            <span class="ml-auto">{userDetails.CreatedAt}</span>
                         </li>
                     </ul>
                 </div>
@@ -186,23 +201,23 @@ function Profile(props) {
                         <div class="grid md:grid-cols-2 text-sm">
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">First Name</div>
-                                <div class="px-4 py-2">John Doe</div>
+                                <div class="px-4 py-2">{userDetails.Firstname}</div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Surname</div>
-                                <div class="px-4 py-2">John Doe</div>
+                                <div class="px-4 py-2">{userDetails.Surname}</div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Username</div>
-                                <div class="px-4 py-2">JohnDoe</div>
+                                <div class="px-4 py-2">{userDetails.Username}</div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Gender</div>
-                                <div class="px-4 py-2">Male</div>
+                                <div class="px-4 py-2">{userDetails.Gender}</div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Birthday</div>
-                                <div class="px-4 py-2">Feb 06, 1998</div>
+                                <div class="px-4 py-2">{userDetails.Birthday}</div>
                             </div>
                         </div>
                     </div>
@@ -213,6 +228,7 @@ function Profile(props) {
 
             
                <div class="my-4"></div>
+
 
 
 

@@ -10,6 +10,7 @@ export default async function handler(req, res) {
 
     inputtedPassword = crypto.createHash("sha256").update(inputtedPassword).digest('hex')
 
+
     let password = await prisma.users.findUnique({
         where: {
             Username: name,
@@ -18,10 +19,11 @@ export default async function handler(req, res) {
             Password: true
         }
     });
-    if (password != null) {
+    if (password.Password != null) {
         password = password.Password
         if(password === inputtedPassword){
             let token = jwt.sign({username: name}, process.env.ACCESS_TOKEN)
+            console.log(token)
             res.setHeader('Authorization', `Bearer ${token}`);
             res.status(200).json({"accessToken" : 1})
         }

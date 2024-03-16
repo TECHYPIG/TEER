@@ -21,6 +21,8 @@ model Users {
   Bio       String
   CreateAt  DateTime @default(now())
   Posts     Post[]   @relation("userPosts")
+  Following String []
+  Block     String
 }
 
 model Post {
@@ -31,4 +33,13 @@ model Post {
   createdAt DateTime @default(now())
   user      Users    @relation("userPosts", fields: [userId], references: [id])
   userId    String
+  Comments  Comment[] 
+  Like      Users     @relation("userPosts", fields: [userId], references: [id])
+
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      Users
+  content   String
 }

@@ -53,15 +53,15 @@ function editprofile() {
     }, []);
 
     // Handler functions for input changes
-    const handleFirstname = (event) => setUserDetails({ ...userDetails, firstname: event.target.value });
-    const handleSurname = (event) => setUserDetails({ ...userDetails, surname: event.target.value });
-    const handleUsername = (event) => setUserDetails({ ...userDetails, username: event.target.value });
-    const handleEmail = (event) => setUserDetails({ ...userDetails, email: event.target.value });
-    const handleRole = (event) => setUserDetails({ ...userDetails, role: event.target.value });
-    const handleLocation = (event) => setUserDetails({ ...userDetails, location: event.target.value });
-    const handleGender = (event) => setUserDetails({ ...userDetails, gender: event.target.value });
-    const handleBirthday = (event) => setUserDetails({ ...userDetails, birthday: event.target.value });
-    const handleBio = (event) => setUserDetails({ ...userDetails, bio: event.target.value });
+    const handleFirstname = (event) => setUserDetails({ ...userDetails, Firstname: event.target.value });
+    const handleSurname = (event) => setUserDetails({ ...userDetails, Surname: event.target.value });
+    const handleUsername = (event) => setUserDetails({ ...userDetails, Username: event.target.value });
+    const handleEmail = (event) => setUserDetails({ ...userDetails, Email: event.target.value });
+    const handleRole = (event) => setUserDetails({ ...userDetails, Role: event.target.value });
+    const handleLocation = (event) => setUserDetails({ ...userDetails, Location: event.target.value });
+    const handleGender = (event) => setUserDetails({ ...userDetails, Gender: event.target.value });
+    const handleBirthday = (event) => setUserDetails({ ...userDetails, Birthday: event.target.value });
+    const handleBio = (event) => setUserDetails({ ...userDetails, Bio: event.target.value });
 
     // Function to update user details
     async function updateUserDetails() {

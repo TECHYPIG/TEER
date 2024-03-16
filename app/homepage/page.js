@@ -6,7 +6,6 @@ import PostContent from './Post';
 import Jobpost from './Jobposting';
 import Newfollow from './Newfollow';
 
-
 export default function Home() {
   return (
     <div className={styles.homecontainer}>

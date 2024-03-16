@@ -6,6 +6,7 @@ import profilePic from './/images/google.png'
 import Cookies from 'js-cookie';
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import {data} from "autoprefixer";
 
 export function TextBoxes(){
     const router = useRouter()
@@ -24,10 +25,10 @@ export function TextBoxes(){
             <h5>{incorrectLogin}</h5>
 
             <input  type="Submit" className="Submit" onClick={async function inside (){
+                changedIncorrectLogin("")
                 var returingValue =   await callAPI(userName, passWord)
                 if(returingValue === 1){
-                    changedIncorrectLogin("")
-                    router.push("/register");//Change this to push to homepage off course
+                    router.push("/homepage");//Change this to push to homepage off course
                 } else{
                     changedIncorrectLogin("Your username or password was incorrect")
                 }
@@ -92,9 +93,8 @@ async function callAPI(name, password) {
                 password: password
             })
         })
-        console.log("Checking")
-        console.log(response.json())
-        if (response.json() === 0) {
+        let jsonResponse = await response.json()
+        if (jsonResponse.accessToken !== 1) {
             return 0;
         } else {
             const fullToken = response.headers.get("Authorization")

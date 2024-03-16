@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from "./prismaClient"
 import 'dotenv/config'
 import Cookies from 'js-cookie';
 
-const prisma = new PrismaClient()
 
 export default async function handler(req, res) {
     const { method, body } = req;

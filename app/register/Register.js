@@ -10,7 +10,7 @@ export function Register(){
                 <Image src={RegisterImage} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                        alt="Testing" />
             </div>
-            <div>
+            <div className="RegisterSide">
                 <RegisterSign />
                 <RegisterInputs />
             </div>

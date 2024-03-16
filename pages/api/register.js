@@ -30,9 +30,12 @@ export default async function handler(req, res) {
             }
         });
         console.log("Register was executed")
-        res.status(200)
+        return res.status(200).json(100)
     } catch (error){
+        if (error.code === 'P2002'){
+           return res.status(401).json(101)
+        }
         console.log("Error in inputting, Probably Default")
-        res.status(401)
+        return res.status(401).json(102)
     }
 }

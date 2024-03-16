@@ -4,17 +4,21 @@ import jwt from 'jsonwebtoken'
 
 
 export default async function handler(req, res) {
-    const { method, body } = req;
+    const { method, body, headers } = req;
 
     switch (method) {
         //get logged in user and all user details
         case 'GET':
             try {
                 // Extract JWT token from request headers
-               const token = Cookies.get('accessToken');
-                if (!token) {
-                    return res.status(401).json({ error: 'Unauthorized' });
-                }
+            //    const token = Cookies.get('accessToken');
+            //     if (!token) {
+            //         return res.status(401).json({ error: 'Unauthorized' });
+            //     }
+
+                const token = headers.authorization.split(' ')[1];
+
+                
                 
                 // Verify JWT token
                 const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
@@ -27,7 +31,7 @@ export default async function handler(req, res) {
 
                 // Fetch user details for the authenticated user
                 const user = await prisma.users.findUnique({
-                    where: { username },
+                    where: { Username:username },
                 });
                 if (!user) {
                     return res.status(404).json({ error: 'User not found' });
@@ -43,11 +47,14 @@ export default async function handler(req, res) {
             case 'POST':
                 try {
                         // Retrieve access token from cookies
-                    const token = Cookies.get('accessToken');
-                    if (!token) {
-                        return res.status(401).json({ error: 'Unauthorized' });
-                    }
+                    // const token = Cookies.get('accessToken');
+                    // if (!token) {
+                    //     return res.status(401).json({ error: 'Unauthorized' });
+                    // }
                     
+
+                    const token = headers.authorization.split(' ')[1];
+
                     // Verify JWT token
                     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
                     if (!decodedToken) {
@@ -60,8 +67,8 @@ export default async function handler(req, res) {
                     // Update user details based on the provided data
                     const { firstname, surname, newUsername, email, role, location, gender, birthday, bio } = JSON.parse(body);
                     const updatedUser = await prisma.users.update({
-                        where: { username },
-                        data: { firstname, surname, username: newUsername, email, role, location, gender, birthday, bio },
+                        where: { Username:username },
+                        data: { firstname:firstname, Surname:surname, Username: newUsername, Email:email, Role:role, Location:location, Gender:gender, Birthday:birthday, Bio:bio },
                     });
     
                     res.status(200).json(updatedUser);

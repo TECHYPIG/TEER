@@ -24,6 +24,7 @@ model Users {
   Comments  Comment[] @relation("userComments")
   Following String[] @default([])
   Block     String[] @default([])
+  Likes     Like[]
 }
 
 model Post {
@@ -32,7 +33,6 @@ model Post {
   content     String
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now())
-  likes       Like[]
   user        Users     @relation("userPosts", fields: [userId], references: [id])
   userId      String
   Comments    Comment[] @relation("postComments")

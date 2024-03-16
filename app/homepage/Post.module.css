@@ -5,9 +5,6 @@
     margin-bottom: 2rem;
     padding: 20px; 
     background-color: white;
-    border: 1px solid;
-    border-color: #389668;
-    border-radius: 8px;
   }
   .profilepic{
     width: 2.5rem;
@@ -28,7 +25,12 @@
     padding-top: 0.5rem ;
     padding-bottom: 0.5rem;
     background-color: #F2F3F4;
-    border-radius: 15px;
+  }
+  .followb{
+    color: green;
+    margin-left: 12rem;
+    /* margin-bottom: 1rem; */
+    font-weight: bold;
   }
   .postimage{
     width: 25rem;

@@ -1,8 +1,8 @@
 import styles from './Page.module.css';
 import Navbar from './Navbar';
 import Userprofile from './Userprofile';
-import NewPostContent from './Newpost';
-import PostContent from './Post';
+import Newpostcontent from './Newpost';
+import Postcontent from './Post';
 import Jobpost from './Jobposting';
 import Newfollow from './Newfollow';
 
@@ -13,8 +13,8 @@ export default function Home() {
       <div className= {styles.innerdiv}>
       <Userprofile></Userprofile>
       <div className= {styles.row2}>
-      <NewPostContent></NewPostContent>
-      <PostContent></PostContent>
+      <Newpostcontent></Newpostcontent>
+      <Postcontent></Postcontent>
       </div>
       <div className= {styles.row3}>
       <Jobpost></Jobpost>

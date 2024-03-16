@@ -3,9 +3,6 @@
     height: 25%; 
     margin-top: 1rem;
     background-color: white;
-    border: 1px solid;
-    border-color: #389668;
-    border-radius: 8px;
     color: black;
     font-size: 0.7rem;
   }
@@ -23,9 +20,6 @@
     height: 2.5rem;
     object-fit: cover;
     border-radius: 50%;
-  }
-  .userinfo{
-    color: black;
   }
   .usernames{
     margin-left: 1rem;

@@ -79,7 +79,7 @@ function Profile(props) {
 
     useEffect(() => {
         // Fetch post details when the component mounts
-        fetchPosts();
+       // fetchPosts();
 
     }, []);
 
@@ -113,33 +113,33 @@ function Profile(props) {
         fetchUserDetails();
     }, []);
 
-    const fetchPosts = async () => {
-        try {
-            const token = Cookies.get('accessToken'); // Retrieve access token from cookies
-            if (!token) {
-                throw new Error('No access token found');
-            }
+    // const fetchPosts = async () => {
+    //     try {
+    //         const token = Cookies.get('accessToken'); // Retrieve access token from cookies
+    //         if (!token) {
+    //             throw new Error('No access token found');
+    //         }
     
-            const response = await fetch('/api/post', {
-                headers: {
-                    'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch post details');
-            }
-            const postsData = await response.json();
-            setPosts(postsData);
+    //         const response = await fetch('/api/post', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+    //             },
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error('Failed to fetch post details');
+    //         }
+    //         const postsData = await response.json();
+    //         setPosts(postsData);
     
-        } catch (error) {
-            console.error('Error fetching post details:', error);
-        }
-    };
+    //     } catch (error) {
+    //         console.error('Error fetching post details:', error);
+    //     }
+    // };
 
 
-    const postJSX = posts.map( 
-        (post, i) => <Post key={i + post} count={i} post={post} /> 
-    ) 
+    // const postJSX = posts.map( 
+    //     (post, i) => <Post key={i + post} count={i} post={post} /> 
+    // ) 
 
 
 
@@ -158,7 +158,7 @@ function Profile(props) {
             {/* <!-- Left Side --> */}
             <div class="w-full md:w-3/12 md:mx-2">
                 {/* <!-- Profile Card --> */}
-                <div class="bg-white p-3 border-t-4 border-green-400">
+                <div class="bg-white p-3 border-t-4 border-green-600">
                     {/* <img class="h-16 w-16 rounded-full mx-auto"
                                 src={profilePic}
                                 alt=""/> */}
@@ -233,7 +233,7 @@ function Profile(props) {
 
 
 
-               {postJSX}
+               {/* {postJSX} */}
 
 
 

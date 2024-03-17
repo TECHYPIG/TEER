@@ -16,21 +16,27 @@
     display: flex;
     padding-bottom: 5px;
     color: black;
+    justify-content: space-between;
   }
   .usernames{
     margin-left: 1rem;
+  }
+  .align{
+    display:flex;
+    flex-direction: row;
   }
   .postinfo{
     padding: 10%;
     padding-top: 0.5rem ;
     padding-bottom: 0.5rem;
-    background-color: #F2F3F4;
   }
   .followb{
+    display: flex;
     color: green;
-    margin-left: 12rem;
-    /* margin-bottom: 1rem; */
     font-weight: bold;
+    justify-content: center;
+    align-content: center;
+
   }
   .postimage{
     width: 25rem;
@@ -41,3 +47,14 @@
     border-radius: 2px;
 
   }
+  .line{
+    width: 100%;
+    margin-top: 10px;
+    border-bottom: 1px solid;
+    border-color: grey;
+  }
+  .comments{
+    font-size: 0.7rem;
+    color: black;
+    margin-top: 1rem;
+}

@@ -26,7 +26,6 @@ const Userprofile = () => {
             <div className={styles.usernames}>
             <h1 style= {h1Style}> Username</h1> 
             <h2 style= {h2Style}>@Usertag</h2>
-            {/* <a href="#ProfilePage"><IoAccessibilityOutline className={styles.picons} size={20}/></a> */}
           </div>
         </div>
           <div className={styles.userdetails}>

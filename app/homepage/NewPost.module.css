@@ -5,6 +5,7 @@
     padding-left: 20px;
     padding-right: 20px;
     background-color: white;
+    color: black;
   }
 .profilepic{
     width: 1.5rem;
@@ -15,13 +16,18 @@
   .userinfo{
     display: flex;
     padding-bottom: 5px;
+    justify-content: space-between;
   }
   .usernames{
     margin-left: 1rem;
   }
+  .align{
+    display: flex;
+    flex-direction: row;
+  }
   .postinfoh3{
+    width: 100%;
     padding: 5%;
-    padding-right: 45%;
     background-color: #F2F3F4;
     font-size: 0.8rem;
   }
@@ -39,4 +45,8 @@
     border-radius: 30px;
     color: white;
     font-size: 0.7rem;
+  }
+  .picon{
+    display:flex;
+    margin-top: 30px;
   }

@@ -8,12 +8,10 @@
   }
   .userinfo{
     display: flex;
-    margin: 10px;
-    padding: 5px;
+    padding: 10px;
     background-color: #389668;
-    border: 1px solid;
-    border-color: black;
     border-radius: 3px;
+    color: white;
   }
   .profilepic{
     width: 2.5rem;

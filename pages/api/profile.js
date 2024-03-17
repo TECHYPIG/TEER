@@ -10,11 +10,7 @@ export default async function handler(req, res) {
         //get logged in user and all user details
         case 'GET':
             try {
-                // Extract JWT token from request headers
-            //    const token = Cookies.get('accessToken');
-            //     if (!token) {
-            //         return res.status(401).json({ error: 'Unauthorized' });
-            //     }
+
 
                 const token = headers.authorization.split(' ')[1];
 
@@ -46,11 +42,7 @@ export default async function handler(req, res) {
             //add or update logged in user details
             case 'POST':
                 try {
-                        // Retrieve access token from cookies
-                    // const token = Cookies.get('accessToken');
-                    // if (!token) {
-                    //     return res.status(401).json({ error: 'Unauthorized' });
-                    // }
+
                     
 
                     const token = headers.authorization.split(' ')[1];
@@ -63,12 +55,25 @@ export default async function handler(req, res) {
     
                     // Extract username from decoded token
                     const { username } = decodedToken;
+
+
+                    console.log('Received body:', body);
+
+                    // Parse the body string to JSON
+                   // const requestBody = JSON.parse(body);
+
+                    delete body.id;
+                    delete body.Password;
+                    
+
+                    console.log('Received body2:', body);
+
     
                     // Update user details based on the provided data
-                    const { firstname, surname, newUsername, email, role, location, gender, birthday, bio } = JSON.parse(body);
+                    //const { Firstname, Surname, Username, Email, Role, Location, Gender, Birthday, Bio } = JSON.parse(body);
                     const updatedUser = await prisma.users.update({
-                        where: { Username:username },
-                        data: { firstname:firstname, Surname:surname, Username: newUsername, Email:email, Role:role, Location:location, Gender:gender, Birthday:birthday, Bio:bio },
+                        where: { Username: username },
+                        data: body, 
                     });
     
                     res.status(200).json(updatedUser);

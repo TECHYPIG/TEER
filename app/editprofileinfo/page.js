@@ -62,15 +62,17 @@ function editprofile() {
     const handleGender = (event) => setUserDetails({ ...userDetails, Gender: event.target.value });
     const handleBirthday = (event) => setUserDetails({ ...userDetails, Birthday: event.target.value });
     const handleBio = (event) => setUserDetails({ ...userDetails, Bio: event.target.value });
+   // console.log(userDetails)
+   // console.log(JSON.stringify(userDetails))
 
     // Function to update user details
     async function updateUserDetails() {
+        
         try {
             const token = Cookies.get('accessToken');
             if (!token) {
                 throw new Error('No access token found');
             }
-            
             const response = await fetch('/api/profile', {
                 method: 'POST',
                 headers: {

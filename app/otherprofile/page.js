@@ -7,8 +7,7 @@
  * @author Ines Rita
  */
 
- import profilePic from './koreanwoman.png';
- import Cookies from 'js-cookie';
+
  import { useState, useEffect } from 'react';
 import Navbar from '../homepage/Navbar';
 
@@ -85,34 +84,31 @@ function Profile(props) {
 
     useEffect(() => {
         async function fetchUserDetails() {
-            try {
-                const token = Cookies.get("accessToken");
-                //console.log(Cookies.get())
-                if (!token) {
-                    throw new Error('No access token found');
-                }
-                
-                const response = await fetch('/api/profile', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user details');
-                }
-                const userData = await response.json();
-                setUserDetails(userData);
-                console.log(userData) 
-            } catch (error) {
-                console.error('Error fetching user details:', error);
-                // Handle error
+          try {
+            // Extract the 'username' query parameter from the URL
+            const params = new URLSearchParams(window.location.search);
+            const username = params.get('username');
+            
+            // Fetch user details using the provided username
+            const response = await fetch(`/api/otherprofile?username=${username}`);
+            if (!response.ok) {
+              throw new Error('Failed to fetch user details');
             }
+            
+            // Parse the response JSON
+            const userDetails = await response.json();
+            // Set the user details in the state
+            setUserDetails(userDetails);
+          } catch (error) {
+            console.error('Error fetching user details:', error);
+            // Handle error
+          }
         }
-
+      
+        // Call fetchUserDetails
         fetchUserDetails();
-    }, []);
-
+      }, []); // Empty dependency array ensures useEffect runs only once after initial render
+      
     // const fetchPosts = async () => {
     //     try {
     //         const token = Cookies.get('accessToken'); // Retrieve access token from cookies

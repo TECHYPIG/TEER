@@ -33,7 +33,7 @@ model Post {
   content     String
   user        Users     @relation("userPosts", fields: [userId], references: [id])
   comments    Comment[] @relation("postComments")
-  likes       Like[]    @relation("postLikes")
+  likes       User[]   @relation("PostLikes")
   createdAt   DateTime  @default(now())
 }
 

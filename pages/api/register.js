@@ -35,7 +35,7 @@ export default async function handler(req, res) {
         if (error.code === 'P2002'){
            return res.status(401).json(101)
         }
-        console.log("Error in inputting, Probably Default")
+        console.log("Error in inputting, Probably Page")
         return res.status(401).json(102)
     }
 }

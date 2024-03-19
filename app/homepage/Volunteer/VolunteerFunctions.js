@@ -6,7 +6,6 @@ import ModalOpportunity from "./VolunteerOppurtunityModal"
 
 export function Name(){
 var [ModalOpen,SetModalOpen] = useState(false)
-    console.log(ModalOpen)
     return(
         <div className="NameDiv">
             <h3></h3>
@@ -41,7 +40,7 @@ function VolunteeringInformation(){
         })
     for(let x = 0; x < list.length;x++){
         list1.push(
-        <div>
+        <div key={x}>
             <h3 onClick={() => insideClick(setModalOpen,email,setEmail, list[x].email)}>{list[x].email}</h3>
             <ModalOpportunity open={modal} close={() => setModalOpen(false)} email = {email}></ModalOpportunity>
         </div>

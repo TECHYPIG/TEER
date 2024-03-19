@@ -15,6 +15,7 @@ import Modal from "./Modal"
 
  function Post(props) {
  
+    const { post } = props;
    // posts listing and results
     return (
         <>
@@ -65,9 +66,10 @@ function Profile(props) {
 
     var [ModalOpen,SetModalOpen] = useState(false)
 
+    const [posts, setPosts] = useState([]);
+
     const [followingCount, setFollowingCount] = useState(null);
 
-    const [posts, setPosts] = useState([]);
     const [userDetails, setUserDetails] = useState({
         Firstname: '',
         Surname: '',
@@ -140,34 +142,45 @@ function Profile(props) {
         }
     }, [userDetails.Username]);
 
-    // const fetchPosts = async () => {
-    //     try {
-    //         const token = Cookies.get('accessToken'); // Retrieve access token from cookies
-    //         if (!token) {
-    //             throw new Error('No access token found');
-    //         }
     
-    //         const response = await fetch('/api/post', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
-    //             },
-    //         });
-    //         if (!response.ok) {
-    //             throw new Error('Failed to fetch post details');
-    //         }
-    //         const postsData = await response.json();
-    //         setPosts(postsData);
-    
-    //     } catch (error) {
-    //         console.error('Error fetching post details:', error);
-    //     }
-    // };
 
+    useEffect(() => {
+      async function fetchPostDetails() {
+        try {
+          const token = Cookies.get("accessToken");
+          if (!token) {
+            throw new Error('No access token found');
+          }
+          
+          const response = await fetch('/api/post/getUserPosts', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+  
+          if (!response.ok) {
+            throw new Error('Failed to fetch post details');
+          }
+  
+          const postDetails = await response.json();
+          // Modify post details if necessary before updating state
+          setPosts(postDetails);
+        } catch (error) {
+          console.error('Error fetching post details:', error);
+          // Handle error
+        }
+      }
+  
+      fetchPostDetails();
+    }, []);
+  
 
-    // const postJSX = posts.map( 
-    //     (post, i) => <Post key={i + post} count={i} post={post} /> 
-    // ) 
+    const postJSX = posts.map((post, i) => (
+        <Post key={i} post={post} />
+      ));
 
+   
 
 
 
@@ -257,7 +270,6 @@ function Profile(props) {
 
 
 
-
                 <div className="my-4"></div>
             </div>
             {/* <!-- Right Side --> */}
@@ -312,7 +324,7 @@ function Profile(props) {
 
 
 
-               {/* {postJSX} */}
+               {postJSX}
 
 
 

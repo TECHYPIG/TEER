@@ -11,6 +11,7 @@
  import Cookies from 'js-cookie';
  import { useState, useEffect } from 'react';
 import Navbar from '../homepage/Navbar';
+import Modal from "./Modal"
 
  function Post(props) {
  
@@ -26,16 +27,16 @@ import Navbar from '../homepage/Navbar';
         <div className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800 p-4 rounded-xl border max-w-xl">
             <div className="flex justify-between">
             <div className="flex items-center">
-                {/* <img class="h-11 w-11 rounded-full" src=""/> */}
+                {/* <img className="h-11 w-11 rounded-full" src=""/> */}
                 <div className="ml-1.5 text-sm leading-tight">
                 <span className="text-black dark:text-white font-bold block ">{props.post.title}</span>
                 </div>
             </div>
             </div>
             <p className="text-black dark:text-white block text-xl leading-snug mt-3">{props.post.content}</p>
-            {/* <img class="mt-2 rounded-2xl border border-gray-100 dark:border-gray-700" src="https://pbs.twimg.com/media/EpkuplDXEAEjbFc?format=jpg&name=medium"/> */}
+            {/* <img className="mt-2 rounded-2xl border border-gray-100 dark:border-gray-700" src="https://pbs.twimg.com/media/EpkuplDXEAEjbFc?format=jpg&name=medium"/> */}
             <p className="text-gray-500 dark:text-gray-400 text-base py-1 my-0.5">{props.post.createdAt}</p>
-            <div class="border-gray-200 dark:border-gray-600 border border-b-0 my-1"></div>
+            <div className="border-gray-200 dark:border-gray-600 border border-b-0 my-1"></div>
             <div className="text-gray-500 dark:text-gray-400 flex mt-3">
             <div className="flex items-center mr-6">
             <button className="py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border border-gray-300 rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
@@ -62,6 +63,9 @@ import Navbar from '../homepage/Navbar';
 
 function Profile(props) {
 
+    var [ModalOpen,SetModalOpen] = useState(false)
+
+    const [followingCount, setFollowingCount] = useState(null);
 
     const [posts, setPosts] = useState([]);
     const [userDetails, setUserDetails] = useState({
@@ -117,6 +121,25 @@ function Profile(props) {
         fetchUserDetails();
     }, []);
 
+    useEffect(() => {
+        async function fetchFollowingCount() {
+            try {
+                const response = await fetch(`/api/getFollowers?username=${userDetails.Username}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch following count');
+                }
+                const data = await response.json();
+                setFollowingCount(data.followingCount);
+            } catch (error) {
+                console.error('Error fetching following count:', error);
+            }
+        }
+
+        if (userDetails.Username) {
+            fetchFollowingCount();
+        }
+    }, [userDetails.Username]);
+
     // const fetchPosts = async () => {
     //     try {
     //         const token = Cookies.get('accessToken'); // Retrieve access token from cookies
@@ -162,36 +185,38 @@ function Profile(props) {
             {/* <!-- Left Side --> */}
             <div className="w-full md:w-3/12 md:mx-2">
 
-      <div class="h-screen bg-green-teer py-5 px-3">
+      <div className="h-screen bg-green-teer py-5 px-3">
     
-    <div class="max-w-md mx-auto md:max-w-lg">
-        <div class="w-full">
-            <div class="bg-white p-3 rounded text-center py-5">
-                <div class="flex justify-center">
-                    <img class="rounded-full" src="https://i.imgur.com/TcyQLXx.jpg" width="100"/>
+    <div className="max-w-md mx-auto md:max-w-lg">
+        <div className="w-full">
+            <div className="bg-white p-3 rounded text-center py-5">
+                <div className="flex justify-center">
+                    <img className="rounded-full" src="https://i.imgur.com/TcyQLXx.jpg" width="100"/>
                 </div>
                 
-                <div class="text-center">
-                    <h1 class="text-2xl mt-2">{userDetails.Username} </h1>
-                    <div class="px-5 text-sm">
+                <div className="text-center">
+                    <h1 className="text-2xl mt-2">{userDetails.Username} </h1>
+                    <div className="px-5 text-sm">
                     
-                        {/* <p class="text-justify">{userDetails.Bio}</p> */}
+                        {/* <p className="text-justify">{userDetails.Bio}</p> */}
                     </div>
-                    <div class="flex justify-between mt-3 px-4">
-                        <div  class="flex flex-col">
-                            <span class="font-bold text-2xl">97</span>
-                            <span class="text-sm text-red-600">Followers</span>
-                        </div>
+                    <div className="flex justify-center mt-3 px-4">
                         
-                        <div  class="flex flex-col">
-                            <span class="font-bold text-2xl">47</span>
-                            <span class="text-sm text-red-600">Followings</span>
+                        <div  className="flex flex-col">
+                            <span className="font-bold text-2xl">{followingCount}</span>
+                            <span className="text-sm text-red-600">Following</span>
                         </div>
                     </div>
                     
-                    <div class="flex flex-row px-4 mt-4">
-                      <a href="/editprofileinfo" class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700" >  <button class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700">Edit Profile</button> </a> 
-                        {/* <button class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2">Block</button> */}
+                    <div className="flex flex-row px-4 mt-4">
+                      <a href="/editprofileinfo" className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700" >  <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700">Edit Profile</button> </a> 
+                        {/* <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2">Block</button> */}
+                    </div>
+
+                    <div className="flex flex-row px-4 mt-4">
+                       <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700"  onClick={() => SetModalOpen(true)}>Blocked Users</button> 
+                       <Modal open ={ModalOpen} close = {() => SetModalOpen(false)} ></Modal>
+                        {/* <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2">Block</button> */}
                     </div>
                     
                     
@@ -202,7 +227,7 @@ function Profile(props) {
 
         {/* <!-- Profile Card --> */}
         <div className="bg-white p-3 border-t-4 border-green-teer">
-                    {/* <img class="h-16 w-16 rounded-full mx-auto"
+                    {/* <img className="h-16 w-16 rounded-full mx-auto"
                                 src={profilePic}
                                 alt=""/> */}
                     {/* <h1 className="text-gray-900 font-bold text-xl leading-8 my-1" id="username" > {userDetails.Username}</h1> */}

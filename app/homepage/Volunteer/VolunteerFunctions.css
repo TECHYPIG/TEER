@@ -1,0 +1,28 @@
+.Name{
+    font-size: 1.3rem;
+    text-align: center;
+}
+.OpportunitiesDiv{
+    background-color: pink;
+    width: 95%;
+    height: 40vh;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: scroll;
+}
+.NameDiv{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+.Add{
+    margin-left: 5%;
+}
+.FlexForInside{
+    display: flex;
+    flex-direction: row;
+}
+.Border{
+    border: 3px solid black;
+    border-bottom: 0px;
+}

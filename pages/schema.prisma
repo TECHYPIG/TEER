@@ -8,35 +8,37 @@ datasource db {
 }
 
 model Users {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  Firstname String
-  Password  String
-  Surname   String
-  Username  String    @unique
-  Email     String    @unique
-  Role      String
-  Location  String
-  Gender    String
-  Birthday  String
-  Bio       String
-  CreateAt  DateTime  @default(now())
-  Posts     Post[]    @relation("userPosts")
-  Comments  Comment[] @relation("userComments")
-  Following String[]  @default([])
-  Block     String[]  @default([])
-  Likes     Like[]
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  Firstname   String
+  Password    String
+  Surname     String
+  Username    String    @unique
+  Email       String    @unique
+  profile_url String
+  Role        String
+  Location    String
+  Gender      String
+  Birthday    String
+  Bio         String
+  CreateAt    DateTime  @default(now())
+  Posts       Post[]    @relation("userPosts")
+  Comments    Comment[] @relation("userComments")
+  Following   String[]  @default([])
+  Block       String[]  @default([])
+  Likes       Like[]
 }
 
 model Post {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  content   String
-  published Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  user      Users     @relation("userPosts", fields: [userId], references: [id])
-  userId    String
-  Comments  Comment[] @relation("postComments")
-  likes     Like[]    @relation("postLikes")
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  picture_url String
+  content     String
+  published   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  user        Users     @relation("userPosts", fields: [userId], references: [id])
+  userId      String
+  Comments    Comment[] @relation("postComments")
+  likes       Like[]    @relation("postLikes")
 }
 
 model Comment {
@@ -55,4 +57,14 @@ model Like {
   userId String
   post   Post   @relation("postLikes", fields: [postId], references: [id])
   postId String
+}
+
+model Volunteer {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  username    String
+  email       String
+  description String
+  role        String
+  company     String
+  location    String
 }

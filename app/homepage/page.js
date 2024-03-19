@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import Userprofile from './Userprofile';
 import Newpostcontent from './Newpost';
 import Postcontent from './Post';
-import Jobpost from './Jobposting';
+import Voluneer from "./Volunteer/Volunteer"
 import Newfollow from './Newfollow';
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
       <Postcontent></Postcontent>
       </div>
       <div className= {styles.row3}>
-      <Jobpost></Jobpost>
+      <Voluneer></Voluneer>
       <Newfollow></Newfollow>
       </div>
     </div>

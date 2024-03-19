@@ -6,7 +6,6 @@ import profilePic from './/images/google.png'
 import Cookies from 'js-cookie';
 import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {data} from "autoprefixer";
 
 export function TextBoxes(){
     const router = useRouter()

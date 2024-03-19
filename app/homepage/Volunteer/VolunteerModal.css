@@ -1,0 +1,70 @@
+.Background{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    z-index: 100; /* Ensure modal is on top of other elements */
+}
+.Content{
+    width: 40%;
+    height: 70%;
+    background-color: white;
+}
+.Flex{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.Input{
+    background-color: grey;
+    width: 30%;
+}
+.Close{
+    margin-top: 1vh;
+   margin-left: 36vw;
+}
+.Row{
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+}
+.Column{
+    display: flex;
+    flex-direction: column;
+}
+label{
+    font-size: 20px;
+}
+.Input{
+    color: lightgrey;
+    height: 40px;
+    border-radius: 10px;
+    width: 16vw;
+}
+.MarginLeft{
+    margin-left: 2vw;
+}
+textarea{
+    resize: both;
+    max-width: 250px;
+    max-height: 90px;
+}
+.Submit{
+    background-color: rgb(5,150,105);
+    width: 140px;
+    height: 50px;
+    font-size: 20px;
+    border-radius: 13px;
+    cursor: pointer;
+    margin-top: 5vh;
+}
+.Description{
+    margin-top: 4vh;
+}

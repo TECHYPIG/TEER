@@ -94,8 +94,8 @@ export function RegisterInputs(){
                case 10:
                    ChangedDontMatch("Username is empty");
                    break;
-               case 10:
-                   ChangedDontMatch("Username is too short");
+               case 11:
+                   ChangedDontMatch("Username length is too short");
                    break;
                case 20:
                    ChangedDontMatch("Password is empty");
@@ -170,8 +170,10 @@ async function registerInformation(username,location, password,confirmPassword,b
     var firstname
     var surname
     let nameSplit = fullName.split(" ");
+    console.log("Checkpoint")
     if(nameSplit[1] === undefined){
-        return 100;}
+        return 100;
+    }
     else if(nameSplit[2] !== undefined){
          return 101;
         }
@@ -179,7 +181,7 @@ async function registerInformation(username,location, password,confirmPassword,b
        firstname = nameSplit[0];
         surname = nameSplit[1];
     }
-
+    console.log("Checkpoint")
     var response;
     if (password !== confirmPassword){
         return 0;
@@ -203,6 +205,7 @@ async function registerInformation(username,location, password,confirmPassword,b
                 });
 
                 let x = response.json();
+                console.log(x)
                 if (x === 100){
                     ChangedDontMatch("You have been registered succesfully")
                 }else if(x===101){

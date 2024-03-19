@@ -14,7 +14,7 @@ model Users {
   Surname     String
   Username    String    @unique
   Email       String    @unique
-  profile_url String
+  profile_url String    @default("https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg")
   Role        String
   Location    String
   Gender      String
@@ -31,7 +31,7 @@ model Users {
 model Post {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  picture_url String
+  picture_url String    @default("")
   content     String
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now())

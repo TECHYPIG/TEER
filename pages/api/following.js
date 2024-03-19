@@ -1,5 +1,6 @@
 import prisma from "./prismaClient";
 import jwt from 'jsonwebtoken';
+import 'dotenv/config'
  
 export default async function handler(req, res) {
     const { method, body, headers, query } = req;
@@ -48,41 +49,32 @@ export default async function handler(req, res) {
                 res.status(500).json({ error: 'Internal Server Error' });
             }
             break;
-        case 'GET':
-            try {
-                // Extract JWT token from headers
-                const token = headers.authorization.split(' ')[1];
-                // Verify JWT token
-                const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
-                if (!decodedToken) {
-                    return res.status(401).json({ error: 'Unauthorized' });
-                }
-                // Extract username from decoded token
-                const { username } = decodedToken;
-                // Fetch user details for the logged in user
-                const loggedInUser = await prisma.users.findUnique({
-                    where: { Username: username },
-                    include: {
-                        Following: true
+            case 'GET':
+                try {
+                    // Extract JWT token from headers
+                    const token = headers.authorization.split(' ')[1];
+                    // Verify JWT token
+                    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
+                    if (!decodedToken) {
+                        return res.status(401).json({ error: 'Unauthorized' });
                     }
-                });
-                if (!loggedInUser) {
-                    return res.status(404).json({ error: 'Logged in user not found' });
-                }
-                // Fetch users in the Following array of the logged in user
-                const followedUsers = await prisma.users.findMany({
-                    where: {
-                        Username: {
-                            in: loggedInUser.Following
-                        }
+                    // Extract username from decoded token
+                    const { username } = decodedToken;
+                    // Fetch user details for the logged-in user
+                    const loggedInUser = await prisma.users.findUnique({
+                        where: { Username: username },
+                        select: { Following: true }
+                    });
+                    if (!loggedInUser) {
+                        return res.status(404).json({ error: 'Logged in user not found' });
                     }
-                });
-                res.status(200).json(followedUsers);
-            } catch (error) {
-                console.error('Error fetching followed users:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
-            }
-            break;
+                    // Return the usernames in the Following array of the logged-in user
+                    res.status(200).json(loggedInUser.Following);
+                } catch (error) {
+                    console.error('Error fetching followed users:', error);
+                    res.status(500).json({ error: 'Internal Server Error' });
+                }
+                break;
         default:
             res.setHeader('Allow', ['POST', 'GET']);
             res.status(405).end(`Method ${method} Not Allowed`);

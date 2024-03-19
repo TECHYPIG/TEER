@@ -10,6 +10,7 @@
 
  import { useState, useEffect } from 'react';
 import Navbar from '../homepage/Navbar';
+import Cookies from 'js-cookie';
 
  function Post(props) {
  
@@ -115,6 +116,75 @@ function Profile(props) {
       }, []); // Empty dependency array ensures useEffect runs only once after initial render
       
 
+      
+      async function blockUsername() {
+        try {
+            // Check if userDetails is defined and contains the username
+            if (!userDetails || !userDetails.Username) {
+                console.error('User details not found');
+                return;
+            }
+            
+            const usernameToBlock = userDetails.Username; // Get the username from userDetails
+            const token = Cookies.get("accessToken");
+            if (!token) {
+                throw new Error('No access token found');
+            }
+            
+            const response = await fetch(`/api/block?blockedUsername=${usernameToBlock}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to block user');
+            }
+            
+            const updatedUser = await response.json();
+            console.log('User blocked successfully:', updatedUser);
+        } catch (error) {
+            console.error('Error blocking user:', error);
+            // Handle error
+        }
+    }
+
+
+    async function followUsername() {
+        try {
+            // Check if userDetails is defined and contains the username
+            if (!userDetails || !userDetails.Username) {
+                console.error('User details not found');
+                return;
+            }
+            
+            const usernameToFollow = userDetails.Username; // Get the username from userDetails
+            const token = Cookies.get("accessToken");
+            if (!token) {
+                throw new Error('No access token found');
+            }
+            
+            const response = await fetch(`/api/following?followedUsername=${usernameToFollow}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to block user');
+            }
+            
+            const updatedUser = await response.json();
+            console.log('User followed successfully:', updatedUser);
+        } catch (error) {
+            console.error('Error following user:', error);
+            // Handle error
+        }
+    }
+
+
     //   useEffect(() => {
     //     // Check if userDetails.CreatedAt is defined before splitting
     //     const createdAtDate = userDetails.CreatedAt ? userDetails.CreatedAt.split('T')[0] : '';
@@ -198,8 +268,8 @@ function Profile(props) {
                     </div>
                     
                     <div class="flex flex-row px-4 mt-4">
-                        <button class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700">Follow</button>
-                        <button class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2">Block</button>
+                        <button class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700"onClick={followUsername}>Follow</button>
+                        <button class="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2" onClick={blockUsername}>Block</button>
                     </div>
                     
                     

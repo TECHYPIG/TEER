@@ -99,6 +99,7 @@ function Post(props) {
 function Profile(props) {
 
     const [isFollowed, setIsFollowed] = useState(false);
+    const [loggedInUser, setLoggedInUser] = useState(null);
     const [followingCount, setFollowingCount] = useState(null);
     const [posts, setPosts] = useState([]);
     const [userDetails, setUserDetails] = useState({
@@ -296,6 +297,48 @@ function Profile(props) {
 
         fetchPostDetails();
     }, [userDetails.Username]);
+
+
+
+
+    useEffect(() => {
+        async function fetchLoggedInUser() {
+            try {
+                const token = Cookies.get("accessToken");
+                if (!token) {
+                    throw new Error('No access token found');
+                }
+
+                const response = await fetch('/api/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                }
+
+                const loggedUserDetails = await response.json();
+                setLoggedInUser(loggedUserDetails);
+            } catch (error) {
+                console.error('Error fetching logged-in user details:', error);
+            }
+        }
+
+        fetchLoggedInUser();
+    }, []);
+
+    useEffect(() => {
+        if (loggedInUser && loggedInUser.Following) {
+            setIsFollowed(loggedInUser.Following.includes(userDetails.Username));
+        }
+    }, [loggedInUser, userDetails.Username]);
+
+
+
+
 
 
     const postJSX = posts.map((post, i) => (

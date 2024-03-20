@@ -10,6 +10,7 @@ export default async function createPost(req, res) {
       try {
         const { title, content } = body;
         const username = await getUsername(headers, res);
+        // const userId = await getUserId(username);
         const post = await sendPostDB(username, content, title);
         res.status(201).json(post);
       } catch (error) {
@@ -43,6 +44,15 @@ async function getUsername(headers, res) {
   return username;
 }
 
+async function getUserId(username) {
+  const user = await prisma.users.findUnique({
+    where: {
+      Username: username,
+    },
+  });
+  return user.id;
+}
+
 
 // send post to database
 async function sendPostDB(username, content, title) {
@@ -51,6 +61,7 @@ async function sendPostDB(username, content, title) {
       title: title,
       content: content,
       published: true,
+      picture_url: "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
       user: {
         connect: {
           Username: username,

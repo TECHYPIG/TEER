@@ -11,7 +11,11 @@
  import Cookies from 'js-cookie';
  import { useState, useEffect } from 'react';
 import Navbar from '../homepage/Navbar';
-import Modal from "./Modal"
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
  function Post(props) {
  
@@ -59,12 +63,95 @@ import Modal from "./Modal"
        
     )
 }
+
+
+function UserList(props) {
+    // Destructure user from props
+    const { user } = props;
+
+    async function unblockUsername(username) {
+        try {
+            const token = Cookies.get("accessToken");
+            if (!token) {
+                throw new Error('No access token found');
+            }
+    
+            const response = await fetch(`/api/block?unblockedUsername=${username}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to unblock user');
+            }
+    
+            const updatedUser = await response.json();
+            console.log('User unblocked successfully:', updatedUser);
+        } catch (error) {
+            console.error('Error unblocking user:', error);
+            // Handle error
+        }
+    }
+    
+    
+    return (
+      <>
+
+
+
+                {/* <li class="flex  items-center">
+                    <div class="flex items-center">
+                        <img class="" alt=""/>
+                        <span class="ml-3 font-medium">{user.Username}</span>
+                    </div>
+                    <div>
+                    <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700" onClick={() => unblockUsername(user.Username)}>Unblock</button>
+
+                    </div>
+                </li> */}
+
+                <div role="button"
+                                class="flex items-center w-full p-3 py-1 pl-4 pr-1 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                                {user.Username}
+                                <div class="grid ml-auto place-items-center justify-self-end">
+                                    <button
+                                    className="h-10 w-full px-10 text-white text-md rounded bg-green-teer hover:bg-green-700"
+                                    type="button" onClick={() => unblockUsername(user.Username)} >
+                                   Unblock
+                                    </button>
+                                </div>
+                                </div>
+     
+      </>
+    );
+  }
  
 
 
 function Profile(props) {
 
-    var [ModalOpen,SetModalOpen] = useState(false)
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width:450,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+      };
+
+
+   // var [ModalOpen,SetModalOpen] = useState(false)
+
+   const [open, setOpen] = React.useState(false);
+   const handleOpen = () => setOpen(true);
+   const handleClose = () => setOpen(false);
+
+   const [blockedUsers, setBlockedUsers] = useState([]);
 
     const [posts, setPosts] = useState([]);
 
@@ -174,11 +261,51 @@ function Profile(props) {
   
       fetchPostDetails();
     }, []);
+
+
+
+    async function fetchBlockedUsers() {
+   
+
+
+        try {
+            const token = Cookies.get("accessToken");
+            //console.log(Cookies.get())
+            if (!token) {
+                throw new Error('No access token found');
+            }
+            
+            const response = await fetch('/api/block', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch user details');
+            }
+            const blockedUsers = await response.json();
+            return blockedUsers;
+        } catch (error) {
+            console.error('Error fetching blocked details:', error);
+            // Handle users
+        }
+    }
+
+    useEffect(() => {
+        fetchBlockedUsers()
+            .then((blockedUsers) => setBlockedUsers(blockedUsers))
+            .catch((error) => console.error('Error setting blocked users:', error));
+    }, []);
   
 
     const postJSX = posts.map((post, i) => (
         <Post key={i} post={post} />
       ));
+
+      const blockedUsersJSX = blockedUsers.map((username, i) => (
+        <UserList key={i} user={{ Username: username }} />
+    ));
 
    
 
@@ -227,9 +354,31 @@ function Profile(props) {
                     </div>
 
                     <div className="flex flex-row px-4 mt-4">
-                       <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700"  onClick={() => SetModalOpen(true)}>Blocked Users</button> 
-                       <Modal open ={ModalOpen} close = {() => SetModalOpen(false)} ></Modal>
-                        {/* <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2">Block</button> */}
+                       <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700" onClick={handleOpen}>Blocked Users</button> 
+                       <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+
+
+
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Blocked Users
+                            </Typography>
+
+                            <div class="relative flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
+                            <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+                            {blockedUsersJSX}
+                            </nav>
+                            </div>
+
+
+
+                            </Box>
+                        </Modal>
                     </div>
                     
                     

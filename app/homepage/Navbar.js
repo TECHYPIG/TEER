@@ -19,8 +19,18 @@ function Navbar(props) {
   const [users, setUsers] = useState([]);
 
   async function searchUsersByUsername() {
+    const token = Cookies.get("accessToken");
+    //console.log(Cookies.get())
+    if (!token) {
+        throw new Error('No access token found');
+    }
     try {
-      const response = await fetch(`/api/search?username=${username}`);
+      const response = await fetch(`/api/search?username=${username}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }

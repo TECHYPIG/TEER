@@ -9,6 +9,7 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import {locations} from "../register/countries"
+import { useRouter } from 'next/navigation'
 
 function editprofile() {
     const [userDetails, setUserDetails] = useState({
@@ -63,6 +64,9 @@ function editprofile() {
     const handleGender = (event) => setUserDetails({ ...userDetails, Gender: event.target.value });
     const handleBirthday = (event) => setUserDetails({ ...userDetails, Birthday: event.target.value });
     const handleBio = (event) => setUserDetails({ ...userDetails, Bio: event.target.value });
+
+    const router = useRouter()
+
    // console.log(userDetails)
    // console.log(JSON.stringify(userDetails))
 
@@ -88,6 +92,7 @@ function editprofile() {
             // Optionally, set the updated access token in cookies
             const updatedUser = await response.json();
            // Cookies.set('accessToken', updatedUser.accessToken);
+           router.push('/profile', { scroll: false })
         } catch (error) {
             console.error('Error updating user details:', error);
             // Handle error
@@ -119,17 +124,6 @@ function editprofile() {
                         type="text"
                         value={userDetails.Surname}
                 onChange={handleSurname}
-                        />
-                </div>
-                <div>
-                    <label className="text-gray-600 dark:text-gray-400">
-                        Username
-                    </label>
-                    <input
-                        className="w-full py-3 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow dark:bg-gray-600 dark:text-gray-100"
-                        type="text"
-                        value={userDetails.Username}
-                onChange={handleUsername}
                         />
                 </div>
 

@@ -10,7 +10,8 @@ export default async function fetchPostsByFollowedUsers(req, res) {
       try {
         const username = await getUsername(headers, res);
         const userInfo = await getUser(username, res);
-        const posts = await GetPosts(userInfo);
+        const followedUsernames = userInfo.Following;
+        const posts = await GetPosts(followedUsernames);
         res.status(200).json(posts);
       } catch (error) {
         console.error("Error fetching user posts:", error);
@@ -35,7 +36,9 @@ async function getUsername(headers, res) {
     username = decodedToken.username;
   } catch (error) {
     console.error("Error fetching user details:", error);
-    res.status(500).json({content:"User doesnt exist", error: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ content: "User doesnt exist", error: "Internal Server Error" });
   }
 
   return username;
@@ -43,31 +46,43 @@ async function getUsername(headers, res) {
 
 //using username to get user info including following
 async function getUser(username, res) {
-    try {
-        const user = await prisma.users.findUnique({
-            where: {
-              Username: username,
-            },
-            select: {
-              Following: true,
-            },
-          });
-        return user;
-    } catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({content:'User infomation could not be found', error: 'Internal Server Error' });
-        return null;
-    }
+  try {
+    const user = await prisma.users.findUnique({
+      where: {
+        Username: username,
+      },
+    });
+    return user;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res
+      .status(500)
+      .json({
+        content: "User infomation could not be found",
+        error: "Internal Server Error",
+      });
+    return null;
+  }
 }
 
 //using user following to get posts
-async function GetPosts(user) {
+async function GetPosts(followedUsernames) {
+
   const posts = await prisma.post.findMany({
     where: {
-      userId: {
-        in: user.Following,
+      user: {
+        Username: {
+          in: followedUsernames,
+        },
       },
     },
+    include: {
+      user: true, // Include user data in the returned posts
+    },
+    orderBy: {
+      createdAt: 'desc', // Order by createdAt in descending order
+    },
   });
+
   return posts;
 }

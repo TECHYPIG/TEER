@@ -22,10 +22,10 @@ model Users {
   Bio         String
   CreateAt    DateTime  @default(now())
   Posts       Post[]    @relation("userPosts")
-  Comments    Comment[] @relation("userComments")
   Following   String[]  @default([])
   Block       String[]  @default([])
-  Likes       Like[]
+  Comments    Comment[]  @relation("userComments")
+  Likes       Like[]      @relation("userLikes")
 }
 
 model Post {
@@ -35,8 +35,8 @@ model Post {
   content     String
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now())
-  user        Users     @relation("userPosts", fields: [userId], references: [id])
-  userId      String
+  user        Users     @relation("userPosts", fields:  [Username], references: [Username])
+  Username    String
   Comments    Comment[] @relation("postComments")
   likes       Like[]    @relation("postLikes")
 }
@@ -45,18 +45,18 @@ model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
   createdAt DateTime @default(now())
-  user      Users    @relation("userComments", fields: [userId], references: [id])
-  userId    String
+  user      Users     @relation("userComments", fields: [Username], references: [Username])
+  Username  String
   post      Post     @relation("postComments", fields: [postId], references: [id])
   postId    String
 }
 
 model Like {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  user   Users  @relation(fields: [userId], references: [id])
-  userId String
-  post   Post   @relation("postLikes", fields: [postId], references: [id])
-  postId String
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  user      Users     @relation("userLikes", fields: [Username], references: [Username])
+  Username  String
+  post      Post   @relation("postLikes", fields: [postId], references: [id])
+  postId    String
 }
 
 model Volunteer {

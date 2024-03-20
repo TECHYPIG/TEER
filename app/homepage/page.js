@@ -76,9 +76,13 @@ export default function Home() {
               />
               <Dropzone
                 acceptedFiles={["image/*"]}
-                onDrop={(acceptedFiles) =>
-                  console.log("Accepted files:", acceptedFiles)
-                }
+                onDrop={(acceptedFiles) => {
+                  if (acceptedFiles.length > 1) {
+                    alert("You can only drop one file at a time.");
+                    return;
+                  }
+                  console.log("Accepted file:", acceptedFiles[0]);
+                }}
               >
                 {({ getRootProps, getInputProps }) => (
                   <section>

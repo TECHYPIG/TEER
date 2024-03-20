@@ -99,9 +99,9 @@ const Comments = ({ comments }) => {
     <button class="submit-btn" type="submit">Submit</button>
   </div>
   <ul class="comment-list">
-   {comments.map((comment, index) => (
+   {/* {comments.map((comment, index) => (
     <li>{comment.content}</li>
-   ))}
+   ))} */}
   </ul>
 </div>
   );

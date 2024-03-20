@@ -45,10 +45,16 @@ async function getUsername(headers, res) {
 
 // send post to database
 async function getPosts(user) {
-  const userPosts = await prisma.post.findMany({
+  const posts = await prisma.post.findMany({
     where: {
       Username: user,
     },
+    include: {
+      user: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
-  return userPosts;
+  return posts;
 }

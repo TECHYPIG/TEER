@@ -27,6 +27,9 @@
   padding: 10px;
   background-color: white;
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 }
 .line{
   width: 50%;
@@ -42,3 +45,9 @@
 .picon{
  margin-bottom: 60px;
 }
+.row{
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+ }

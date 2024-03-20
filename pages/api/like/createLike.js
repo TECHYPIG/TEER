@@ -2,25 +2,25 @@ import prisma from "../prismaClient";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 
-export default async function createComment(req, res) {
+export default async function createLike(req, res) {
  const { method, body, headers } = req;
 
  switch (method) {
    case "POST":
      try {
-       const { postId, content } = body;
+       const { postId } = body;
        const username = await getUsername(headers, res);
 
        if (!username) {
          return;
        }
 
-       const newComment = await sendCommentDB(username, postId, content);
-       res.status(201).json(newComment);
+       const newLike = await sendLikeDB(username, postId);
+       res.status(201).json(newLike);
      } catch (error) {
-       console.error("Error creating comment:", error);
+       console.error("Error liking post:", error);
        res.status(500).json({
-         content: "Could not create comment",
+         content: "Could not like post",
          error: "Internal Server Error",
        });
      }
@@ -47,11 +47,10 @@ async function getUsername(headers, res) {
  return username;
 }
 
-// send comment to database
-async function sendCommentDB(username, postId, content) {
-    const newComment = await prisma.comment.create({
+// send like to database
+async function sendLikeDB(username, postId) {
+    const newLike = await prisma.like.create({
       data: {
-        content: "COMMENT CONTENT",
         user: {
           connect: { Username: username },
         },
@@ -60,5 +59,5 @@ async function sendCommentDB(username, postId, content) {
         },
       },
     });
-    return newComment;
+    return newLike;
   }

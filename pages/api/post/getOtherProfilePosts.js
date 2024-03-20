@@ -20,10 +20,10 @@ export default async function handler(req, res) {
             Username: username,
           },
           include: {
-            User: true,
+            user: true,
           },
           orderBy: {
-            CreatedAt: "desc",
+            createdAt: "desc",
           },
         });
 

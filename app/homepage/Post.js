@@ -92,8 +92,17 @@ const PostContent = ({ post }) => {
 
 const Comments = ({ comments }) => {
   return (
-    <div className={styles.comments}>
-      <p>-Comment section-</p>
-    </div>
+    <div class="comment-section">
+  <h2>Comments</h2>
+  <div class="comment-form">
+    <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+    <button class="submit-btn" type="submit">Submit</button>
+  </div>
+  <ul class="comment-list">
+   {comments.map((comment, index) => (
+    <li>{comment.content}</li>
+   ))}
+  </ul>
+</div>
   );
 };

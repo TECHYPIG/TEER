@@ -14,10 +14,21 @@ export default async function createLike(req, res) {
        if (!username) {
          return;
        }
+       
+       const checkLike = await prisma.like.findMany({
+        where: { Username: username, postId: postId },
+      });
 
-       const newLike = await sendLikeDB(username, postId);
-       res.status(201).json(newLike);
-     } catch (error) {
+      console.log(checkLike.length);
+
+      if (!checkLike.length == 0) {
+        return res.status(404).json({ error: "User has already liked post" });
+      }
+
+      const newLike = await sendLikeDB(username, postId);
+
+      res.status(201).json(newLike);
+    } catch (error) {
        console.error("Error liking post:", error);
        res.status(500).json({
          content: "Could not like post",

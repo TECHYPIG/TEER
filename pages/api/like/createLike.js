@@ -17,7 +17,7 @@ export default async function createLike(req, res) {
        
        const checkLike = await prisma.like.findMany({
         where: { Username: username, postId: postId },
-      });
+      }); 
 
       console.log(checkLike.length);
 

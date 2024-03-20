@@ -82,9 +82,11 @@ const Userprofile = () => {
         <div className={styles.sideprofile}>
         <div className={styles.userinfo}>
           <Image src={Piggy} className={styles.profilepic} width={30} height={30} alt='Piggy' />
-            <div className={styles.usernames}>
+            <div className={styles.usernames} >
+              <a href="/profile">
             <h1 style= {h1Style}> {userDetails.Firstname}</h1> 
             <h2 style= {h2Style}>@{userDetails.Username}</h2>
+            </a>
           </div>
         </div>
           <div className={styles.userdetails}>

@@ -9,8 +9,7 @@ export default async function getUserPosts(req, res) {
     case "GET":
       try {
         const username = await getUsername(headers, res);
-        const user = await getUser(username);
-        const posts = await getPosts(user);
+        const posts = await getPosts(username);
         res.status(201).json(posts);
       } catch (error) {
         console.error("Error creating post:", error);
@@ -44,27 +43,11 @@ async function getUsername(headers, res) {
   return username;
 }
 
-//using username to get user info
-async function getUser(username) {
-    try{
-        const user = await prisma.users.findUnique({
-            where: {
-              Username: username,
-            },
-          });
-        return user;
-    }catch (error) {
-        console.error('Error fetching user:', error);
-        res.status(500).json({content:'User infomation could not be found', error: 'Internal Server Error' });
-        return null;
-    }
-}
-
 // send post to database
 async function getPosts(user) {
   const userPosts = await prisma.post.findMany({
     where: {
-      userId: user.id,
+      Username: user,
     },
   });
   return userPosts;

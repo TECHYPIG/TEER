@@ -22,10 +22,10 @@ model Users {
   Bio         String
   CreateAt    DateTime  @default(now())
   Posts       Post[]    @relation("userPosts")
-  Comments    Comment[] @relation("userComments")
   Following   String[]  @default([])
   Block       String[]  @default([])
-  Likes       Like[]
+  Comments    Comment[]  @relation("userComments")
+  Likes       Like[]      @relation("userLikes")
 }
 
 model Post {
@@ -45,7 +45,7 @@ model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   content   String
   createdAt DateTime @default(now())
-  user      Users     @relation("userPosts", fields:  [Username], references: [Username])
+  user      Users     @relation("userComments", fields: [Username], references: [Username])
   Username  String
   post      Post     @relation("postComments", fields: [postId], references: [id])
   postId    String
@@ -53,7 +53,7 @@ model Comment {
 
 model Like {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
-  user      Users     @relation("userPosts", fields:  [Username], references: [Username])
+  user      Users     @relation("userLikes", fields: [Username], references: [Username])
   Username  String
   post      Post   @relation("postLikes", fields: [postId], references: [id])
   postId    String

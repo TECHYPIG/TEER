@@ -39,21 +39,8 @@ function UserList(props) {
       <>
 
 
-    {/* <div class="max-w-sm mx-auto mt-40">
-        <div class="p-3 flex items-center justify-between border-t cursor-pointer hover:bg-gray-200">
-            <div class="flex items-center">
-                <div class="ml-2 flex flex-col">
-                    <div class="leading-snug text-sm text-gray-900 font-bold">{user.Username}</div>
-                    <div class="leading-snug text-xs text-gray-600">@{user.Username}</div>
-                </div>
-            </div>
-            <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700"onClick={unblockUsername}>Unblock</button>
-        </div>
-    </div> */}
 
-
-
-                <li class="p-3 flex  items-center user-card">
+                <li class="flex  items-center">
                     <div class="flex items-center">
                         <img class="" alt=""/>
                         <span class="ml-3 font-medium">{user.Username}</span>
@@ -98,12 +85,6 @@ async function fetchBlockedUsers() {
     }
 }
 
-function renderBlockedUsers(blockedUsers) {
-    return blockedUsers.map((username, index) => (
-        <p key={index}>{username}</p>
-    ));
-}
-
 export default function Modal({open,close})
 {
     const [blockedUsers, setBlockedUsers] = useState([]);
@@ -126,18 +107,14 @@ export default function Modal({open,close})
     }
         return (
             <>
-<div class="flex flex-row margin-top">
-<div class="bg-gray-100">
-    <div class="">
+
         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
             <ul class="divide-y divide-gray-200">
 
             {blockedUsersJSX}
             </ul>
         </div>
-    </div>
-</div>
-</div>
+
 
             </>
         );

@@ -62,6 +62,7 @@ function Post(props) {
 
 function Profile(props) {
 
+    const [isFollowed, setIsFollowed] = useState(false);
     const [followingCount, setFollowingCount] = useState(null);
     const [posts, setPosts] = useState([]);
     const [userDetails, setUserDetails] = useState({
@@ -82,6 +83,7 @@ function Profile(props) {
        // fetchPosts();
 
     }, []);
+
 
     useEffect(() => {
         async function fetchUserDetails() {
@@ -182,7 +184,36 @@ function Profile(props) {
             console.error('Error following user:', error);
             // Handle error
         }
+        setIsFollowed(true);
     }
+
+    async function unfollowUsername() {
+        try {
+            const token = Cookies.get("accessToken");
+            if (!token) {
+                throw new Error('No access token found');
+            }
+    
+            const response = await fetch(`/api/following?unfollowedUsername=${userDetails.Username}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to unfollow user');
+            }
+    
+            const updatedUser = await response.json();
+            console.log('User unfollowed successfully:', updatedUser);
+        } catch (error) {
+            console.error('Error unfollowing user:', error);
+            // Handle error
+        }
+        setIsFollowed(false);
+    }
+
 
     useEffect(() => {
         async function fetchFollowingCount() {
@@ -271,7 +302,12 @@ function Profile(props) {
                     </div>
                     
                     <div className="flex flex-row px-4 mt-4">
-                        <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700"onClick={followUsername}>Follow</button>
+                    <button 
+                    className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700"
+                    onClick={isFollowed ? unfollowUsername : followUsername}
+                    >
+                    {isFollowed ? 'Unfollow' : 'Follow'}
+                    </button>
                         <button className="h-10 w-full text-white text-md rounded bg-green-teer hover:bg-green-700 ml-2" onClick={blockUsername}>Block</button>
                     </div>
                     

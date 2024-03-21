@@ -50,8 +50,13 @@ export default function Home() {
         }
         if (response.status === 200) {
           return response.json();
-        } else {
-          router.push("/login");
+
+        }
+        if (response.status === 500) {
+          return router.push("/login");
+        }
+        else {
+          return router.push("/login");
         }
       })
       .then((data) => {
@@ -60,7 +65,9 @@ export default function Home() {
         setIsLoading(false);
         console.log(data);
       })
-      .catch((error) => console.log("Error:", error));
+      .catch(
+        router.push("/login")
+      );
 
     if (userDetails == []) {
       router.push("/login");

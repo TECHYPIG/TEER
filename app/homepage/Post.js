@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import styles from "./Post.module.css";
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
@@ -9,6 +9,8 @@ import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { useState } from "react";
+import { Modal } from "@mui/material";
+import { ImBin } from "react-icons/im";
 
 const h1Style = {
   fontSize: "1rem",
@@ -24,14 +26,29 @@ const h3Style = {
 };
 
 const Post = ({ post, userDetails }) => {
+  const [commentsShow, setCommentsShow] = useState(false);
   const content = post.content;
+
+  const handleCommentsShow = () => {
+    setCommentsShow(!commentsShow);
+  };
 
   return (
     <div className={styles.post}>
       <UserInfo user={post.user} />
       <div className={styles.postinfo}>
-        <PostContent post={post} user={userDetails} />
-        <Comments comments={post.comments} user={userDetails} />
+        <PostContent
+          post={post}
+          user={userDetails}
+          onCommentsShow={handleCommentsShow}
+        />
+        {commentsShow && (
+          <Comments
+            commentsDB={post.Comments}
+            post={post.id}
+            user={userDetails}
+          />
+        )}
       </div>
     </div>
   );
@@ -59,10 +76,12 @@ const UserInfo = ({ user }) => {
   );
 };
 
-const PostContent = ({ post, user }) => {
+const PostContent = ({ post, user, onCommentsShow }) => {
   const token = Cookies.get("accessToken");
   const [liked, setLiked] = useState(
-    post && post.likes ? post.likes.some(like => like.Username === user.Username) : false
+    post && post.likes
+      ? post.likes.some((like) => like.Username === user.Username)
+      : false
   );
   const [likes, setLikes] = useState(post.likes.length);
   const likeButtonHandle = () => {
@@ -82,7 +101,7 @@ const PostContent = ({ post, user }) => {
         .then((data) => console.log(data));
       return;
     }
-    if (!liked){
+    if (!liked) {
       setLikes(likes + 1);
       fetch("/api/like/createLike", {
         method: "POST",
@@ -95,7 +114,6 @@ const PostContent = ({ post, user }) => {
         .then((response) => response.json())
         .then((data) => console.log(data));
     }
-
   };
   return (
     <>
@@ -125,7 +143,10 @@ const PostContent = ({ post, user }) => {
             {liked ? <FaHeart color="red" /> : <FaRegHeart />}
             <span>{likes}</span>
           </button>
-          <button className="py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
+          <button
+            onClick={onCommentsShow}
+            className="py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2"
+          >
             <TfiCommentAlt />
             <span>{post.Comments.length + " Comments"} </span>
           </button>
@@ -135,24 +156,92 @@ const PostContent = ({ post, user }) => {
   );
 };
 
-const Comments = ({ comments, user }) => {
+const Comments = ({ commentsDB, post, user }) => {
+  const [comments, setComments] = useState(commentsDB);
+  const [inputComment, setInputComment] = useState("");
+
+  const commentButtonHandle = () => {
+    fetch("/api/comment/createComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("accessToken")}`,
+      },
+      body: JSON.stringify({
+        postId: post,
+        content: inputComment,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setComments([...comments, data]);
+      });
+  };
+
+  const deleteaComment = (commentId) => {
+    fetch("/api/comment/deleteComment", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("accessToken")}`,
+      },
+      body: JSON.stringify({
+        commentId: commentId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setComments(comments.filter((comment) => comment.id !== commentId));
+      });
+  };
+
   return (
-    <div className="comment-section">
-      <h2>Comments</h2>
-      <div className="comment-form">
-        <textarea
-          className="comment-input"
-          placeholder="Write a comment..."
-        ></textarea>
-        <button className="submit-btn" type="submit">
-          Submit
+    <div className={styles.commentsection}>
+      <h2 className={styles.commentsection}>Comments</h2>
+      <ul className={styles.commentlist}>
+        {comments.map((comment, index) => (
+          <div className={styles.comment} key={index}>
+            <div className={styles.commentuser}>
+              <div className={styles.profilepicspace}>
+                <Image
+                  src={comment.user.profile_url}
+                  className={styles.profilepic}
+                  width={30}
+                  height={30}
+                  alt="Piggy"
+                />
+              </div>
+              <div className={styles.comments}>
+                <div className={styles.commentuserinfo}>
+                  <h3>{comment.user.Firstname + " " + comment.user.Surname}</h3>
+                </div>
+                <p className={styles.commentcontent}>{comment.content}</p>
+              </div>
+            </div>
+            {comment.user.Username === user.Username && (
+              <button
+                onClick={() => deleteaComment(comment.id)}
+                className={styles.deletecomment}
+              >
+                <ImBin color="white" />
+              </button>
+            )}
+          </div>
+        ))}
+      </ul>
+      <div className={styles.commentinput}>
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          className={styles.commentinputfield}
+          onChange={(e) => setInputComment(e.target.value)}
+        />
+        <button onClick={commentButtonHandle} className={styles.commentbutton}>
+          Post
         </button>
       </div>
-      <ul className="comment-list">
-        {/* {comments.map((comment, index) => (
-    <li>{comment.content}</li>
-   ))} */}
-      </ul>
     </div>
   );
 };

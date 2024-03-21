@@ -55,19 +55,16 @@ async function getUser(username, res) {
     return user;
   } catch (error) {
     console.error("Error fetching user:", error);
-    res
-      .status(500)
-      .json({
-        content: "User infomation could not be found",
-        error: "Internal Server Error",
-      });
+    res.status(500).json({
+      content: "User infomation could not be found",
+      error: "Internal Server Error",
+    });
     return null;
   }
 }
 
 //using user following to get posts
 async function GetPosts(followedUsernames) {
-
   const posts = await prisma.post.findMany({
     where: {
       user: {
@@ -78,11 +75,11 @@ async function GetPosts(followedUsernames) {
     },
     include: {
       user: true, // Include user data in the returned posts
-      Comments: true, // Include comments data in the returned posts
+      Comments: { include: { user: true } }, // Include comments data in the returned posts
       likes: true, // Include likes data in the returned posts
     },
     orderBy: {
-      createdAt: 'desc', // Order by createdAt in descending order
+      createdAt: "desc", // Order by createdAt in descending order
     },
   });
 

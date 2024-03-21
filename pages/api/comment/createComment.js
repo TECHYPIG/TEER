@@ -51,7 +51,7 @@ async function getUsername(headers, res) {
 async function sendCommentDB(username, postId, content) {
     const newComment = await prisma.comment.create({
       data: {
-        content: "COMMENT CONTENT",
+        content: content,
         user: {
           connect: { Username: username },
         },
@@ -59,6 +59,9 @@ async function sendCommentDB(username, postId, content) {
           connect: { id: postId },
         },
       },
+      include:{
+        user: true,
+      }
     });
     return newComment;
   }

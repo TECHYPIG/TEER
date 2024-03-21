@@ -47,25 +47,13 @@
     border-radius: 2px;
 
   }
-  .line{
-    width: 100%;
-    margin-top: 10px;
-    border-bottom: 1px solid;
-    border-color: grey;
-  }
-  .comments{
-    font-size: 0.7rem;
-    color: black;
-    margin-top: 1rem;
-}
-.comment-section {
-  margin-bottom: 20px;
-}
 
-.comment-form {
-  display: flex;
+.commentsection {
+  margin-top: 10px;
   margin-bottom: 10px;
 }
+
+
 
 .comment-input {
   flex: 1;
@@ -89,15 +77,96 @@
   background-color: #45a049;
 }
 
-.comment-list {
+.commentlist {
   list-style-type: none;
   padding: 0;
 }
 
-.comment-list li {
+.commentlist li {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 10px;
   background-color: #f5f5f5;
+}
+.comment{
+  display: flex;
+  flex-direction: row;
+  color: black;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+ 
+
+}
+.deletecomment{
+  background-color: #BC544B;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+}
+.comments{
+  display: flex;
+  flex-direction: column;
+  color: black;
+  justify-content: left;
+  padding-left: 10px;
+
+}
+.commentuser{
+  display: flex;
+  flex-direction: row;
+  color: black;
+  justify-content: left;
+
+}
+.commentuser{
+  display: flex;
+  flex-direction: row;
+  color: black;
+  justify-content: left;
+
+}
+.commentuserinfo{
+  display: flex;
+  flex-direction: row;
+  color: black;
+  justify-content: left;
+  font-weight: 600;
+}
+.commentcontent{
+  color:black;
+  font-size: 0.9rem;
+}
+.profilepicspace{
+  width:3.5rem;
+}
+.commentinput{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  color: black;
+  justify-content: left;
+  border-radius: 10px;
+
+}
+.commentinputfield{
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  color: black;
+  justify-content: left;
+  border : 1px solid #ccc;
+  
+}
+.commentbutton{
+  padding: 10px;
+  background-color: #389668;
+  color: white;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
 }

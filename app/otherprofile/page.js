@@ -1,8 +1,8 @@
 "use client"
 /**
- * Profile page
+ * Profile page of other users
  * 
- * This is the profile page for the application
+ * This is the profile page for the application where other users information and posts are displayed
  * 
  * @author Ines Rita
  */
@@ -11,11 +11,8 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../homepage/Navbar';
 import Cookies from 'js-cookie';
-import styles from "../homepage/Post.module.css";
 import Post from "../homepage/Post";
-import Image from "next/image";
-import { TfiCommentAlt } from "react-icons/tfi";
-import { AiOutlineLike } from "react-icons/ai";
+
 
 
 function Profile(props) {
@@ -38,13 +35,8 @@ function Profile(props) {
         CreateAt: ''
     });
 
-    useEffect(() => {
-        // Fetch post details when the component mounts
-        // fetchPosts();
 
-    }, []);
-
-
+    //function to fetch current page user's details
     useEffect(() => {
         async function fetchUserDetails() {
             try {
@@ -65,11 +57,8 @@ function Profile(props) {
 
                 // Update the userDetails object with the modified createAt
                 setUserDetails({ ...userDetails, CreateAt: createAtDate });
-
-                console.log(userDetails)
             } catch (error) {
                 console.error('Error fetching user details:', error);
-                // Handle error
             }
         }
 
@@ -78,7 +67,7 @@ function Profile(props) {
     }, []); // Empty dependency array ensures useEffect runs only once after initial render
 
 
-
+    //function to block user
     async function blockUsername() {
         try {
             // Check if userDetails is defined and contains the username
@@ -108,11 +97,10 @@ function Profile(props) {
             console.log('User blocked successfully:', updatedUser);
         } catch (error) {
             console.error('Error blocking user:', error);
-            // Handle error
         }
     }
 
-
+    //function to follow user
     async function followUsername() {
         try {
             // Check if userDetails is defined and contains the username
@@ -142,11 +130,11 @@ function Profile(props) {
             console.log('User followed successfully:', updatedUser);
         } catch (error) {
             console.error('Error following user:', error);
-            // Handle error
         }
         setIsFollowed(true);
     }
 
+    //function to unfollow user
     async function unfollowUsername() {
         try {
             const token = Cookies.get("accessToken");
@@ -169,12 +157,11 @@ function Profile(props) {
             console.log('User unfollowed successfully:', updatedUser);
         } catch (error) {
             console.error('Error unfollowing user:', error);
-            // Handle error
         }
         setIsFollowed(false);
     }
 
-
+    //function to get number of people user follows
     useEffect(() => {
         async function fetchFollowingCount() {
             try {
@@ -195,7 +182,7 @@ function Profile(props) {
     }, [userDetails.Username]);
 
 
-
+    //function to fetch user posts
     useEffect(() => {
         async function fetchPostDetails() {
             try {
@@ -209,11 +196,9 @@ function Profile(props) {
                 }
 
                 const postDetails = await response.json();
-                // Modify post details if necessary before updating state
                 setPosts(postDetails);
             } catch (error) {
                 console.error('Error fetching post details:', error);
-                // Handle error
             }
         }
 
@@ -222,7 +207,7 @@ function Profile(props) {
 
 
 
-
+    //function to fetch logged in user and check whether they follow the current user therefore toggling follow or unfollow button
     useEffect(() => {
         async function fetchLoggedInUser() {
             try {
@@ -278,7 +263,6 @@ function Profile(props) {
             <div className="container mx-auto my-5 p-5">
                 <div className="md:flex no-wrap md:-mx-2 ">
 
-                    {/* <!-- Left Side --> */}
                     <div className="w-full md:w-3/12 md:mx-2">
 
                         <div className="h-screen bg-green-teer py-5 px-3">
@@ -293,7 +277,6 @@ function Profile(props) {
                                         <div className="text-center">
                                             <h1 className="text-2xl mt-2">{userDetails.Username} </h1>
                                             <div className="px-5 text-sm">
-                                                {/* <p className="text-justify">{userDetails.Bio}</p> */}
                                             </div>
                                             <div className="flex justify-center mt-3 px-4">
 
@@ -319,12 +302,8 @@ function Profile(props) {
                                 </div>
 
 
-                                {/* <!-- Profile Card --> */}
+
                                 <div className="bg-white p-3 border-t-4 border-green-teer">
-                                    {/* <img className="h-16 w-16 rounded-full mx-auto"
-                                src={profilePic}
-                                alt=""/> */}
-                                    {/* <h1 className="text-gray-900 font-bold text-xl leading-8 my-1" id="username" > {userDetails.Username}</h1> */}
                                     <h3 className="text-gray-600 font-lg text-semibold leading-6">{userDetails.Role}</h3>
                                     <p className="text-sm text-gray-500 hover:text-gray-600 leading-6"> {userDetails.Bio}</p>
                                     <ul
@@ -347,16 +326,13 @@ function Profile(props) {
 
 
 
-                        {/* <!-- End of profile card --> */}
+
                         <div className="my-4"></div>
                     </div>
-                    {/* <!-- Right Side --> */}
+
                     <div className="w-full md:w-9/12 mx-2 h-64">
-                        {/* <!-- Profile tab -->
-                <!-- About Section --> */}
                         <div className="bg-white p-3 shadow-sm rounded-sm">
                             <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                                {/* <!-- about icon --> */}
                                 <span clas="text-green-teer">
                                     <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor">
@@ -392,8 +368,6 @@ function Profile(props) {
                             </div>
                         </div>
 
-                        {/* <!-- Edit profile link -->   */}
-
                         <div className="my-4"></div>
 
 
@@ -404,7 +378,7 @@ function Profile(props) {
 
 
 
-                        {/* <!-- End of profile tab --> */}
+
                     </div>
                 </div>
             </div>

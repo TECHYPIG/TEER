@@ -1,10 +1,11 @@
 "use client";
 /**
- * Profile page
+ * Navbar component
  *
- * This is the profile page for the application
- *
+ * This is the component that generated the navbar at the top of the page 
+ * handles the search bar where a username can be searched for
  * @author Ines Rita
+ * @author Firdaws Yasmin
  */
 
 import Cookies from "js-cookie";
@@ -19,6 +20,7 @@ function Navbar(props) {
   // State for holding the list of users
   const [users, setUsers] = useState([]);
 
+  //function to search for a username
   async function searchUsersByUsername() {
     const token = Cookies.get("accessToken");
     if (!token) {
@@ -48,6 +50,7 @@ function Navbar(props) {
     setUsername(event.target.value);
   };
 
+  //function to handle when search button is clicked
   const handleSearch = () => {
     searchUsersByUsername(username);
   };

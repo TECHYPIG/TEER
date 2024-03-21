@@ -21,7 +21,6 @@ function Navbar(props) {
 
   async function searchUsersByUsername() {
     const token = Cookies.get("accessToken");
-    //console.log(Cookies.get())
     if (!token) {
         throw new Error('No access token found');
     }
@@ -43,15 +42,18 @@ function Navbar(props) {
     }
   }
 
+
+  
   // Function to handle changes in the input field
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
-  function testFunction() {
-    handleUsernameChange();
-    searchUsersByUsername();
-  }
+  const handleSearch = () => {
+    searchUsersByUsername(username);
+  };
+
+
 
   return (
     <>
@@ -70,8 +72,14 @@ function Navbar(props) {
                   style={{ width: "400px" }}
                   value={username}
                   onInput={handleUsernameChange}
-                  onChange={searchUsersByUsername}
+                  
                 />
+                <button
+                  className="p-2 ml-2 rounded-lg bg-white text-green hover:bg-yellow-600 focus:outline-none focus:bg-green-teer"
+                  onClick={handleSearch}
+                >
+                  Search
+                </button>
                 <svg
                   className="w-4 h-4 absolute left-2.5 top-3.5"
                   xmlns="http://www.w3.org/2000/svg"

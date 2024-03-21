@@ -3,7 +3,7 @@ import styles from "./Page.module.css";
 import Navbar from "./Navbar";
 import Userprofile from "./Userprofile";
 import Newpostcontent from "./NewPost";
-import Postcontent from "./Post";
+import Post from "./Post";
 import Voluneer from "./Volunteer/Volunteer";
 import Newfollow from "./Newfollow";
 import Cookies from "js-cookie";
@@ -26,6 +26,7 @@ export default function Home() {
   const [userDetails, setUserDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  let user = [];
   // const [open, setOpen] = useState(false);
   // const [selectedImage, setSelectedImage] = useState(null);
 
@@ -55,6 +56,7 @@ export default function Home() {
       })
       .then((data) => {
         setUserDetails(data);
+        user = data;
         setIsLoading(false);
         console.log(data);
       })
@@ -88,7 +90,7 @@ export default function Home() {
           ) : (
             userDetails &&
             posts.map((post, index) => (
-              <Postcontent key={index} post={post} user={userDetails} />
+              <Post key={index} post={post} userDetails={userDetails} />
             ))
           )}
         </div>

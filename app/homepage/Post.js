@@ -8,6 +8,7 @@ import { TfiCommentAlt } from "react-icons/tfi";
 import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
+import { useState } from "react";
 
 const h1Style = {
   fontSize: "1rem",
@@ -22,7 +23,7 @@ const h3Style = {
   marginLeft: "70px",
 };
 
-const Postcontent = ({ post, userDetails }) => {
+const Post = ({ post, userDetails }) => {
   const content = post.content;
 
   return (
@@ -36,7 +37,7 @@ const Postcontent = ({ post, userDetails }) => {
   );
 };
 
-export default Postcontent;
+export default Post;
 
 const UserInfo = ({ user }) => {
   return (
@@ -60,18 +61,41 @@ const UserInfo = ({ user }) => {
 
 const PostContent = ({ post, user }) => {
   const token = Cookies.get("accessToken");
-  console.log(user);
+  const [liked, setLiked] = useState(
+    post && post.likes ? post.likes.some(like => like.Username === user.Username) : false
+  );
+  const [likes, setLikes] = useState(post.likes.length);
   const likeButtonHandle = () => {
-    fetch("/api/like/createLike", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ postId: post.id }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    setLiked(!liked);
+
+    if (liked) {
+      setLikes(likes - 1);
+      fetch("/api/like/deleteLike", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ postId: post.id }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+      return;
+    }
+    if (!liked){
+      setLikes(likes + 1);
+      fetch("/api/like/createLike", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ postId: post.id }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+
   };
   return (
     <>
@@ -98,13 +122,8 @@ const PostContent = ({ post, user }) => {
             onClick={likeButtonHandle}
             className="py-1.5 px-3 mr-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2"
           >
-            {/* {post.likes.includes(user.Username) ? (
-              <FaHeart color="red" />
-            ) : (
-              <FaRegHeart />
-            
-            )} */}
-            <span>{post.likes.length}</span>
+            {liked ? <FaHeart color="red" /> : <FaRegHeart />}
+            <span>{likes}</span>
           </button>
           <button className="py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
             <TfiCommentAlt />

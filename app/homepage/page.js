@@ -65,9 +65,6 @@ export default function Home() {
         setIsLoading(false);
         console.log(data);
       })
-      .catch(
-        router.push("/login")
-      );
 
     if (userDetails == []) {
       router.push("/login");

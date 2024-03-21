@@ -1,6 +1,9 @@
 import "./VolunteerOppurtunityModal.css"
+import {deletingVolunteering} from "./serverVolunteer"
 import {useState} from "react";
-export default function ModalOpportunity({open, close,username,location,email,description,company,role}){
+import {useRouter} from "next/navigation";
+import Link from "next/link";
+export default function ModalOpportunity({open, close,username,location,email,description,company,role, usernameOfLoggedInUser, id}){
 
     if (open === false) {
         return null
@@ -19,17 +22,26 @@ export default function ModalOpportunity({open, close,username,location,email,de
                 <h3>Location:{location}</h3>
                 <h3>Description: {description}</h3>
                 <h3>Contact them at: {email}</h3>
-                    {deleteFunction(username)}
+                    {deleteFunction(username,usernameOfLoggedInUser,id)}
             </div>
             </div>
         </div>
     );
 }
 
-function deleteFunction(username){
-    if (username === "woody"){
-        return <h3 className="Delete">Delete</h3>
+function deleteFunction(username,usernameOfLoggedInUser,id){
+    console.log(username)
+    const loggedInUsername = usernameOfLoggedInUser.username.Username
+    if (username === loggedInUsername){
+        return <h3 className="Delete" onClick={() => DeletingMiddleware(id)}>Delete</h3>
     } else {
         return null;
+    }
+}
+function DeletingMiddleware(description){
+    const response = deletingVolunteering(description)
+    console.log(response)
+    if(!response) {
+        <Link href="/homepage"></Link>
     }
 }

@@ -1,27 +1,25 @@
-import styles from './Newfollow.module.css';
-import Image from "next/image";
-import Piggy from "./piggy.jpg";
+import followers from './Followsug.js'
+import styles from './Newfollow.module.css'
+import { useState, useEffect } from 'react';
+import ModalOpportunity from "@/app/homepage/Volunteer/VolunteerOppurtunityModal";
 
-const Newfollow = () => {
-    const h1Style = {
-        fontSize: '1rem', 
-        fontWeight:'bold',
-      };
-      const h2Style = {
-        fontSize: '0.8rem', 
-      };
+export default function NewFollow(){
+    const FollowingList = followers();
 
-    return ( 
-        <div className={styles.nfollow}>
-            <h3>You may like...</h3>
-        <div className={styles.accounts}>
-        <Image src={Piggy} className={styles.profilepic} width={30} height={30} alt='Piggy' />
-        <div className={styles.usernames}>
+    const [usernamesOfNonFollowers, setUsernamesOfNonFollowers] = useState([]);
+    useEffect(() => {
+        FollowingList.then((data) => {
+            setUsernamesOfNonFollowers(data)
+        })
+    } , [])
+    return (
+    <div>
+        {usernamesOfNonFollowers.map((value, index) => (
 
-          </div>
+        <div key={index}>
+            <h3>{value}</h3>
         </div>
-        </div>
-     );
+    ))}
+    </div>);
 }
  
-export default Newfollow;

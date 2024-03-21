@@ -5,7 +5,7 @@ import {gettingVolunteering} from "./serverVolunteer"
 import Modal from "./VolunteerModal"
 import ModalOpportunity from "./VolunteerOppurtunityModal"
 
-export function Name(){
+export function Name(username){
 var [ModalOpen,SetModalOpen] = useState(false)
     return(
         <div className="NameDiv">
@@ -13,13 +13,12 @@ var [ModalOpen,SetModalOpen] = useState(false)
             <h3></h3>
             <h2 className="Name">Volunteering Opportunities</h2>
             <h4 className="Add" onClick={() => SetModalOpen(true)}>Add+</h4>
-            <Modal open ={ModalOpen} close = {() => SetModalOpen(false)} ></Modal>
+            <Modal open ={ModalOpen} close = {() => SetModalOpen(false)} username={username} ></Modal>
         </div>
     );
 }
-export function InsideVolunteer(){
-    const [modal,setModal] = useState(false)
-    const data = DynamicData()
+export function InsideVolunteer(username){
+    const data = DynamicData(username)
     return(
         <div className="OpportunitiesDiv">
             {data}
@@ -27,24 +26,26 @@ export function InsideVolunteer(){
     )
     }
 
-    function DynamicData() {
+    function DynamicData(usernameOfLoggedInUser) {
         const [usernames, setUsernames] = useState([]);
         const [role, setRole] = useState([]);
         const [company, setCompany] = useState([]);
         const [description, setDescription] = useState([]);
         const [location, setLocation] = useState([]);
         const [email, setEmail] = useState([]);
+        const [id, setID] = useState([]);
 
         useEffect(() => {
             const fetchInformation = async () => {
                 try {
-                    const {usernames, role, company, description, location, email} = await gettingVolunteering();
+                    const {usernames, role, company, description, location, email, id} = await gettingVolunteering();
                     setUsernames(usernames)
                     setRole(role)
                     setEmail(email)
                     setLocation(location)
                     setCompany(company)
                     setDescription(description)
+                    setID(id)
                     const initialModalStates = new Array(usernames.length).fill(false);
                     setModalStates(initialModalStates);
                 } catch (error) {
@@ -53,7 +54,7 @@ export function InsideVolunteer(){
             };
             fetchInformation()
         }, []);
-
+        console.log(id)
         const [modalStates, setModalStates] = useState([]); // Example array of modal states
         const clickedInside = (index) => {
             const updatedModalStates = modalStates.slice();
@@ -80,7 +81,7 @@ export function InsideVolunteer(){
                     </div>
                 <ModalOpportunity open={isOpen} close={() => closeModal(index)} username={usernames[index]}
                 role ={role[index]} email ={email[index]} description={description[index]} location={location[index]}
-                company={company[index]}/>
+                company={company[index]} usernameOfLoggedInUser={usernameOfLoggedInUser} id={id[index]}/>
             </div>
         ));
     }

@@ -71,66 +71,6 @@ export const config = {
   },
 };
 
-// export default async function createPost(req, res) {
-//   //   const s3 = new AWS.S3({
-//   //     endpoint: process.env.SPACES_ENDPOINT,
-//   //   });
-//   const { method, body, headers } = req;
-
-//   switch (method) {
-//     case "POST":
-//       try {
-//         const uploadResult = await new Promise((resolve, reject) => {
-//           upload.single("image")(req, res, (err) => {
-//             if (err) reject(err);
-//             resolve({ file: req.file, body: req.body });
-//           });
-//         });
-//         console.log(uploadResult.file);
-//         // const uploadResult = await new Promise((resolve, reject) => {
-//         //   upload.single("image")(req, res, (err) => {
-//         //     if (err) reject(err);
-//         //     resolve({ file: req.file, body: req.body });
-//         //   });
-//         // });
-//         // const { file, body } = uploadResult;
-//         // if (!file) {
-//         //   return res.status(400).json({ error: "Image file is required" });
-//         // }
-//         // const uniqueFilename = `${username}/${uuidv4()}.jpg`;
-
-//         const username = await getUsername(headers, res);
-
-//         // const uploadParams = {
-//         //   Bucket: process.env.SPACES_BUCKET_NAME,
-//         //   Key: `posts/${uniqueFilename}`,
-//         //   Body: file.buffer,
-//         //   ACL: "public-read",
-//         //   ContentType: file.mimetype,
-//         // };
-//         // const uploadResponse = await s3.upload(uploadParams).promise();
-//         // console.log("Image uploaded:", uploadResponse.Location);
-//         // const imageUrl = uploadResponse.Location;
-//         // console.log("Image URL:", imageUrl);
-
-//         // const userId = await getUserId(username);
-//         //  const post = await sendPostDB(username, content, imageUrl);
-//         res.status(201).json(post);
-//       } catch (error) {
-//         console.error("Error creating post:", error);
-//         res.status(500).json({
-//           content: "Could not create post",
-//           error: "Internal Server Error",
-//         });
-//       }
-//       break;
-
-//     default:
-//       res.setHeader("Allow", ["POST"]);
-//       res.status(405).end(`Method ${method} Not Allowed`);
-//   }
-// }
-
 async function getUsername(headers, res) {
   let username = null;
   try {

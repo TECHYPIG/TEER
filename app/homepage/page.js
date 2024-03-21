@@ -29,7 +29,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
-  const [modalText, setModalText] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -130,98 +129,7 @@ const getPosts = async (token) => {
   }
 };
 
-function oldHome() {
-  const token = Cookies.get("accessToken");
-
-  const router = useRouter();
-  const [userDetails, setUserDetails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
-  const [modalText, setModalText] = useState("");
-
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  useEffect(() => {
-    if (!token) {
-      router.push("/login");
-    }
-
-    fetch("/api/profile", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        if (response.status === 200) {
-          return response.json();
-        }
-        if (response.status === 500) {
-          return router.push("/login");
-        } else {
-          return router.push("/login");
-        }
-      })
-      .then((data) => {
-        setUserDetails(data);
-        setIsLoading(false);
-        console.log(data);
-      });
-
-    if (userDetails == []) {
-      router.push("/login");
-    }
-    fetch("/api/post/fetchPostsByFollowedUsers", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setPosts(data));
-  }, [token]);
-
-  return (
-    <div className={styles.homecontainer}>
-      <Navbar></Navbar>
-      <div className={styles.innerdiv}>
-        <Userprofile></Userprofile>
-        <div className={styles.row2}>
-          <ModalCustom
-            isOpen={open}
-            onHandleClose={handleClose}
-            onHandleOpen={handleOpen}
-            token={token}
-          />
-
-          <Newpostcontent
-            user={userDetails}
-            onHandleOpen={handleOpen}
-          ></Newpostcontent>
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
-            userDetails &&
-            posts.map((post, index) => (
-              <Post key={index} post={post} userDetails={userDetails} />
-            ))
-          )}
-        </div>
-        <div className={styles.row3}>
-          <Voluneer user={userDetails}></Voluneer>
-          <Newfollow></Newfollow>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ModalCustom({ isOpen, onHandleClose, handleOpen, token }) {
+function ModalCustom({ isOpen, onHandleClose, token }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
   const [modalText, setModalText] = useState("");

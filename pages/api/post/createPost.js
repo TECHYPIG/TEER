@@ -3,6 +3,7 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import AWS from "aws-sdk";
+import { v4 as uuidv4 } from "uuid";
 
 AWS.config.update({
   accessKeyId: process.env.SPACES_ACCESS_KEY_ID,
@@ -30,15 +31,15 @@ export default async function handler(req, res) {
     endpoint: process.env.SPACES_ENDPOINT,
   });
   await runMiddleware(req, res, myUploadMiddleware);
+  let uploadResponse = null;
   console.log(req.files);
   for (const file of req.files) {
     try {
-      const b64 = Buffer.from(file.buffer).toString("base64");
-      let dataURI = "data:" + file.mimetype + ";base64," + b64;
+      const uniqueFilename = uuidv4() + "-" + file.originalname;
 
       const uploadParams = {
         Bucket: process.env.SPACES_BUCKET_NAME,
-        Key: `posts/${file.originalname}`,
+        Key: `posts/${uniqueFilename}`,
         Body: file.buffer,
         ACL: "public-read",
         ContentType: file.mimetype,
@@ -50,6 +51,20 @@ export default async function handler(req, res) {
       return;
     }
   }
+
+  try {
+    const username = await getUsername(req.headers, res);
+    if (!username) {
+      res.status(400).json(error);
+      return;
+    }
+    const post = await sendPostDB(username, req.body.content, uploadResponse);
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(400).json(error);
+    return;
+  }
+
   res.status(200).json({ message: "Upload successfull", files: req.files });
 }
 
@@ -119,46 +134,36 @@ export const config = {
 //   }
 // }
 
-// async function getUsername(headers, res) {
-//   let username = null;
-//   try {
-//     const token = headers.authorization.split(" ")[1];
-//     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
-//     if (!decodedToken) {
-//       return res.status(401).json({ error: "Unauthorized" });
-//     }
-//     username = decodedToken.username;
-//   } catch (error) {
-//     console.error("Error fetching user details:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-//   return username;
-// }
+async function getUsername(headers, res) {
+  let username = null;
+  try {
+    const token = headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
+    if (!decodedToken) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    username = decodedToken.username;
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+  return username;
+}
 
-// async function getUserId(username) {
-//   const user = await prisma.users.findUnique({
-//     where: {
-//       Username: username,
-//     },
-//   });
-//   return user.id;
-// }
-
-// // send post to database
-// async function sendPostDB(username, content, imageUrl) {
-//   const post = await prisma.post.create({
-//     data: {
-//       title: title,
-//       content: content,
-//       published: true,
-//       picture_url:
-//         "https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D",
-//       user: {
-//         connect: {
-//           Username: username,
-//         },
-//       },
-//     },
-//   });
-//   return post;
-// }
+// send post to database
+async function sendPostDB(username, content, imageUrl) {
+  const post = await prisma.post.create({
+    data: {
+      title: title,
+      content: content,
+      published: true,
+      picture_url: imageUrl,
+      user: {
+        connect: {
+          Username: username,
+        },
+      },
+    },
+  });
+  return post;
+}

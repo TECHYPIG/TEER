@@ -30,35 +30,12 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [modalText, setModalText] = useState("");
   let user = [];
-  const [selectedImage, setSelectedImage] = useState([]);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
 
-
-  // Add this
-  const onUpload = async () => {
-    setUploadStatus("Uploading....");
-    const formData = new FormData();
-    selectedImage.forEach((image, index) => {
-      formData.append("file" + index, image);
-    });
-
-    try {
-      const response = await axios.post("/api/post/createPost", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data);
-      setUploadStatus("upload successful");
-    } catch (error) {
-      console.log("imageUpload" + error);
-      setUploadStatus("Upload failed..");
-    }
-  };
 
   useEffect(() => {
     if (!token) {
@@ -111,7 +88,7 @@ export default function Home() {
         <Userprofile></Userprofile>
         <div className={styles.row2}>
           <Button onClick={handleOpen}>Open modal</Button>
-          <ModalCustom open handleClose handleOpen/>
+          <ModalCustom isOpen={open} onHandleClose={handleClose} onHandleOpen={handleOpen}/>
 
           <Newpostcontent></Newpostcontent>
           {isLoading ? (
@@ -132,10 +109,11 @@ export default function Home() {
   );
 }
 
-function ModalCustom( {open, handleClose, handleOpen}) {
+function ModalCustom( {isOpen, onHandleClose, handleOpen}) {
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
+  const [modalText, setModalText] = useState("");
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     acceptedFiles.forEach((file) => {
       console.log(file);
@@ -152,7 +130,7 @@ function ModalCustom( {open, handleClose, handleOpen}) {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ onDrop, accept: "image/*" });
+  } = useDropzone({ onDrop, accept: "image/*", maxFiles: 1});
 
   const style = useMemo(
     () => ({
@@ -162,24 +140,32 @@ function ModalCustom( {open, handleClose, handleOpen}) {
     [isDragAccept, isDragReject]
   );
 
-  const onUpload = async () => {
-    setUploadStatus("Uploading....");
-    const formData = new FormData();
-    formData.append("file", selectedImage);
-    try {
-      const response = await axios.post("/api/post/createPost", formData);
-      console.log(response.data);
-      setUploadStatus("upload successful");
-    } catch (error) {
-      console.log("imageUpload" + error);
-      setUploadStatus("Upload failed..");
-    }
-  };
+ // Add this
+ const onUpload = async () => {
+  setUploadStatus("Uploading....");
+  const formData = new FormData();
+  selectedImages.forEach((image) => {
+    formData.append("file", image);
+  });
+  formData.append("content", modalText);
+  try {
+    const response = await axios.post("/api/post/createPost", formData);
+    console.log(response.data);
+    setUploadStatus("upload successful");
+  } catch (error) {
+    console.log("imageUpload" + error);
+    setUploadStatus("Upload failed..");
+  }
+};
+const clearData = () => {
+  setSelectedImages([]);
+  setUploadStatus("");
+};
 
   return (
     <Modal
-      open={open}
-      onClose={handleClose}
+      open={isOpen}
+      onClose={onHandleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
@@ -192,7 +178,6 @@ function ModalCustom( {open, handleClose, handleOpen}) {
           width: "50vw",
           bgcolor: "background.paper",
           borderRadius: 5,
-
           boxShadow: 24,
           p: 4,
         }}

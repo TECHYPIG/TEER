@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     if (password.Password != null) {
         password = password.Password
         if(password === inputtedPassword){
-            let token = jwt.sign({username: name}, process.env.ACCESS_TOKEN)
+            let token = jwt.sign({username: name}, process.env.ACCESS_TOKEN,{ expiresIn: 14400})
             console.log(token)
             res.setHeader('Authorization', `Bearer ${token}`);
             res.status(200).json({"accessToken" : 1})

@@ -2,31 +2,38 @@ import prisma from "../prismaClient";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 
-export default async function getUserPosts(req, res) {
-  const { method, headers } = req;
+export default async function deleteLike(req, res) {
+  const { method, body, headers } = req;
 
   switch (method) {
-    case "GET":
+    case "DELETE":
       try {
+        const { postId } = body;
         const username = await getUsername(headers, res);
-        const posts = await getPosts(username);
-        res.status(201).json(posts);
+
+        if (!username) {
+          return;
+        }
+
+
+        const deletedLike = await deleteLikeDB(postId, username);
+
+        if (!deletedLike) {
+          return res.status(404).json({ error: "Like not found" });
+        }
+
+        res.status(200).json({ message: "Unliked successfully" });
       } catch (error) {
-        console.error("Error creating post:", error);
-        res.status(500).json({
-          content: "Could not get post",
-          error: "Internal Server Error",
-        });
+        console.error("Error unliking post:", error);
+        res.status(500).json({ error: "Internal Server Error" });
       }
       break;
-
     default:
-      res.setHeader("Allow", ["POST"]);
+      res.setHeader("Allow", ["DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
 
-//using token to get username
 async function getUsername(headers, res) {
   let username = null;
   try {
@@ -43,18 +50,14 @@ async function getUsername(headers, res) {
   return username;
 }
 
-// send post to database
-async function getPosts(user) {
-  const posts = await prisma.post.findMany({
+// Delete like from database
+async function deleteLikeDB(postId, userId) {
+  const deletedLike = await prisma.like.deleteMany({
     where: {
-      Username: user,
-    },
-    include: {
-      user: true,
-    },
-    orderBy: {
-      createdAt: "desc",
+      postId: postId,
+      Username: userId,
     },
   });
-  return posts;
+
+  return deletedLike.count > 0;
 }

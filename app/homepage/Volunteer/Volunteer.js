@@ -1,12 +1,12 @@
-import {Name, DynamicData} from "./VolunteerFunctions"
+import {Name, InsideVolunteer} from "./VolunteerFunctions"
 import "./Volunteer.css"
 
 
-export default function Volunteer(){
+export default function Volunteer({user}){
     return(
         <div className="MainDiv">
             <Name />
-            <DynamicData />
+            <InsideVolunteer />
         </div>
     )
 }

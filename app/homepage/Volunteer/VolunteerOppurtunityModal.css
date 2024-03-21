@@ -24,17 +24,14 @@
     justify-content: space-between;
 }
 .Close{
-    background-color: pink;
     margin-left: 0px;
     font-size: 20px;
     padding: 10px;
-    border-radius: 10px;
     margin-top: 0px;
 }
 .Delete{
-    background-color: pink;
+    background-color: grey;
     font-size: 20px;
     padding: 10px;
     width: 85px;
-    border-radius: 10px;
 }

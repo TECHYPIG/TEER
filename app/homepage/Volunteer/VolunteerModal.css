@@ -61,7 +61,6 @@ textarea{
     width: 140px;
     height: 50px;
     font-size: 20px;
-    border-radius: 13px;
     cursor: pointer;
     margin-top: 5vh;
 }
@@ -69,10 +68,8 @@ textarea{
     margin-top: 4vh;
 }
 .Close{
-    background-color: pink;
+    background-color: grey;
     margin-left: 0px;
     font-size: 20px;
-    padding: 10px;
-    border-radius: 10px;
     margin-top: 0px;
 }

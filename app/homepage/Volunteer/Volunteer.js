@@ -5,8 +5,8 @@ import "./Volunteer.css"
 export default function Volunteer({user}){
     return(
         <div className="MainDiv">
-            <Name />
-            <InsideVolunteer />
+            <Name username={user} />
+            <InsideVolunteer username ={user}/>
         </div>
     )
 }

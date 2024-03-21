@@ -9,7 +9,6 @@ export default function LoginCompiled(){
                 <div className="TextAndBoxes">
                 <TextBoxes values="Username"/>
                 </div>
-                <Google />
             </div>
             <div className="RegisterSide">
                 <RegisterText />

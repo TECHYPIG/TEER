@@ -24,9 +24,9 @@ export default async function handler(req, res) {
                         role: role
                     }
                 })
-                console.log("Volunteer has been added");
+                return res.status(200).json(1)
             } catch (error) {
-                console.log("Error in putting in a volunteer")
+                return res.status(200).json(0)
 
             }
 }

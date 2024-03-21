@@ -43,16 +43,6 @@ export function SignIn(){
         <h1 className="SignIn">SignIn</h1>
     );
 }
-export function Google(){
-    return(
-        <Image
-        src ={profilePic}
-        width={150}
-        height={150}
-         alt="Hello"
-        className="Google"/>
-    );
-}
 
 /* REGISTER FUNCTIONS */
 export function RegisterText(){

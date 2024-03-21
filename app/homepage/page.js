@@ -88,7 +88,7 @@ export default function Home() {
         <Userprofile></Userprofile>
         <div className={styles.row2}>
           <Button onClick={handleOpen}>Open modal</Button>
-          <ModalCustom isOpen={open} onHandleClose={handleClose} onHandleOpen={handleOpen}/>
+          <ModalCustom isOpen={open} onHandleClose={handleClose} onHandleOpen={handleOpen} token={token}/>
 
           <Newpostcontent></Newpostcontent>
           {isLoading ? (
@@ -109,7 +109,7 @@ export default function Home() {
   );
 }
 
-function ModalCustom( {isOpen, onHandleClose, handleOpen}) {
+function ModalCustom( {isOpen, onHandleClose, handleOpen, token}) {
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
@@ -149,7 +149,11 @@ function ModalCustom( {isOpen, onHandleClose, handleOpen}) {
   });
   formData.append("content", modalText);
   try {
-    const response = await axios.post("/api/post/createPost", formData);
+    const response = await axios.post("/api/post/createPost", formData, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
     console.log(response.data);
     setUploadStatus("upload successful");
   } catch (error) {

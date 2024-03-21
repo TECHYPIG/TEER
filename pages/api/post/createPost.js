@@ -30,9 +30,16 @@ export default async function handler(req, res) {
   const s3 = new AWS.S3({
     endpoint: process.env.SPACES_ENDPOINT,
   });
+  console.log(req.headers.authorization);
+  const username = await getUsername(req.headers, res);
+  if (!username) {
+    res.status(401).json("error fetching username");
+    return;
+  }
   await runMiddleware(req, res, myUploadMiddleware);
   let uploadResponse = null;
   console.log(req.files);
+
   for (const file of req.files) {
     try {
       const uniqueFilename = uuidv4() + "-" + file.originalname;
@@ -46,28 +53,18 @@ export default async function handler(req, res) {
       };
       const uploadResponse = await s3.upload(uploadParams).promise();
       console.log("Image uploaded:", uploadResponse.Location);
+      console.log("Username:" + username);
+      console.log("Content:" + req.body.content); 
+      const post = await sendPostDB(username, req.body.content, uploadResponse.Location);
+      res.status(201).json(post);
     } catch (error) {
-      res.status(400).json(error);
+      res.status(500).json("Error creating post");
       return;
     }
-  }
 
-  try {
-    const username = await getUsername(req.headers, res);
-    if (!username) {
-      res.status(400).json(error);
-      return;
-    }
-    const post = await sendPostDB(username, req.body.content, uploadResponse);
-    res.status(201).json(post);
-  } catch (error) {
-    res.status(400).json(error);
-    return;
+    res.status(200).json({ message: "Upload successfull", files: req.files });
   }
-
-  res.status(200).json({ message: "Upload successfull", files: req.files });
 }
-
 export const config = {
   api: {
     bodyParser: false,
@@ -154,7 +151,7 @@ async function getUsername(headers, res) {
 async function sendPostDB(username, content, imageUrl) {
   const post = await prisma.post.create({
     data: {
-      title: title,
+      title: "title",
       content: content,
       published: true,
       picture_url: imageUrl,

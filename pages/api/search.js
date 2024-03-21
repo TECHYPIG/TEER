@@ -2,6 +2,8 @@ import prisma from "./prismaClient"
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 
+//api that takes a username and gets all the users with the same username from the database
+//author: Ines Rita
 export default async function handler(req, res) {
     const { method, query, headers } = req;
 

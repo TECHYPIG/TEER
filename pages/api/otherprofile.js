@@ -2,6 +2,8 @@ import prisma from "./prismaClient";
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 
+//api that takes a username and gets that users details to populate profile page
+//author: Ines Rita
 export default async function handler(req, res) {
     const { method, query } = req;
 

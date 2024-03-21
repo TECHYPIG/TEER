@@ -14,9 +14,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useDropzone } from "react-dropzone";
-import { FaCloudUploadAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { data } from "autoprefixer";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
 
@@ -63,7 +61,7 @@ export default function Home() {
       ) : (
       <div className={styles.innerdiv}>
         
-        <Userprofile></Userprofile>
+        <Userprofile user={userDetails}/>
         <div className={styles.row2}>
         <ModalCustom
             isOpen={open}

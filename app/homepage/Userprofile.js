@@ -1,165 +1,59 @@
-"use client"
-import styles from './Userprofile.module.css';
+"use client";
+import styles from "./Userprofile.module.css";
 import Image from "next/image";
-import Piggy from "./piggy.jpg";
-import { SlSocialTwitter, SlSocialInstagram, SlSocialLinkedin } from "react-icons/sl";
-import { CiLocationOn } from "react-icons/ci";
-import { PiBriefcaseLight } from "react-icons/pi"; 
-import Cookies from 'js-cookie';
-import { useState, useEffect } from 'react';
 
-
-
-
-
-export default function Userprofile({user}) {
-  const h1Style = {
-    fontSize: '1rem', 
-    fontWeight:'bold',
-  };
-  const h2Style = {
-    fontSize: '0.8rem', 
-  };
-  const h3Style = {
-    fontSize: '0.9rem', 
-    fontWeight:'bold',
-    marginLeft: '70px',
-  };
+export default function Userprofile({ user }) {
   return (
     <div className={styles.sideprofile}>
-        <div className={styles.userinfo}>
-          <Image src={Piggy} className={styles.profilepic} width={30} height={30} alt='Piggy' />
-            <div className={styles.usernames} >
-              <a href="/profile">
-            <h1 style= {h1Style}> {user.Firstname}</h1> 
-            <h2 style= {h2Style}>@{user.Username}</h2>
-            </a>
-          </div>
-        </div>
-          <div className={styles.userdetails}>
-            {/* <ul>
-            <li className={styles.picons}><CiLocationOn size={24}/>{userDetails.Location}</li>
-            <li  className={styles.picons}> <PiBriefcaseLight size={24}/>{userDetails.Role}</li>
-            </ul> */}
-            <div className={styles.row}>
-            <CiLocationOn size={24}/><span>{user.Location}</span>
-            </div>
-            <div className={styles.row}>
-            <PiBriefcaseLight size={24}/><span>{user.Role}</span>
-            </div>
-
-          </div>
-          <div className={styles.line}></div>
-          <a style= {h3Style}></a>
-          <div className={styles.socials}>
-            <ul>
-            <li><a href="https://www.instagram.com/"><SlSocialInstagram className={styles.picons} size={22}/>Instagram</a></li>
-            <li><a href="https://twitter.com/"><SlSocialTwitter className={styles.picons} size={22}/>Twitter</a></li>
-            <li><a href="https://www.linkedin.com/"><SlSocialLinkedin className={styles.picons} size={22}/>LinkedIn</a></li>
-            </ul>
-          </div>
-      </div>
-
-  )
-
+      <UserBadge profile_url={user.profile_url} Firstname={user.Firstname} Surname={user.Surname} Username={user.Username} />
+      {user.Bio && <UserBio Bio={user.Bio} />}
+      <UserInfo location={user.Location} role={user.Role} />
+    </div>
+  );
 }
 
-const UserprofileOLD = () => {
-  const [userDetails, setUserDetails] = useState({
-      Firstname: '',
-      Surname: '',
-      Username: '',
-      Email: '',
-      Role: '',
-      Location: '',
-      Gender: '',
-      Birthday: '',
-      Bio: '',
-      CreateAt: ''
-  });
-
-
-  useEffect(() => {
-    async function fetchUserDetails() {
-        try {
-            const token = Cookies.get("accessToken");
-            //console.log(Cookies.get())
-            if (!token) {
-                throw new Error('No access token found');
-            }
-            
-            const response = await fetch('/api/profile', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch user details');
-            }
-            const userDetails = await response.json();
-             // Check if userDetails.CreateAt is defined before splitting
-        const createAtDate = userDetails.CreateAt ? userDetails.CreateAt.split('T')[0] : '';
-  
-        // Update the userDetails object with the modified createAt
-        setUserDetails({ ...userDetails, CreateAt: createAtDate });
-            //console.log(userDetails) 
-        } catch (error) {
-            console.error('Error fetching user details:', error);
-            // Handle error
-        }
-    }
-
-    fetchUserDetails();
-}, []);
-
-
-
-    const h1Style = {
-      fontSize: '1rem', 
-      fontWeight:'bold',
-    };
-    const h2Style = {
-      fontSize: '0.8rem', 
-    };
-    const h3Style = {
-      fontSize: '0.9rem', 
-      fontWeight:'bold',
-      marginLeft: '70px',
-    };
-    return ( 
-        <div className={styles.sideprofile}>
-        <div className={styles.userinfo}>
-          <Image src={Piggy} className={styles.profilepic} width={30} height={30} alt='Piggy' />
-            <div className={styles.usernames} >
-              <a href="/profile">
-            <h1 style= {h1Style}> {userDetails.Firstname}</h1> 
-            <h2 style= {h2Style}>@{userDetails.Username}</h2>
-            </a>
-          </div>
-        </div>
-          <div className={styles.userdetails}>
-            {/* <ul>
-            <li className={styles.picons}><CiLocationOn size={24}/>{userDetails.Location}</li>
-            <li  className={styles.picons}> <PiBriefcaseLight size={24}/>{userDetails.Role}</li>
-            </ul> */}
-            <div className={styles.row}>
-            <CiLocationOn size={24}/><span>{userDetails.Location}</span>
-            </div>
-            <div className={styles.row}>
-            <PiBriefcaseLight size={24}/><span>{userDetails.Role}</span>
-            </div>
-
-          </div>
-          <div className={styles.line}></div>
-          <a style= {h3Style}></a>
-          <div className={styles.socials}>
-            <ul>
-            <li><a href="https://www.instagram.com/"><SlSocialInstagram className={styles.picons} size={22}/>Instagram</a></li>
-            <li><a href="https://twitter.com/"><SlSocialTwitter className={styles.picons} size={22}/>Twitter</a></li>
-            <li><a href="https://www.linkedin.com/"><SlSocialLinkedin className={styles.picons} size={22}/>LinkedIn</a></li>
-            </ul>
-          </div>
+function UserBadge(data) {
+  return (
+    <div className={styles.userinfo}>
+      <Image
+        src={data.profile_url}
+        className={styles.profilepic}
+        width={30}
+        height={30}
+        alt="Piggy"
+      />
+      <div className={styles.usernames}>
+        <a href="/profile">
+          <h1 className={styles.h1Style}>
+            {" "}
+            {data.Firstname + " " + data.Surname}
+          </h1>
+          <h2 className={styles.h2Style}>@{data.Username}</h2>
+        </a>
       </div>
-     );
+    </div>
+  );
+}
+
+function UserBio({ Bio }) {
+  console.log(Bio);
+  return (
+    <div className={styles.biocontainer}>
+      <p className={styles.bio}>{Bio}</p>
+    </div>
+  );
+}
+
+function UserInfo({ location, role }) {
+  return (
+    <div className={styles.userdetails}>
+      <div className={styles.row}>
+        <p>{role}</p>
+      </div>
+      <div className={styles.row}>
+        <p>{location}</p>
+      </div>
+      
+    </div>
+  );
 }

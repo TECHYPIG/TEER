@@ -1,5 +1,5 @@
 .sideprofile{ 
-    width: 25%;
+    width: 20%;
     height: 25%; 
     margin-top: 1rem;
     background-color: white;
@@ -26,7 +26,6 @@
 .userdetails{
   padding: 10px;
   background-color: white;
-  font-weight: bold;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -46,8 +45,39 @@
  margin-bottom: 60px;
 }
 .row{
-  font-weight: bold;
+  padding: 10px 5px;
+  font-size: 0.9rem;
   display: flex;
   flex-direction: row;
   align-items: center;
+  text-align: center;
+  justify-content: center;
  }
+.biocontainer{
+  padding: 5px 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bio{
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: normal;
+}
+.h1Style{
+  font-size: 1rem;
+  font-weight: bold;
+}
+.h2Style{
+  font-size: 0.8rem;
+};
+.h3Style{
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-left: 70px;
+}
+
+

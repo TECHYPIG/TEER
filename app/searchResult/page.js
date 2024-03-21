@@ -74,7 +74,7 @@ export default function SearchResult({ users }) {
 
 
     return (
-        <div>
+        <div className={styles.searchResults}>
             
             {usersJSX} 
         </div>

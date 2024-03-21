@@ -62,7 +62,7 @@ function Navbar(props) {
         </p>
         <div className={styles.search}>
           <div className="">
-            <div className="inline-flex flex-col justify-center relative text-gray-500">
+            <div className="inline-flex flex-col justify-center relative z-0 text-gray-500">
               <div className="relative">
                 <input
                   type="text"

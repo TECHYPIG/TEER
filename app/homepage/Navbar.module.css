@@ -44,3 +44,13 @@
     color: black;
     border-radius: 8px;
   }
+  .searchResults{
+    clear: both;
+    position:absolute;
+    height: 1px;
+    width: 410px;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 2px;
+    
+  }

@@ -326,8 +326,8 @@ function Profile(props) {
                                                             Blocked Users
                                                         </Typography>
 
-                                                        <div class="relative flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
-                                                            <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+                                                        <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-96 rounded-xl bg-clip-border">
+                                                            <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
                                                                 {blockedUsersJSX}
                                                             </nav>
                                                         </div>

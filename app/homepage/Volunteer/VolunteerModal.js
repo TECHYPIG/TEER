@@ -1,8 +1,9 @@
 import "./VolunteerModal.css"
 import {useState} from "react";
-export default function Modal({open,close,username})
+export default function Modal({open,close})
 {
-    const [RoleState,changedRoleState] = useState("")
+    const username = "woody"
+    const [Role,changedRoleState] = useState("")
     const [Location,changedLocation] = useState("")
     const [Email,changedEmail] = useState("")
     const [Company,changedCompany] = useState("")
@@ -20,7 +21,7 @@ export default function Modal({open,close,username})
                         <div className="Row">
                                 <div className="Column">
                                 <label>Role</label>
-                                <input type="text" className="Input" value={RoleState}
+                                <input type="text" className="Input" value={Role}
                                        onChange ={event => onChangeFunction(event,changedRoleState)}/>
                                 </div>
 
@@ -46,7 +47,7 @@ export default function Modal({open,close,username})
                             <label>Description</label>
                             <textarea value={Description} className="Input"
                                       onChange ={event => onChangeFunction(event,changedDescription)}/>
-                        <input type="submit" className="Submit"/>
+                        <input type="submit" className="Submit" onClick={() => volunteerPushing(Email,username,Location,Company,Description,Role)}/>
                     </div>
                     </div>
             </div>
@@ -54,4 +55,17 @@ export default function Modal({open,close,username})
     }
 function onChangeFunction(event, inputState){
     inputState(event.target.value)
+}
+async function volunteerPushing(email,username,location,company,description,role){
+    let response = await fetch('/api/volunteer', {
+        method: 'POST', // Adjust the method as needed (GET, POST, etc.)
+        'Content-Type': 'application/json',
+        body: JSON.stringify({
+            username : username,
+            company : company,
+            description : description,
+            email : email,
+            location : location,
+            role : role})
+    });
 }

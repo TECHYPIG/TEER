@@ -68,3 +68,11 @@ textarea{
 .Description{
     margin-top: 4vh;
 }
+.Close{
+    background-color: pink;
+    margin-left: 0px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 0px;
+}

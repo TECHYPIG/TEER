@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import styles from "../homepage/Navbar.module.css";
 import SearchResult from "../searchResult/page";
+import Link from "next/link";
 
 function Navbar(props) {
   // State for holding the input username
@@ -93,6 +94,9 @@ function Navbar(props) {
         <p className={styles.navtxtinv}>
           <a href="/homepage">TEER</a>
         </p>
+        <Link href="/login">
+        <h3 onClick={() => Cookies.set("accessToken", undefined)}>Logout</h3>
+        </Link>
       </div>
     </>
   );

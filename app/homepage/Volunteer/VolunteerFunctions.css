@@ -3,7 +3,7 @@
     text-align: center;
 }
 .OpportunitiesDiv{
-    background-color: pink;
+    background-color: #BBBBBB;
     width: 95%;
     height: 40vh;
     margin-left: auto;
@@ -21,8 +21,8 @@
 .FlexForInside{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .Border{
     border: 3px solid black;
-    border-bottom: 0px;
 }

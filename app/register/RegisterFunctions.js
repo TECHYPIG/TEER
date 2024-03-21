@@ -61,7 +61,7 @@ export function RegisterInputs(){
                 </div>
                 <div className="Flex MarginLeft">
                     <label>Birth Date</label>
-                    <input type="date" className="Input" onChange ={event => onChangeFunction(event,changedBirthDate)}/>
+                    <input type="date" id="Date" className="Input" onChange ={event => onChangeFunction(event,changedBirthDate)}/>
                 </div>
             </div>
 
@@ -104,7 +104,7 @@ export function RegisterInputs(){
                    ChangedDontMatch("Your Confirmed Password is empty");
                    break;
                case 40:
-                   ChangedDontMatch("Birth Date is empty");
+                   ChangedDontMatch("Birth Date is empty or invalid");
                    break;
                case 50:
                    ChangedDontMatch("Your name is empty");
@@ -139,22 +139,20 @@ function onChangeFunctionUsername(event, inputState){
     inputState(x)
 }
 async function registerInformation(username,location, password,confirmPassword,birthDate,fullName,gender,email,ChangedDontMatch){
-    console.log("Working")
     if(username === ""){
         return 10
     }
     if(username.length < 5){
         return 11
     }
-    if(password === ""){
-        return 20
+    if(email === ""){
+        return 80
     }
-    if(confirmPassword === ""){
-        return 30
+    var valueDate = document.getElementById('Date').value;
+
+    if(!Date.parse(valueDate)){
+        return 40
     }
-    // if(birthDate === ){
-    //     return 40
-    // }
     if(fullName === ""){
         return 50
     }
@@ -164,13 +162,16 @@ async function registerInformation(username,location, password,confirmPassword,b
     if(gender === "Select One"){
         return 70
     }
-    if(email === ""){
-        return 80
+    if(password === ""){
+        return 20
+    }
+    if(confirmPassword === ""){
+        return 30
     }
     var firstname
     var surname
     let nameSplit = fullName.split(" ");
-    console.log("Checkpoint")
+
     if(nameSplit[1] === undefined){
         return 100;
     }
@@ -181,12 +182,10 @@ async function registerInformation(username,location, password,confirmPassword,b
        firstname = nameSplit[0];
         surname = nameSplit[1];
     }
-    console.log("Checkpoint")
     var response;
     if (password !== confirmPassword){
         return 0;
     } else{
-        console.log("testing")
         ChangedDontMatch("")
         let hashedPassword = crypto.createHash("sha256").update(password).digest('hex')
 

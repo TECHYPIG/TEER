@@ -17,25 +17,131 @@ import { useDropzone } from "react-dropzone";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { data } from "autoprefixer";
-import { useEffect, useState, useCallback, useMemo} from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
+
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Home() {
   const token = Cookies.get("accessToken");
-
   const router = useRouter();
   const [userDetails, setUserDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [uploadStatus, setUploadStatus] = useState("");
   const [posts, setPosts] = useState([]);
-  const [modalText, setModalText] = useState("");
-  let user = [];
 
+  const [modalText, setModalText] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
 
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+    if(token == undefined){
+      router.push("/login");
+    }
+    getUserDetails(token).then((data) => {
+      setUserDetails(data);
+      if (userDetails == []) {
+        router.push("/login");
+      }
+      getPosts(token).then((data) => {
+        setPosts(data);
+        setIsLoading(false);
+      });
+    });
+  }, [token]);
+
+  return (
+    <div className={styles.homecontainer}>
+      <Navbar></Navbar>
+      {isLoading ? (
+      <div className={styles.loading}>
+        <CircularProgress />
+      </div>
+      ) : (
+      <div className={styles.innerdiv}>
+        
+        <Userprofile></Userprofile>
+        <div className={styles.row2}>
+        <ModalCustom
+            isOpen={open}
+            onHandleClose={handleClose}
+            onHandleOpen={handleOpen}
+            token={token}
+          />
+          <Newpostcontent
+            user={userDetails}
+            onHandleOpen={handleOpen}
+          />
+          {userDetails &&
+            posts.map((post, index) => (
+              <Post key={index} post={post} userDetails={userDetails} />
+            ))}
+        </div>
+        <div className={styles.row3}>
+          <Voluneer user={userDetails}></Voluneer>
+          <Newfollow></Newfollow>
+        </div>
+      </div>
+      )}
+    </div>
+  );
+}
+
+
+const getUserDetails = async (token) => {
+  try {
+    const response = await fetch("/api/profile", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    if (response.status === 200) {
+      return response.json();
+    }
+    if (response.status === 500) {
+      return router.push("/login");
+    } else {
+      return router.push("/login");
+    }
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+  }
+};
+
+const getPosts = async (token) => {
+  try {
+    const response = await fetch("/api/post/fetchPostsByFollowedUsers", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+};
+
+function oldHome() {
+  const token = Cookies.get("accessToken");
+
+  const router = useRouter();
+  const [userDetails, setUserDetails] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [modalText, setModalText] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     if (!token) {
@@ -63,7 +169,6 @@ export default function Home() {
       })
       .then((data) => {
         setUserDetails(data);
-        user = data;
         setIsLoading(false);
         console.log(data);
       });
@@ -87,9 +192,17 @@ export default function Home() {
       <div className={styles.innerdiv}>
         <Userprofile></Userprofile>
         <div className={styles.row2}>
-          <ModalCustom isOpen={open} onHandleClose={handleClose} onHandleOpen={handleOpen} token={token}/>
+          <ModalCustom
+            isOpen={open}
+            onHandleClose={handleClose}
+            onHandleOpen={handleOpen}
+            token={token}
+          />
 
-          <Newpostcontent user={userDetails} onHandleOpen={handleOpen}></Newpostcontent>
+          <Newpostcontent
+            user={userDetails}
+            onHandleOpen={handleOpen}
+          ></Newpostcontent>
           {isLoading ? (
             <div>Loading...</div>
           ) : (
@@ -108,8 +221,7 @@ export default function Home() {
   );
 }
 
-function ModalCustom( {isOpen, onHandleClose, handleOpen, token}) {
-
+function ModalCustom({ isOpen, onHandleClose, handleOpen, token }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
   const [modalText, setModalText] = useState("");
@@ -129,7 +241,7 @@ function ModalCustom( {isOpen, onHandleClose, handleOpen, token}) {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ onDrop, accept: "image/*", maxFiles: 1});
+  } = useDropzone({ onDrop, accept: "image/*", maxFiles: 1 });
 
   const style = useMemo(
     () => ({
@@ -139,31 +251,31 @@ function ModalCustom( {isOpen, onHandleClose, handleOpen, token}) {
     [isDragAccept, isDragReject]
   );
 
- // Add this
- const onUpload = async () => {
-  setUploadStatus("Uploading....");
-  const formData = new FormData();
-  selectedImages.forEach((image) => {
-    formData.append("file", image);
-  });
-  formData.append("content", modalText);
-  try {
-    const response = await axios.post("/api/post/createPost", formData, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+  // Add this
+  const onUpload = async () => {
+    setUploadStatus("Uploading....");
+    const formData = new FormData();
+    selectedImages.forEach((image) => {
+      formData.append("file", image);
     });
-    console.log(response.data);
-    setUploadStatus("upload successful");
-  } catch (error) {
-    console.log("imageUpload" + error);
-    setUploadStatus("Upload failed..");
-  }
-};
-const clearData = () => {
-  setSelectedImages([]);
-  setUploadStatus("");
-};
+    formData.append("content", modalText);
+    try {
+      const response = await axios.post("/api/post/createPost", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data);
+      setUploadStatus("upload successful");
+    } catch (error) {
+      console.log("imageUpload" + error);
+      setUploadStatus("Upload failed..");
+    }
+  };
+  const clearData = () => {
+    setSelectedImages([]);
+    setUploadStatus("");
+  };
 
   return (
     <Modal

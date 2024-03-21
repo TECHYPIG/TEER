@@ -3,16 +3,29 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
+    border-radius: 20px;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     z-index: 100; /* Ensure modal is on top of other elements */
 }
 .Content{
+    border-radius: 20px;
     width: 40%;
     height: 70%;
+}
+.Title{
+    color: black;
+    padding: 20px;
+    font-size: 26px;
+}
+.CloseAlign{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 2vh;
     background-color: white;
 }
 .Flex{
@@ -23,12 +36,25 @@
     align-items: center;
 }
 .Input{
-    background-color: grey;
-    width: 30%;
+    background-color: white;
+    border: 1px solid grey;
+    color: black;
+    border-radius: 10px;
+    
+    height: 40px;
+    width: 16vw;
+}
+
+.Input:focus{
+    outline: #389668;
+    color: black;
 }
 .Close{
-    margin-top: 1vh;
-   margin-left: 36vw;
+    background-color: white;
+    margin-left: 0px;
+    font-size: 20px;
+    margin-top: 0px;
+   align-items: right;
 }
 .Row{
     display: flex;
@@ -38,16 +64,12 @@
 .Column{
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 label{
     font-size: 20px;
 }
-.Input{
-    color: lightgrey;
-    height: 40px;
-    border-radius: 10px;
-    width: 16vw;
-}
+
 .MarginLeft{
     margin-left: 2vw;
 }
@@ -57,19 +79,19 @@ textarea{
     max-height: 90px;
 }
 .Submit{
-    background-color: rgb(5,150,105);
+    background-color: #003b2e;
+    color: white;
+    border-radius: 50px;
     width: 140px;
     height: 50px;
     font-size: 20px;
     cursor: pointer;
     margin-top: 5vh;
 }
+.Submit:hover{
+    background-color: #005744;
+    color: white;
+}
 .Description{
     margin-top: 4vh;
-}
-.Close{
-    background-color: grey;
-    margin-left: 0px;
-    font-size: 20px;
-    margin-top: 0px;
 }

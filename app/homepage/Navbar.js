@@ -22,15 +22,15 @@ function Navbar(props) {
   async function searchUsersByUsername() {
     const token = Cookies.get("accessToken");
     if (!token) {
-        throw new Error('No access token found');
+      throw new Error("No access token found");
     }
     try {
       const response = await fetch(`/api/search?username=${username}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-    });
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
@@ -41,8 +41,6 @@ function Navbar(props) {
     }
   }
 
-
-  
   // Function to handle changes in the input field
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -51,8 +49,6 @@ function Navbar(props) {
   const handleSearch = () => {
     searchUsersByUsername(username);
   };
-
-
 
   return (
     <>
@@ -71,7 +67,6 @@ function Navbar(props) {
                   style={{ width: "400px" }}
                   value={username}
                   onInput={handleUsernameChange}
-                  
                 />
                 <button
                   className="p-2 ml-2 rounded-lg bg-white text-green hover:bg-yellow-600 focus:outline-none focus:bg-green-teer"
@@ -99,7 +94,12 @@ function Navbar(props) {
           </div>
         </div>
         <Link href="/login">
-        <h3 className={styles.navlogout} onClick={() => Cookies.set("accessToken", undefined)}>Logout</h3>
+          <h3
+            className={styles.navlogout}
+            onClick={() => Cookies.set("accessToken", undefined)}
+          >
+            Logout
+          </h3>
         </Link>
       </div>
     </>

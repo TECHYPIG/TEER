@@ -1,50 +1,49 @@
-.sideprofile{ 
-    width: 20%;
-    height: 25%; 
-    margin-top: 1rem;
-    background-color: white;
-    color: black;
-    font-size: 0.7rem;
-  }
-  .userinfo{
-    display: flex;
-    padding: 10px;
-    background-color: #389668;
-    border-radius: 3px;
-    color: white;
-  }
-  .profilepic{
-    width: 2.5rem;
-    height: 2.5rem;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  .usernames{
-    margin-left: 1rem;
-    text-align: left;
-  }
-.userdetails{
+.sideprofile {
+  width: 20%;
+  height: 25%;
+  margin-top: 1rem;
+  background-color: white;
+  color: black;
+  font-size: 0.7rem;
+}
+.userinfo {
+  display: flex;
+  padding: 10px;
+  background-color: #003b2e;
+  color: white;
+}
+.profilepic {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.usernames {
+  margin-left: 1rem;
+  text-align: left;
+}
+.userdetails {
   padding: 10px;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: left;
 }
-.line{
+.line {
   width: 50%;
   margin: auto;
   border-bottom: 1px solid;
   border-color: grey;
 }
-.socials{
+.socials {
   padding: 5%;
   background-color: white;
   opacity: 95%;
 }
-.picon{
- margin-bottom: 60px;
+.picon {
+  margin-bottom: 60px;
 }
-.row{
+.row {
   padding: 10px 5px;
   font-size: 0.9rem;
   display: flex;
@@ -52,8 +51,8 @@
   align-items: center;
   text-align: center;
   justify-content: center;
- }
-.biocontainer{
+}
+.biocontainer {
   padding: 5px 10px;
   background-color: white;
   display: flex;
@@ -61,23 +60,21 @@
   justify-content: center;
   align-items: center;
 }
-.bio{
+.bio {
   margin-top: 1rem;
   font-size: 0.8rem;
   text-align: center;
   font-weight: normal;
 }
-.h1Style{
+.h1Style {
   font-size: 1rem;
   font-weight: bold;
 }
-.h2Style{
+.h2Style {
   font-size: 0.8rem;
-};
-.h3Style{
+}
+.h3Style {
   font-size: 0.9rem;
   font-weight: bold;
   margin-left: 70px;
 }
-
-

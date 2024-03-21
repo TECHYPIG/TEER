@@ -87,10 +87,9 @@ export default function Home() {
       <div className={styles.innerdiv}>
         <Userprofile></Userprofile>
         <div className={styles.row2}>
-          <Button onClick={handleOpen}>Open modal</Button>
           <ModalCustom isOpen={open} onHandleClose={handleClose} onHandleOpen={handleOpen} token={token}/>
 
-          <Newpostcontent></Newpostcontent>
+          <Newpostcontent user={userDetails} onHandleOpen={handleOpen}></Newpostcontent>
           {isLoading ? (
             <div>Loading...</div>
           ) : (

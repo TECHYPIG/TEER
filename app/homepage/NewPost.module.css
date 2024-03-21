@@ -17,7 +17,7 @@
 .postbutton {
   margin-left: 50px;
   display: flex;
-  width: 100%;
+  flex:2;
   padding: 10px 20px;
   align-items: center;
   background-color:lightgray;
@@ -27,6 +27,12 @@
 }
 .usernames {
   margin-left: 1rem;
+  width: max-content;
+}
+.user{
+  width: max-content;
+  display: flex;
+  flex-direction: row;
 }
 .align {
   display: flex;

@@ -3,7 +3,7 @@ import styles from "./NewPost.module.css";
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
 
-const Newpostcontent = () => {
+const Newpostcontent = ({user, onHandleOpen}) => {
   const h1Style = {
     fontSize: "1rem",
     fontWeight: "bold",
@@ -36,12 +36,12 @@ const Newpostcontent = () => {
               alt="Piggy"
             />
             <div className={styles.usernames}>
-              <h1 style={h1Style}>Username</h1>
-              <h2 style={h2Style}>@Usertag</h2>
+              <h1 className={styles.name} style={h1Style}>{user.Firstname + " " + user.Surname}</h1>
+              <h2 style={h2Style}>{"@"+user.Username}</h2>
             </div>
           </div>
         </div>
-        <button onClick={handleClick} className={styles.postbutton}>
+        <button onClick={onHandleOpen} className={styles.postbutton}>
           <h3>Share your thoughts...</h3>
         </button>
         {/* <div className={styles.postbutton}>

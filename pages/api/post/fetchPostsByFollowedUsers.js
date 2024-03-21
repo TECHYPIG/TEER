@@ -78,6 +78,8 @@ async function GetPosts(followedUsernames) {
     },
     include: {
       user: true, // Include user data in the returned posts
+      Comments: true, // Include comments data in the returned posts
+      likes: true, // Include likes data in the returned posts
     },
     orderBy: {
       createdAt: 'desc', // Order by createdAt in descending order

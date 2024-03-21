@@ -1,9 +1,13 @@
+'use client';
 import styles from "./Post.module.css";
 import Image from "next/image";
 import Piggy from "./piggy.jpg";
+import Cookies from "js-cookie";
 import Vibe from "./vibe.jpeg";
 import { TfiCommentAlt } from "react-icons/tfi";
+import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
+import { FaHeart } from "react-icons/fa";
 
 const h1Style = {
   fontSize: "1rem",
@@ -18,15 +22,15 @@ const h3Style = {
   marginLeft: "70px",
 };
 
-const Postcontent = ({ post }) => {
+const Postcontent = ({ post, userDetails }) => {
   const content = post.content;
 
   return (
     <div className={styles.post}>
       <UserInfo user={post.user} />
       <div className={styles.postinfo}>
-        <PostContent post={post} />
-        <Comments comments={post.comments} />
+        <PostContent post={post} user={userDetails} />
+        <Comments comments={post.comments} user={userDetails} />
       </div>
     </div>
   );
@@ -39,7 +43,7 @@ const UserInfo = ({ user }) => {
     <div className={styles.userinfo}>
       <div className={styles.align}>
         <Image
-          src={Piggy}
+          src={user.profile_url}
           className={styles.profilepic}
           width={30}
           height={30}
@@ -54,7 +58,21 @@ const UserInfo = ({ user }) => {
   );
 };
 
-const PostContent = ({ post }) => {
+const PostContent = ({ post, user }) => {
+  const token = Cookies.get("accessToken");
+  console.log(user);
+  const likeButtonHandle = () => {
+    fetch("/api/like/createLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ postId: post.id }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  };
   return (
     <>
       <p className="text-black dark:text-white text-[16px] py-1 my-0.5">
@@ -76,13 +94,21 @@ const PostContent = ({ post }) => {
       </p>
       <div className="text-gray-500 dark:text-gray-400 flex mt-3">
         <div className="flex items-center mr-6">
-          <button className="py-1.5 px-3 mr-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
-            <AiOutlineLike />
-            <span>342</span>
+          <button
+            onClick={likeButtonHandle}
+            className="py-1.5 px-3 mr-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2"
+          >
+            {/* {post.likes.includes(user.Username) ? (
+              <FaHeart color="red" />
+            ) : (
+              <FaRegHeart />
+            
+            )} */}
+            <span>{post.likes.length}</span>
           </button>
           <button className="py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
             <TfiCommentAlt />
-            <span>comments no.</span>
+            <span>{post.Comments.length + " Comments"} </span>
           </button>
         </div>
       </div>
@@ -90,19 +116,24 @@ const PostContent = ({ post }) => {
   );
 };
 
-const Comments = ({ comments }) => {
+const Comments = ({ comments, user }) => {
   return (
-    <div class="comment-section">
-  <h2>Comments</h2>
-  <div class="comment-form">
-    <textarea class="comment-input" placeholder="Write a comment..."></textarea>
-    <button class="submit-btn" type="submit">Submit</button>
-  </div>
-  <ul class="comment-list">
-   {/* {comments.map((comment, index) => (
+    <div className="comment-section">
+      <h2>Comments</h2>
+      <div className="comment-form">
+        <textarea
+          className="comment-input"
+          placeholder="Write a comment..."
+        ></textarea>
+        <button className="submit-btn" type="submit">
+          Submit
+        </button>
+      </div>
+      <ul className="comment-list">
+        {/* {comments.map((comment, index) => (
     <li>{comment.content}</li>
    ))} */}
-  </ul>
-</div>
+      </ul>
+    </div>
   );
 };

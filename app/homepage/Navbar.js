@@ -39,7 +39,6 @@ function Navbar(props) {
       setUsers(users);
     } catch (error) {
       console.error("Error searching users:", error);
-      throw error;
     }
   }
 

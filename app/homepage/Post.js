@@ -11,6 +11,8 @@ import { FaHeart } from "react-icons/fa";
 import { useState } from "react";
 import { Modal } from "@mui/material";
 import { ImBin } from "react-icons/im";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const h1Style = {
   fontSize: "1rem",
@@ -25,7 +27,7 @@ const h3Style = {
   marginLeft: "70px",
 };
 
-const Post = ({ post, userDetails }) => {
+const Post = ({ post, userDetails, setPosts, posts}) => {
   const [commentsShow, setCommentsShow] = useState(false);
   const content = post.content;
 
@@ -41,6 +43,8 @@ const Post = ({ post, userDetails }) => {
           post={post}
           user={userDetails}
           onCommentsShow={handleCommentsShow}
+          setPosts={setPosts}
+          posts={posts}
         />
         {commentsShow && (
           <Comments
@@ -76,7 +80,8 @@ const UserInfo = ({ user }) => {
   );
 };
 
-const PostContent = ({ post, user, onCommentsShow }) => {
+const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
+  console.log(post);
   const token = Cookies.get("accessToken");
   const [liked, setLiked] = useState(
     post && post.likes
@@ -115,6 +120,24 @@ const PostContent = ({ post, user, onCommentsShow }) => {
         .then((data) => console.log(data));
     }
   };
+
+  const deletePost = (postId) => {
+    fetch("/api/post/deletePost", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("accessToken")}`,
+      },
+      body: JSON.stringify({
+        postId: post.id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setPosts(posts.filter((post) => post.id !== postId));
+      });
+  };
   return (
     <>
       <p className="text-black dark:text-white text-[16px] py-1 my-0.5">
@@ -150,6 +173,12 @@ const PostContent = ({ post, user, onCommentsShow }) => {
             <TfiCommentAlt />
             <span>{post.Comments.length + " Comments"} </span>
           </button>
+
+          {post.user.Username === user.Username && (
+            <IconButton aria-label="delete" onClick={() => deletePost(post.id)}>
+              <DeleteIcon />
+            </IconButton>
+          )}
         </div>
       </div>
     </>
@@ -221,12 +250,12 @@ const Comments = ({ commentsDB, post, user }) => {
               </div>
             </div>
             {comment.user.Username === user.Username && (
-              <button
+              <IconButton
+                aria-label="delete"
                 onClick={() => deleteaComment(comment.id)}
-                className={styles.deletecomment}
               >
-                <ImBin color="white" />
-              </button>
+                <DeleteIcon />
+              </IconButton>
             )}
           </div>
         ))}

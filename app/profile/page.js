@@ -15,102 +15,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import styles from "../homepage/Post.module.css";
+import Post from "../homepage/Post";
 import Image from "next/image";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { AiOutlineLike } from "react-icons/ai";
-
-function Post(props) {
-
-    const h1Style = {
-        fontSize: "1rem",
-        fontWeight: "bold",
-      };
-      const h2Style = {
-        fontSize: "0.8rem",
-      };
-      const h3Style = {
-        fontSize: "0.9rem",
-        fontWeight: "bold",
-        marginLeft: "70px",
-      };
-
-    const { post } = props;
-    // posts listing and results
-    return (
-        <>
-
- 
-
-
-
-
-
-
-
-            <div className={styles.post}>
-            <div className={styles.userinfo}>
-            <div className={styles.align}>
-                <Image
-                src={props.post.user.profile_url}
-                className={styles.profilepic}
-                width={30}
-                height={30}
-                alt="Piggy"
-                />
-                <div className={styles.usernames}>
-                <h1 style={h1Style}>{props.post.user.Firstname + " " + props.post.user.Surname}</h1>
-                <h2 style={h2Style}>{"@" + props.post.user.Username}</h2>
-                </div>
-            </div>
-            </div>
-            <div className={styles.postinfo}>
-            <p className="text-black dark:text-white text-[16px] py-1 my-0.5">
-            {props.post.content}
-            </p>
-            <Image
-                src={props.post.picture_url}
-                width={100}
-                height={100}
-                className={styles.postimage}
-                alt="Vibe"
-                priority
-                unoptimized={true}
-            />
-            <p className="text-gray-500 dark:text-gray-400 text-[9px] py-1 my-0.5">
-                {new Date(props.post.createdAt).toLocaleDateString() +
-                " " +
-                new Date(props.post.createdAt).toLocaleTimeString()}
-            </p>
-            <div className="text-gray-500 dark:text-gray-400 flex mt-3">
-                <div className="flex items-center mr-6">
-                <button className="py-1.5 px-3 mr-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
-                    <AiOutlineLike />
-                    <span>342</span>
-                </button>
-                <button className="py-1.5 px-3 hover:text-green-600 hover:scale-105 hover:shadow text-center border rounded-md border-gray-400 h-8 text-sm flex items-center gap-1 lg:gap-2">
-                    <TfiCommentAlt />
-                    <span>comments no.</span>
-                </button>
-                </div>
-            </div>
-                {/* <Comments comments={props.post.comments} /> */}
-            </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-        </>
-
-    )
-}
 
 
 function UserList(props) {
@@ -349,7 +257,7 @@ function Profile(props) {
 
 
     const postJSX = posts.map((post, i) => (
-        <Post key={i} post={post} />
+        <Post key={i} post={post} userDetails={userDetails} setPosts={setPosts} posts={posts}/>
     ));
 
     const blockedUsersJSX = blockedUsers.map((username, i) => (

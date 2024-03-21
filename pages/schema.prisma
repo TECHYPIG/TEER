@@ -47,7 +47,7 @@ model Comment {
   createdAt DateTime @default(now())
   user      Users     @relation("userComments", fields: [Username], references: [Username])
   Username  String
-  post      Post     @relation("postComments", fields: [postId], references: [id])
+  post      Post     @relation("postComments", fields: [postId], references: [id],onDelete: Cascade)
   postId    String
 }
 
@@ -55,7 +55,7 @@ model Like {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   user      Users     @relation("userLikes", fields: [Username], references: [Username])
   Username  String
-  post      Post   @relation("postLikes", fields: [postId], references: [id])
+  post      Post   @relation("postLikes", fields: [postId], references: [id], onDelete: Cascade)
   postId    String
 }
 

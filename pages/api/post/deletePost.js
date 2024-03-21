@@ -2,31 +2,37 @@ import prisma from "../prismaClient";
 import "dotenv/config";
 import jwt from "jsonwebtoken";
 
-export default async function getUserPosts(req, res) {
-  const { method, headers } = req;
+export default async function deletePost(req, res) {
+  const { method, body, headers } = req;
 
   switch (method) {
-    case "GET":
+    case "DELETE":
       try {
+        const { postId } = body;
         const username = await getUsername(headers, res);
-        const posts = await getPosts(username);
-        res.status(201).json(posts);
+
+        if (!username) {
+          return;
+        }
+
+        const deletedPost = await deletePostDB(postId, username);
+
+        if (!deletedPost) {
+          return res.status(404).json({ error: "Post not found" });
+        }
+
+        res.status(200).json({ message: "Post deleted successfully" });
       } catch (error) {
-        console.error("Error creating post:", error);
-        res.status(500).json({
-          content: "Could not get post",
-          error: "Internal Server Error",
-        });
+        console.error("Error unliking post:", error);
+        res.status(500).json({ error: "Internal Server Error" });
       }
       break;
-
     default:
-      res.setHeader("Allow", ["POST"]);
+      res.setHeader("Allow", ["DELETE"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
 
-//using token to get username
 async function getUsername(headers, res) {
   let username = null;
   try {
@@ -43,20 +49,14 @@ async function getUsername(headers, res) {
   return username;
 }
 
-// send post to database
-async function getPosts(user) {
-  const posts = await prisma.post.findMany({
+// Delete Post from database
+async function deletePostDB(postId, userId) {
+  const deletedPost = await prisma.post.deleteMany({
     where: {
-      Username: user,
-    },
-    include: {
-      user: true,
-      likes: true,
-      Comments: { include: { user: true } },
-    },
-    orderBy: {
-      createdAt: "desc",
+      id: postId,
+      Username: userId,
     },
   });
-  return posts;
+
+  return deletedPost.count > 0;
 }

@@ -17,7 +17,7 @@ import { useDropzone } from "react-dropzone";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
-
+import SendIcon from "@mui/icons-material/Send";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Home() {
@@ -31,12 +31,11 @@ export default function Home() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
   useEffect(() => {
     if (!token) {
       router.push("/login");
     }
-    if(token == undefined){
+    if (token == undefined) {
       router.push("/login");
     }
     getUserDetails(token).then((data) => {
@@ -53,41 +52,36 @@ export default function Home() {
 
   return (
     <div className={styles.homecontainer}>
-      <Navbar></Navbar>
+      <Navbar/>
       {isLoading ? (
-      <div className={styles.loading}>
-        <CircularProgress />
-      </div>
+        <div className={styles.loading}>
+          <CircularProgress />
+        </div>
       ) : (
-      <div className={styles.innerdiv}>
-        
-        <Userprofile user={userDetails}/>
-        <div className={styles.row2}>
-        <ModalCustom
-            isOpen={open}
-            onHandleClose={handleClose}
-            onHandleOpen={handleOpen}
-            token={token}
-          />
-          <Newpostcontent
-            user={userDetails}
-            onHandleOpen={handleOpen}
-          />
-          {userDetails &&
-            posts.map((post, index) => (
-              <Post key={index} post={post} userDetails={userDetails} />
-            ))}
+        <div className={styles.innerdiv}>
+          <Userprofile user={userDetails} />
+          <div className={styles.row2}>
+            <ModalCustom
+              isOpen={open}
+              onHandleClose={handleClose}
+              onHandleOpen={handleOpen}
+              token={token}
+            />
+            <Newpostcontent user={userDetails} onHandleOpen={handleOpen} />
+            {userDetails &&
+              posts.map((post, index) => (
+                <Post key={index} post={post} userDetails={userDetails} />
+              ))}
+          </div>
+          <div className={styles.row3}>
+            <Voluneer user={userDetails}></Voluneer>
+            <Newfollow></Newfollow>
+          </div>
         </div>
-        <div className={styles.row3}>
-          <Voluneer user={userDetails}></Voluneer>
-          <Newfollow></Newfollow>
-        </div>
-      </div>
       )}
     </div>
   );
 }
-
 
 const getUserDetails = async (token) => {
   try {
@@ -234,8 +228,8 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         </div>
         <Button
           variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
+          endIcon={<SendIcon />}
+
           onClick={() => {
             onUpload();
           }}

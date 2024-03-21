@@ -135,7 +135,13 @@ const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setPosts(posts.filter((post) => post.id !== postId));
+        if(data.message === "Post deleted successfully"){
+          setPosts(posts.filter((post) => post.id !== postId));
+          alert("Post deleted successfully");
+        }
+        if(data.error === "Post not found"){
+          alert(data.error);
+        }
       });
   };
   return (

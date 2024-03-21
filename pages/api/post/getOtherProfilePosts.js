@@ -20,7 +20,9 @@ export default async function handler(req, res) {
             Username: username,
           },
           include: {
-            user: true,
+            user: true, // Include user data in the returned posts
+            Comments: { include: { user: true } }, // Include comments data in the returned posts
+            likes: true, // Include likes data in the returned posts
           },
           orderBy: {
             createdAt: "desc",

@@ -11,11 +11,6 @@ import { useState, useEffect } from 'react';
 
 
 const Userprofile = () => {
-
-
-  const [followingCount, setFollowingCount] = useState(null);
-
-  const [posts, setPosts] = useState([]);
   const [userDetails, setUserDetails] = useState({
       Firstname: '',
       Surname: '',
@@ -90,10 +85,17 @@ const Userprofile = () => {
           </div>
         </div>
           <div className={styles.userdetails}>
-            <ul>
+            {/* <ul>
             <li className={styles.picons}><CiLocationOn size={24}/>{userDetails.Location}</li>
             <li  className={styles.picons}> <PiBriefcaseLight size={24}/>{userDetails.Role}</li>
-            </ul>
+            </ul> */}
+            <div className={styles.row}>
+            <CiLocationOn size={24}/><span>{userDetails.Location}</span>
+            </div>
+            <div className={styles.row}>
+            <PiBriefcaseLight size={24}/><span>{userDetails.Role}</span>
+            </div>
+
           </div>
           <div className={styles.line}></div>
           <a style= {h3Style}></a>

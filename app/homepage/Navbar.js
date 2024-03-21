@@ -91,11 +91,8 @@ function Navbar(props) {
             </div>
           </div>
         </div>
-        <p className={styles.navtxtinv}>
-          <a href="/homepage">TEER</a>
-        </p>
         <Link href="/login">
-        <h3 onClick={() => Cookies.set("accessToken", undefined)}>Logout</h3>
+        <h3 className={styles.navlogout} onClick={() => Cookies.set("accessToken", undefined)}>Logout</h3>
         </Link>
       </div>
     </>

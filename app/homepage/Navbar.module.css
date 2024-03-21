@@ -13,11 +13,11 @@
     font-family: monospace;
     font-size: 2rem;
   }
-  .navtxtinv{
+  .navlogout{
     margin: 1rem;
-    color: #389668;
+    color: white;
     font-family: monospace;
-    font-size: 2rem;
+    font-size: 1rem;
   }
   .search{
   display:flex;

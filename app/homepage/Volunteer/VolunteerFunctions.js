@@ -1,6 +1,7 @@
 'use client'
 import "./VolunteerFunctions.css"
-import {useState} from "react"
+import {useEffect, useState} from "react"
+import {gettingVolunteering} from "./serverVolunteer"
 import Modal from "./VolunteerModal"
 import ModalOpportunity from "./VolunteerOppurtunityModal"
 
@@ -16,40 +17,70 @@ var [ModalOpen,SetModalOpen] = useState(false)
         </div>
     );
 }
-export function DynamicData(){
-
-    let p = VolunteeringInformation()
+export function InsideVolunteer(){
+    const [modal,setModal] = useState(false)
+    const data = DynamicData()
     return(
         <div className="OpportunitiesDiv">
-            {p}
+            {data}
         </div>
-    );
-}
+    )
+    }
 
+    function DynamicData() {
+        const [usernames, setUsernames] = useState([]);
+        const [role, setRole] = useState([]);
+        const [company, setCompany] = useState([]);
+        const [description, setDescription] = useState([]);
+        const [location, setLocation] = useState([]);
+        const [email, setEmail] = useState([]);
 
-function VolunteeringInformation(){
-    const [modal,setModalOpen] = useState(false)
-    const [email,setEmail] = useState("")
-    const list = []
-    const list1 = []
-        list.push({
-            email : "jugtejSingh"
-        })
-        list.push({
-            email : "fedora123"
-        })
-    for(let x = 0; x < list.length;x++){
-        list1.push(
-        <div key={x}>
-            <h3 onClick={() => insideClick(setModalOpen,email,setEmail, list[x].email)}>{list[x].email}</h3>
-            <ModalOpportunity open={modal} close={() => setModalOpen(false)} email = {email}></ModalOpportunity>
-        </div>
-        )}
+        useEffect(() => {
+            const fetchInformation = async () => {
+                try {
+                    const {usernames, role, company, description, location, email} = await gettingVolunteering();
+                    setUsernames(usernames)
+                    setRole(role)
+                    setEmail(email)
+                    setLocation(location)
+                    setCompany(company)
+                    setDescription(description)
+                    const initialModalStates = new Array(usernames.length).fill(false);
+                    setModalStates(initialModalStates);
+                } catch (error) {
+                    console.log("Error fetching names")
+                }
+            };
+            fetchInformation()
+        }, []);
 
-    return list1
-}
-function insideClick(setModalOpen, email,setEmail,emailAddress){
-    setModalOpen(true)
-    setEmail(emailAddress)
-    return email
-}
+        const [modalStates, setModalStates] = useState([]); // Example array of modal states
+        const clickedInside = (index) => {
+            const updatedModalStates = modalStates.slice();
+            updatedModalStates[index] = true;
+            setModalStates(updatedModalStates);
+        };
+
+        const closeModal = (index) => {
+            const updatedModalStates = modalStates.slice();
+            updatedModalStates[index] = false;
+            setModalStates(updatedModalStates);
+        };
+
+        // Render the divs and modal windows
+        return modalStates.map((isOpen, index) => (
+            <div key={index}>
+                <div onClick={() => clickedInside(index)} className="Border">
+                    <div className="FlexForInside">
+                        <h3>{role[index]}</h3>
+                        <h3></h3>
+                        <h3>{location[index]}</h3>
+                    </div>
+                        {company[index]}
+                    </div>
+                <ModalOpportunity open={isOpen} close={() => closeModal(index)} username={usernames[index]}
+                role ={role[index]} email ={email[index]} description={description[index]} location={location[index]}
+                company={company[index]}/>
+            </div>
+        ));
+    }

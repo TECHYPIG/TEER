@@ -100,6 +100,8 @@ export default function Home() {
                 <Post
                   key={index}
                   post={post}
+                  setPosts={setPosts}
+                  posts={posts}
                   userDetails={userDetails}
                   CommentSuccess={CommentSuccess}
                   CommentError={CommentError}

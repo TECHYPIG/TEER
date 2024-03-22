@@ -246,11 +246,18 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         <div className={styles.images}>
           {selectedImages.length > 0 &&
             selectedImages.map((image, index) => (
-              <Image width={100} height={30} src={`${URL.createObjectURL(image)}`} key={index} alt="" />
+              <Image
+                width={100}
+                height={30}
+                src={`${URL.createObjectURL(image)}`}
+                key={index}
+                alt=""
+              />
             ))}
         </div>
         <Button
           variant="contained"
+          className={styles.uploadButton}
           endIcon={<SendIcon />}
           onClick={() => {
             onUpload();

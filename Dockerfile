@@ -1,23 +1,29 @@
-# Use a lean Node.js base image with the appropriate version
-FROM node:18-alpine  
+# Base image (Choose Node.js version suitable for your Next.js app)
+FROM node:16-alpine AS base
 
-# Create a working directory for the app
+# Create working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if you have one) for efficient install
-COPY package*.json ./
+# Install essential build dependencies 
+RUN apk add --no-cache libc6-compat
+
+# Copy dependency files
+COPY package*.json ./ 
 
 # Install dependencies 
 RUN npm install
 
-# Copy the rest of your Next.js project files
+# Copy the rest of your Next.js project
 COPY . .
 
-# Build your Next.js project for production
+# Generate Prisma Client 
+RUN npx prisma generate
+
+# Build the Next.js project
 RUN npm run build
 
-# Expose the port on which the Next.js server runs
+# Expose the port used by Next.js 
 EXPOSE 3000
 
-# Specify the command to start your Next.js production server
+# Define the command to run the container
 CMD ["npm", "run", "start"]

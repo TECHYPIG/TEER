@@ -52,15 +52,15 @@ export default function Home() {
 
   useEffect(() => {
     if (!token) {
-      router.push("/login");
+      router.push("/");
+      console.log("UNDEFINED TOKEN")
     }
-    if (token == undefined) {
-      router.push("/login");
-    }
+    console.log(token)
+
     getUserDetails(token).then((data) => {
       setUserDetails(data);
-      if (userDetails == []) {
-        router.push("/login");
+      if (userDetails === []) {
+        router.push("/");
       }
       setUserDetailsLoading(false);
       getPosts(token).then((data) => {
@@ -146,11 +146,8 @@ const getUserDetails = async (token) => {
     }
     if (response.status === 200) {
       return response.json();
-    }
-    if (response.status === 500) {
-      return router.push("/login");
-    } else {
-      return router.push("/login");
+    }else{
+      return router.push("/");
     }
   } catch (error) {
     console.error("Error fetching user details:", error);

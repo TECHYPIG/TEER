@@ -1,12 +1,11 @@
 'use client'
 import "./LoginFunctions.css"
 import React, { useState} from "react"
-import Image from "next/image"
-import profilePic from './/images/google.png'
 import Cookies from 'js-cookie';
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 
+//Both the username and password in the login page
 export function TextBoxes(){
     const router = useRouter()
     const [userName,ChangedUsername] = useState("")
@@ -24,10 +23,12 @@ export function TextBoxes(){
             <h5>{incorrectLogin}</h5>
 
             <input  type="Submit" className="Submit" onClick={async function inside (){
+                //This function calls the api and checks if the username and password are good
                 changedIncorrectLogin("")
                 var returingValue =   await callAPI(userName, passWord)
+                //returning value checks either to send them to homepage or display if the values are incorrect.
                 if(returingValue === 1){
-                    router.push("/home");//Change this to push to homepage off course
+                    router.push("/home");
                 } else{
                     changedIncorrectLogin("Your username or password was incorrect")
                 }
@@ -40,7 +41,7 @@ export function TextBoxes(){
 
 export function SignIn(){
     return(
-        <h1 className="SignIn">SignIn</h1>
+        <h1 className="SignIn">Sign In</h1>
     );
 }
 
@@ -59,7 +60,7 @@ export function RegisterTextBelow(){
 export function RegisterButton(){
     return (
         <Link href={"/register"}>
-        <button className="RegisterButton">No account yet? SignUp</button>
+        <button className="RegisterButton">No account yet? Sign-Up</button>
         </Link>
     )
 }
@@ -82,10 +83,12 @@ async function callAPI(name, password) {
                 password: password
             })
         })
+        //this gets the JWT from the api.
         let jsonResponse = await response.json()
         if (jsonResponse.accessToken !== 1) {
             return 0;
         } else {
+            //This sets the jwt token in the cookies so it can accessed by others.
             const fullToken = response.headers.get("Authorization")
             const tokenSplit = fullToken.split(" ")[1]
             Cookies.set("accessToken", tokenSplit)

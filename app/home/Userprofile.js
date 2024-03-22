@@ -4,6 +4,7 @@ import styles from "./Userprofile.module.css";
 import Image from "next/image";
 
 export default function Userprofile({ user }) {
+
   return (
     <div className={styles.sideprofile}>
       <UserBadge

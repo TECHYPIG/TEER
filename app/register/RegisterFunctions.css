@@ -12,11 +12,11 @@
     flex-direction: row;
 }
 .RegisterSign{
-    margin-top: 4vh;
     font-size: 30px;
+    margin-top: -30px;
 }
 .Submit{
-    background-color: rgb(5,150,105);
+    background-color: #003b2e;
     width: 140px;
     height: 50px;
     font-size: 20px;
@@ -37,8 +37,18 @@ label{
     text-align: center;
     color: red;
 }
-.MainFlex{
+.MainFlexx{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
+}
+.BackToLoginButton{
+    background-color: #003b2e;
+    color: white;
+    width: 80px;
+    height: 50px;
+    margin-left: 600px;
+    margin-top: 20px;
+    border-radius: 13px;
 }

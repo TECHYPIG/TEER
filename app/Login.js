@@ -1,4 +1,4 @@
-import {TextBoxes,SignIn,Google,RegisterText,RegisterButton,RegisterTextBelow} from "@/app/login/LoginFunctions";
+import {TextBoxes,SignIn,RegisterText,RegisterButton,RegisterTextBelow} from "@/app/LoginFunctions";
 import "./Login.css"
 
 export default function LoginCompiled(){

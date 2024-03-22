@@ -31,6 +31,7 @@ function VolunteerTopBar(
   VolunteerError,
   VolunteerLoading}
 ) {
+  //Modal opening and closing state.
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -42,6 +43,7 @@ function VolunteerTopBar(
           <IoIosAdd size={32} />
         </h4>
       </div>
+      //The custom modal code
       <CustomModal
         user={username}
         VolunteerSuccess={VolunteerSuccess}
@@ -63,12 +65,13 @@ function VolunteerTopBar(
   );
 }
 
-
+//the second modal which is the dynamic one.
 export function VolunteerMain(username) {
   const data = DynamicData(username);
   return <div className="OpportunitiesDiv">{data}</div>;
 }
 
+//This is the code that shows the current volunteers in database and displays them.
 function DynamicData(usernameOfLoggedInUser) {
   const [usernames, setUsernames] = useState([]);
   const [role, setRole] = useState([]);
@@ -78,6 +81,7 @@ function DynamicData(usernameOfLoggedInUser) {
   const [email, setEmail] = useState([]);
   const [id, setID] = useState([]);
 
+  //This use effect is what gets the volunteer information out of the database.
   useEffect(() => {
     const fetchInformation = async () => {
       try {
@@ -99,6 +103,8 @@ function DynamicData(usernameOfLoggedInUser) {
     fetchInformation();
   }, []);
   const [modalStates, setModalStates] = useState([]); // Example array of modal states
+
+  //code for opening and closing a modal
   const clickedInside = (index) => {
     const updatedModalStates = modalStates.slice();
     updatedModalStates[index] = true;
@@ -110,8 +116,8 @@ function DynamicData(usernameOfLoggedInUser) {
     updatedModalStates[index] = false;
     setModalStates(updatedModalStates);
   };
-
-  // Render the divs and modal windows
+  //Map that holds the information
+  //Renders the divs and modal windows
   return modalStates.map((isOpen, index) => (
     <div key={index}>
       <div onClick={() => clickedInside(index)}>

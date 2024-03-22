@@ -43,7 +43,6 @@ function VolunteerTopBar(
           <IoIosAdd size={32} />
         </h4>
       </div>
-      //The custom modal code
       <CustomModal
         user={username}
         VolunteerSuccess={VolunteerSuccess}

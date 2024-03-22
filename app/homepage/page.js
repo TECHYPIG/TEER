@@ -53,7 +53,7 @@ export default function Home() {
         setIsLoading(false);
       });
     });
-  }, [token]);
+  }, [token, userDetails, router]);
 
   return (
     <div className={styles.homecontainer}>

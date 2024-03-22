@@ -67,7 +67,6 @@ function DynamicData(usernameOfLoggedInUser) {
     };
     fetchInformation();
   }, []);
-  console.log(id);
   const [modalStates, setModalStates] = useState([]); // Example array of modal states
   const clickedInside = (index) => {
     const updatedModalStates = modalStates.slice();

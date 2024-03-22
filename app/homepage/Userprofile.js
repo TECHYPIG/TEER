@@ -36,7 +36,6 @@ function UserBadge(data) {
 }
 
 function UserBio({ Bio }) {
-  console.log(Bio);
   return (
     <div className={styles.biocontainer}>
       <p className={styles.bio}>{Bio}</p>

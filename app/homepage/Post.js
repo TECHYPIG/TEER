@@ -81,7 +81,6 @@ const UserInfo = ({ user }) => {
 };
 
 const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
-  console.log(post);
   const token = Cookies.get("accessToken");
   const [liked, setLiked] = useState(
     post && post.likes

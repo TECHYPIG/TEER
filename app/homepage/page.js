@@ -176,6 +176,10 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
 
   // Add this
   const onUpload = async () => {
+    if (selectedImages.length === 0 || modalText === "") {
+      setUploadStatus("Please select an image and enter some text");
+      return;
+    }
     setUploadStatus("Uploading....");
     const formData = new FormData();
     selectedImages.forEach((image) => {
@@ -255,6 +259,7 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
               />
             ))}
         </div>
+        <div>{uploadStatus}</div>
         <Button
           variant="contained"
           className={styles.uploadButton}

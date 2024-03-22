@@ -19,6 +19,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import SendIcon from "@mui/icons-material/Send";
 import CircularProgress from "@mui/material/CircularProgress";
+import Image from "next/image";
 
 export default function Home() {
   const token = Cookies.get("accessToken");
@@ -241,7 +242,7 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         <div className={styles.images}>
           {selectedImages.length > 0 &&
             selectedImages.map((image, index) => (
-              <img src={`${URL.createObjectURL(image)}`} key={index} alt="" />
+              <Image width={100} height={30} src={`${URL.createObjectURL(image)}`} key={index} alt="" />
             ))}
         </div>
         <Button

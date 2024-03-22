@@ -7,7 +7,6 @@ import Post from "@/app/posts/Post";
 import Voluneer from "./Volunteer/Volunteer";
 import Newfollow from "./Newfollow";
 import Cookies from "js-cookie";
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -25,9 +24,9 @@ const PostToastSuccess = (e) => toast.success(e, { duration: 5000 });
 const PostToastError = (e) => toast.error(e);
 const PostToastLoading = (e) => toast.loading(e, { duration: 3000 });
 
-const VoluneerSuccess = (e) => toast.success(e, { duration: 5000 });
-const VoluneerError = (e) => toast.error(e);
-const VoluneerLoading = (e) => toast.loading(e, { duration: 3000 });
+const VolunteerSuccess = (e) => toast.success(e, { duration: 5000 });
+const VolunteerError = (e) => toast.error(e);
+const VolunteerLoading = (e) => toast.loading(e, { duration: 3000 });
 
 const CommentSuccess = (e) => toast.success(e, { duration: 5000 });
 const CommentError = (e) => toast.error(e);
@@ -112,7 +111,12 @@ export default function Home() {
             )}
           </div>
           <div className={styles.row3}>
-            <Voluneer user={userDetails}></Voluneer>
+            <Voluneer
+              user={userDetails}
+              VolunteerSuccess={VolunteerSuccess}
+              VolunteerError={VolunteerError}
+              VolunteerLoading={VolunteerLoading}
+            />
             <Newfollow
               followers={followers}
               setFollowers={setFollowers}

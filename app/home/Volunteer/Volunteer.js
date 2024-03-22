@@ -1,37 +1,68 @@
 import "./Volunteer.css";
 import { useEffect, useState } from "react";
-import { gettingVolunteering } from "./serverVolunteer";
-import Modal from "./VolunteerModal";
+import { gettingVolunteering } from "./serverVolunteer"; 
+import CustomModal from "./VolunteerModal";
 import ModalOpportunity from "./VolunteerOppurtunityModal";
 import { IoIosAdd } from "react-icons/io";
 
-export default function Volunteer({ user }) {
+
+export default function Volunteer({
+  user,
+  VolunteerSuccess,
+  VolunteerError,
+  VolunteerLoading,
+}) {
   return (
     <div className="MainDiv">
-      <VolunteerTopBar username={user} />
+      <VolunteerTopBar
+        username={user}
+        VolunteerSuccess={VolunteerSuccess}
+        VolunteerError={VolunteerError}
+        VolunteerLoading={VolunteerLoading}
+      />
       <VolunteerMain username={user} />
     </div>
   );
 }
 
-function VolunteerTopBar(username) {
-  var [ModalOpen, SetModalOpen] = useState(false);
+function VolunteerTopBar(
+  {username,
+  VolunteerSuccess,
+  VolunteerError,
+  VolunteerLoading}
+) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div className="VolunteerContainer">
       <div className="VolunteerTop">
         <h1 className="Name">Volunteering Opportunities</h1>
-        <h4 className="Add" onClick={() => SetModalOpen(true)}>
+        <h4 className="Add" onClick={() => handleOpen()}>
           <IoIosAdd size={32} />
         </h4>
       </div>
-      <Modal
+      <CustomModal
+        user={username}
+        VolunteerSuccess={VolunteerSuccess}
+        VolunteerError={VolunteerError}
+        VolunteerLoading={VolunteerLoading}
+        isOpen={open}
+        onHandleClose={handleClose}
+        onHandleOpen={handleOpen}
+      />
+      {/* <Modal
         open={ModalOpen}
         close={() => SetModalOpen(false)}
         username={username}
-      ></Modal>
+        VoluneerSuccess={VoluneerSuccess}
+        VoluneerError={VoluneerError}
+        VoluneerLoading={VoluneerLoading}
+      ></Modal> */}
     </div>
   );
 }
+
 
 export function VolunteerMain(username) {
   const data = DynamicData(username);

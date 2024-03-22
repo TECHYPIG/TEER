@@ -37,7 +37,6 @@ const Post = ({
     setCommentsShow(!commentsShow);
   };
   return (
-
     <div className={styles.post}>
       <UserInfo user={post.user} />
       <div className={styles.postinfo}>
@@ -47,6 +46,9 @@ const Post = ({
           onCommentsShow={handleCommentsShow}
           setPosts={setPosts}
           posts={posts}
+          PostToastSuccess={CommentSuccess}
+          PostToastError={CommentError}
+          PostToastLoading={CommentLoading}
         />
         {commentsShow && (
           <Comments
@@ -85,7 +87,16 @@ const UserInfo = ({ user }) => {
   );
 };
 
-const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
+const PostContent = ({
+  post,
+  user,
+  onCommentsShow,
+  setPosts,
+  posts,
+  PostToastSuccess,
+  PostToastError,
+  PostToastLoading,
+}) => {
   const token = Cookies.get("accessToken");
   const [liked, setLiked] = useState(
     post && post.likes
@@ -126,6 +137,7 @@ const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
   };
 
   const deletePost = (postId) => {
+    PostToastLoading("Deleting post...");
     fetch("/api/post/deletePost", {
       method: "DELETE",
       headers: {
@@ -141,10 +153,10 @@ const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
         console.log(data);
         if (data.message === "Post deleted successfully") {
           setPosts(posts.filter((post) => post.id !== postId));
-          alert("Post deleted successfully");
+          PostToastSuccess("Post deleted successfully");
         }
         if (data.error === "Post not found") {
-          alert(data.error);
+          PostToastError("Post could not be found");
         }
       });
   };
@@ -224,7 +236,6 @@ const Comments = ({
         setInputComment("");
         CommentSuccess("Comment created successfully");
         setComments([...comments, data]);
-
       })
       .catch((error) => {
         CommentError("Error creating comment");

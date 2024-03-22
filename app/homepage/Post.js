@@ -27,7 +27,15 @@ const h3Style = {
   marginLeft: "70px",
 };
 
-const Post = ({ post, userDetails, setPosts, posts}) => {
+const Post = ({
+  post,
+  userDetails,
+  setPosts,
+  posts,
+  CommentSuccess,
+  CommentError,
+  CommentLoading,
+}) => {
   const [commentsShow, setCommentsShow] = useState(false);
   const content = post.content;
 
@@ -51,6 +59,9 @@ const Post = ({ post, userDetails, setPosts, posts}) => {
             commentsDB={post.Comments}
             post={post.id}
             user={userDetails}
+            CommentSuccess={CommentSuccess}
+            CommentError={CommentError}
+            CommentLoading={CommentLoading}
           />
         )}
       </div>
@@ -134,11 +145,11 @@ const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        if(data.message === "Post deleted successfully"){
+        if (data.message === "Post deleted successfully") {
           setPosts(posts.filter((post) => post.id !== postId));
           alert("Post deleted successfully");
         }
-        if(data.error === "Post not found"){
+        if (data.error === "Post not found") {
           alert(data.error);
         }
       });
@@ -190,11 +201,19 @@ const PostContent = ({ post, user, onCommentsShow, setPosts, posts }) => {
   );
 };
 
-const Comments = ({ commentsDB, post, user }) => {
+const Comments = ({
+  commentsDB,
+  post,
+  user,
+  CommentSuccess,
+  CommentError,
+  CommentLoading,
+}) => {
   const [comments, setComments] = useState(commentsDB);
   const [inputComment, setInputComment] = useState("");
 
   const commentButtonHandle = () => {
+    CommentLoading("Creating comment...");
     fetch("/api/comment/createComment", {
       method: "POST",
       headers: {
@@ -208,8 +227,13 @@ const Comments = ({ commentsDB, post, user }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setInputComment("");
+        CommentSuccess("Comment created successfully");
         setComments([...comments, data]);
+
+      })
+      .catch((error) => {
+        CommentError("Error creating comment");
       });
   };
 
@@ -270,6 +294,7 @@ const Comments = ({ commentsDB, post, user }) => {
           type="text"
           placeholder="Add a comment..."
           className={styles.commentinputfield}
+          value={inputComment}
           onChange={(e) => setInputComment(e.target.value)}
         />
         <button onClick={commentButtonHandle} className={styles.commentbutton}>

@@ -16,7 +16,7 @@
     margin-top: -30px;
 }
 .Submit{
-    background-color: rgb(5,150,105);
+    background-color: #003b2e;
     width: 140px;
     height: 50px;
     font-size: 20px;
@@ -44,7 +44,8 @@ label{
     background-color: white;
 }
 .BackToLoginButton{
-    background-color: green;
+    background-color: #003b2e;
+    color: white;
     width: 80px;
     height: 50px;
     margin-left: 600px;

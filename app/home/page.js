@@ -52,7 +52,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!token) {
-      router.push("/login");
+      router.push("/");
       console.log("UNDEFINED TOKEN")
     }
     console.log(token)
@@ -60,7 +60,7 @@ export default function Home() {
     getUserDetails(token).then((data) => {
       setUserDetails(data);
       if (userDetails === []) {
-        router.push("/login");
+        router.push("/");
       }
       setUserDetailsLoading(false);
       getPosts(token).then((data) => {
@@ -147,7 +147,7 @@ const getUserDetails = async (token) => {
     if (response.status === 200) {
       return response.json();
     }else{
-      return router.push("/login");
+      return router.push("/");
     }
   } catch (error) {
     console.error("Error fetching user details:", error);

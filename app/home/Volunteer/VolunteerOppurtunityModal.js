@@ -75,6 +75,7 @@ export default function ModalOpportunity({
 
 function deleteFunction(username, usernameOfLoggedInUser, id) {
   console.log(username);
+  //This checks if the volunteer post and the current logged in user is the same or not
   const loggedInUsername = usernameOfLoggedInUser.username.Username;
   if (username === loggedInUsername) {
     return (

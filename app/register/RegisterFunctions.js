@@ -16,7 +16,7 @@ export function RegisterSign(){
 export function BackToLogin(){
     return(
         <div>
-            <Link href="login">
+            <Link href="/">
             <button className="BackToLoginButton">Login</button>
             </Link>
         </div>
@@ -33,14 +33,14 @@ export function RegisterInputs(){
     const [gender,changedGender] = useState("")
     const [birthDate,changedBirthDate] = useState("")
     const [dontMatch, ChangedDontMatch] = useState("")
-
+    // The inputs for the register function
     return(
         <div className="MainFlexx">
              <div className="Row">
                 <div className="Flex">
                     <label>Username</label>
                     <input type="text" className="Input" value={username}
-                           onChange ={event => onChangeFunctionUsername(event,changedUsername)}/>
+                           onChange ={event => onChangeFunction(event,changedUsername)}/>
                 </div>
                  <div className="Flex MarginLeft">
                      <label>Email</label>
@@ -98,6 +98,8 @@ export function RegisterInputs(){
             <div className="passwordsDontMatch"><h5>{dontMatch}</h5></div>
 
        <input type="Submit" onClick={async function inside (){
+           //Calling the function and then checking return values to see if there was an error
+
            let value = await registerInformation(username,location, password,confirmPassword,birthDate,fullName,gender,email,ChangedDontMatch);
            switch (value) {
                case 0:
@@ -143,13 +145,11 @@ export function RegisterInputs(){
     );
 }
 
+//These update the change in the inputs using useStates as react/next dont allow it
 function onChangeFunction(event, inputState){
     inputState(event.target.value)
 }
-function onChangeFunctionUsername(event, inputState){
-    let x = event.target.value
-    inputState(x)
-}
+//The function that gets called when submit is called.
 async function registerInformation(username,location, password,confirmPassword,birthDate,fullName,gender,email,ChangedDontMatch){
     if(username === ""){
         return 10
@@ -182,8 +182,8 @@ async function registerInformation(username,location, password,confirmPassword,b
     }
     var firstname
     var surname
+    //This splits fullname in both first and surname.
     let nameSplit = fullName.split(" ");
-
     if(nameSplit[1] === undefined){
         return 100;
     }
@@ -198,8 +198,9 @@ async function registerInformation(username,location, password,confirmPassword,b
         return 0;
     } else{
         ChangedDontMatch("")
+        //Hashes the password so it can be put into the database.
         let hashedPassword = crypto.createHash("sha256").update(password).digest('hex')
-
+            //API call
             try{
                let response =  await fetch('/api/register', {
                     method: 'POST', // Adjust the method as needed (GET, POST, etc.)

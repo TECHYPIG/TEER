@@ -150,7 +150,6 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
   const [modalText, setModalText] = useState("");
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     acceptedFiles.forEach((file) => {
-      console.log(file);
       setSelectedImages((prevState) => [...prevState, file]);
     });
     rejectedFiles.forEach((file) => {
@@ -176,17 +175,24 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
 
   // Add this
   const onUpload = async () => {
-    if (selectedImages.length === 0 || modalText === "") {
+    if (
+      selectedImages.length === 0 ||
+      modalText === "" ||
+      modalText === null ||
+      modalText === undefined ||
+      modalText === "undefined"
+    ) {
       setUploadStatus("Please select an image and enter some text");
       return;
     }
-    setUploadStatus("Uploading....");
+
     const formData = new FormData();
     selectedImages.forEach((image) => {
       formData.append("file", image);
     });
     formData.append("content", modalText);
     try {
+      setUploadStatus("Uploading...");
       const response = await axios.post("/api/post/createPost", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -217,7 +223,7 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "50vw",
+          width: "55vw",
           bgcolor: "background.paper",
           borderRadius: 5,
           boxShadow: 24,
@@ -250,13 +256,7 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         <div className={styles.images}>
           {selectedImages.length > 0 &&
             selectedImages.map((image, index) => (
-              <Image
-                width={100}
-                height={30}
-                src={`${URL.createObjectURL(image)}`}
-                key={index}
-                alt=""
-              />
+              image.name
             ))}
         </div>
         <div>{uploadStatus}</div>

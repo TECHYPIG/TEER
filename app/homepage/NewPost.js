@@ -29,7 +29,7 @@ const Newpostcontent = ({user, onHandleOpen}) => {
         <div className={styles.userinfo}>
           <div className={styles.align}>
             <Image
-              src={Piggy}
+              src={user.profile_url}
               className={styles.profilepic}
               width={30}
               height={30}

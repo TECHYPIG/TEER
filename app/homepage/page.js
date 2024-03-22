@@ -79,7 +79,7 @@ export default function Home() {
           </div>
           <div className={styles.row3}>
             <Voluneer user={userDetails}></Voluneer>
-            <Newfollow followers={followers}/>
+            <Newfollow followers={followers } setFollowers={setFollowers}/>
           </div>
         </div>
       )}

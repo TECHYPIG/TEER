@@ -19,7 +19,7 @@ function VolunteerTopBar(username) {
   return (
     <div className="VolunteerContainer">
       <div className="VolunteerTop">
-        <h2 className="Name">Volunteering Opportunities</h2>
+        <h1 className="Name">Volunteering Opportunities</h1>
         <h4 className="Add" onClick={() => SetModalOpen(true)}>
           <IoIosAdd size={32} />
         </h4>

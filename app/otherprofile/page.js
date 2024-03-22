@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '../homepage/Navbar';
 import Cookies from 'js-cookie';
 import Post from "../homepage/Post";
+import Image from 'next/image';
 
 
 
@@ -271,7 +272,7 @@ function Profile(props) {
                                 <div className="w-full">
                                     <div className="bg-white p-3 rounded text-center py-5">
                                         <div className="flex justify-center">
-                                            <img className="rounded-full" src={userDetails.profile_url} width="100" />
+                                            <Image className="rounded-full" src={userDetails.profile_url} width={100} height={100} />
                                         </div>
 
                                         <div className="text-center">

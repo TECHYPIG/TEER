@@ -24,6 +24,7 @@ export default function Home() {
   const token = Cookies.get("accessToken");
   const router = useRouter();
   const [userDetails, setUserDetails] = useState([]);
+  const [followers, setFollowers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
@@ -45,6 +46,9 @@ export default function Home() {
       }
       getPosts(token).then((data) => {
         setPosts(data);
+      });
+      getFollowers(token).then((data) => {
+        setFollowers(data);
         setIsLoading(false);
       });
     });
@@ -52,7 +56,7 @@ export default function Home() {
 
   return (
     <div className={styles.homecontainer}>
-      <Navbar/>
+      <Navbar />
       {isLoading ? (
         <div className={styles.loading}>
           <CircularProgress />
@@ -75,7 +79,7 @@ export default function Home() {
           </div>
           <div className={styles.row3}>
             <Voluneer user={userDetails}></Voluneer>
-            <Newfollow></Newfollow>
+            <Newfollow followers={followers}/>
           </div>
         </div>
       )}
@@ -104,6 +108,20 @@ const getUserDetails = async (token) => {
     }
   } catch (error) {
     console.error("Error fetching user details:", error);
+  }
+};
+
+const getFollowers = async (token) => {
+  try {
+    const response = await fetch("/api/followsuggestions", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching followers:", error);
   }
 };
 
@@ -229,7 +247,6 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         <Button
           variant="contained"
           endIcon={<SendIcon />}
-
           onClick={() => {
             onUpload();
           }}

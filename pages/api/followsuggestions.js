@@ -20,7 +20,7 @@ export default async function handler(req, res) {
             not: user.username, // Exclude the current user
           },
         },
-        take: 10, // Limit the number of users returned
+        take: 5, // Limit the number of users returned
         orderBy: {
           id: 'asc', // Order by id to get a consistent result
         },

@@ -92,7 +92,7 @@ function Navbar(props) {
                   />
                 </svg>
               </div>
-              {username.trim() !== "" && <SearchResult users={users} />}
+              {username.trim() !== "" && <SearchResult users={users || []} />}
             </div>
           </div>
         </div>

@@ -1,0 +1,89 @@
+.homecontainer {
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  background-color: #F2F3F4;
+  flex:1;
+}
+.loading{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.noposts{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20%;
+
+}
+.innerdiv{
+  display:flex;
+  flex:1;
+  flex-direction: row;
+  margin-left: 2rem;
+  min-height: 90vh;
+}
+.row2{
+  flex:3;
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+.row3{
+  flex:1.5;
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+.images{
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.uploadButton{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #003b2e;
+  color: #C8C8C8;
+  cursor: pointer;
+}
+.uploadButton:hover{
+  background-color: #00664d;
+  color: white;
+}
+.image{
+  margin: 100%;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.dropzone{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 40px;
+  width: 100%;
+  border: 2px dashed #C8C8C8;
+  border-radius: 5px;
+  background-color: #F2F3F4;
+  color: #C8C8C8;
+  cursor: pointer;
+}

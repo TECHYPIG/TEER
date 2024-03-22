@@ -1,13 +1,12 @@
 "use client";
 import styles from "./Page.module.css";
-import Navbar from "./Navbar";
+import Navbar from "@/app/navbar/Navbar";
 import Userprofile from "./Userprofile";
 import Newpostcontent from "./NewPost";
-import Post from "./Post";
+import Post from "@/app/posts/Post";
 import Voluneer from "./Volunteer/Volunteer";
 import Newfollow from "./Newfollow";
 import Cookies from "js-cookie";
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -19,12 +18,32 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import SendIcon from "@mui/icons-material/Send";
 import CircularProgress from "@mui/material/CircularProgress";
+import toast, { Toaster } from "react-hot-toast";
+
+const PostToastSuccess = (e) => toast.success(e, { duration: 5000 });
+const PostToastError = (e) => toast.error(e);
+const PostToastLoading = (e) => toast.loading(e, { duration: 3000 });
+
+const VolunteerSuccess = (e) => toast.success(e, { duration: 5000 });
+const VolunteerError = (e) => toast.error(e);
+const VolunteerLoading = (e) => toast.loading(e, { duration: 3000 });
+
+const CommentSuccess = (e) => toast.success(e, { duration: 5000 });
+const CommentError = (e) => toast.error(e);
+const CommentLoading = (e) => toast.loading(e, { duration: 3000 });
+
+const FollowSuccess = (e) => toast.success(e, { duration: 5000 });
+const FollowError = (e) => toast.error(e);
+const FollowLoading = (e) => toast.loading(e, { duration: 3000 });
 
 export default function Home() {
   const token = Cookies.get("accessToken");
   const router = useRouter();
   const [userDetails, setUserDetails] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [followers, setFollowers] = useState([]);
+  const [postLoading, setPostLoading] = useState(true);
+  const [userDetailsLoading, setUserDetailsLoading] = useState(true);
+  const [followersLoading, setFollowersLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
   const [open, setOpen] = useState(false);
@@ -43,17 +62,23 @@ export default function Home() {
       if (userDetails === []) {
         router.push("/login");
       }
+      setUserDetailsLoading(false);
       getPosts(token).then((data) => {
         setPosts(data);
-        setIsLoading(false);
+        setPostLoading(false);
+      });
+      getFollowers(token).then((data) => {
+        setFollowers(data);
+        setFollowersLoading(false);
       });
     });
   }, [token]);
 
   return (
     <div className={styles.homecontainer}>
-      <Navbar/>
-      {isLoading ? (
+      <Navbar />
+      <Toaster />
+      {followersLoading && postLoading && userDetailsLoading ? (
         <div className={styles.loading}>
           <CircularProgress />
         </div>
@@ -66,16 +91,41 @@ export default function Home() {
               onHandleClose={handleClose}
               onHandleOpen={handleOpen}
               token={token}
+              setPosts={setPosts}
+              posts={posts}
             />
             <Newpostcontent user={userDetails} onHandleOpen={handleOpen} />
-            {userDetails &&
+            {userDetails && posts.length > 0 ? (
               posts.map((post, index) => (
-                <Post key={index} post={post} userDetails={userDetails} />
-              ))}
+                <Post
+                  key={index}
+                  post={post}
+                  setPosts={setPosts}
+                  posts={posts}
+                  userDetails={userDetails}
+                  CommentSuccess={CommentSuccess}
+                  CommentError={CommentError}
+                  CommentLoading={CommentLoading}
+                />
+              ))
+            ) : (
+              <div className={styles.noposts}>No posts found</div>
+            )}
           </div>
           <div className={styles.row3}>
-            <Voluneer user={userDetails}></Voluneer>
-            <Newfollow></Newfollow>
+            <Voluneer
+              user={userDetails}
+              VolunteerSuccess={VolunteerSuccess}
+              VolunteerError={VolunteerError}
+              VolunteerLoading={VolunteerLoading}
+            />
+            <Newfollow
+              followers={followers}
+              setFollowers={setFollowers}
+              FollowSuccess={FollowSuccess}
+              FollowError={FollowError}
+              FollowLoading={FollowLoading}
+            />
           </div>
         </div>
       )}
@@ -104,6 +154,20 @@ const getUserDetails = async (token) => {
   }
 };
 
+const getFollowers = async (token) => {
+  try {
+    const response = await fetch("/api/followsuggestions", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching followers:", error);
+  }
+};
+
 const getPosts = async (token) => {
   try {
     const response = await fetch("/api/post/fetchPostsByFollowedUsers", {
@@ -118,13 +182,12 @@ const getPosts = async (token) => {
   }
 };
 
-function ModalCustom({ isOpen, onHandleClose, token }) {
+function ModalCustom({ isOpen, onHandleClose, token, setPosts, posts }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
   const [modalText, setModalText] = useState("");
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     acceptedFiles.forEach((file) => {
-      console.log(file);
       setSelectedImages((prevState) => [...prevState, file]);
     });
     rejectedFiles.forEach((file) => {
@@ -150,23 +213,42 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
 
   // Add this
   const onUpload = async () => {
-    setUploadStatus("Uploading....");
+    if (
+      selectedImages.length === 0 ||
+      modalText === "" ||
+      modalText === null ||
+      modalText === undefined ||
+      modalText === "undefined"
+    ) {
+      setUploadStatus("Please select an image and enter some text");
+      PostToastError("Select an image and enter text");
+      return;
+    }
+
     const formData = new FormData();
     selectedImages.forEach((image) => {
       formData.append("file", image);
     });
     formData.append("content", modalText);
     try {
+      setUploadStatus("Uploading...");
+      PostToastLoading("Uploading...");
+
       const response = await axios.post("/api/post/createPost", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
-      setUploadStatus("upload successful");
+      getPosts(token).then((data) => {
+        setPosts(data);
+      });
+      onHandleClose();
+      setUploadStatus("Upload successful");
+      PostToastSuccess("Upload successful");
     } catch (error) {
       console.log("imageUpload" + error);
       setUploadStatus("Upload failed..");
+      PostToastError("Upload failed");
     }
   };
   const clearData = () => {
@@ -187,7 +269,7 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: "50vw",
+          width: "55vw",
           bgcolor: "background.paper",
           borderRadius: 5,
           boxShadow: 24,
@@ -219,14 +301,12 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         </div>
         <div className={styles.images}>
           {selectedImages.length > 0 &&
-            selectedImages.map((image, index) => (
-              <img src={`${URL.createObjectURL(image)}`} key={index} alt="" />
-            ))}
+            selectedImages.map((image, index) => image.name)}
         </div>
         <Button
           variant="contained"
+          className={styles.uploadButton}
           endIcon={<SendIcon />}
-
           onClick={() => {
             onUpload();
           }}

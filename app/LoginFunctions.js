@@ -1,6 +1,8 @@
 'use client'
 import "./LoginFunctions.css"
 import React, { useState} from "react"
+import Image from "next/image"
+import profilePic from './/images/google.png'
 import Cookies from 'js-cookie';
 import Link from "next/link";
 import {useRouter} from "next/navigation";
@@ -38,7 +40,7 @@ export function TextBoxes(){
 
 export function SignIn(){
     return(
-        <h1 className="SignIn">Sign In</h1>
+        <h1 className="SignIn">SignIn</h1>
     );
 }
 
@@ -57,7 +59,7 @@ export function RegisterTextBelow(){
 export function RegisterButton(){
     return (
         <Link href={"/register"}>
-        <button className="RegisterButton">No account yet? Sign-Up</button>
+        <button className="RegisterButton">No account yet? SignUp</button>
         </Link>
     )
 }

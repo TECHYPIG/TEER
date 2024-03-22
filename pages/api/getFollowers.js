@@ -1,5 +1,7 @@
 import prisma from "./prismaClient";
 
+//api that gets number of usernames a user follows
+//author: Ines Rita
 export default async function handler(req, res) {
     const { method, query } = req;
 

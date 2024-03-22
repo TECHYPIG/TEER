@@ -1,5 +1,5 @@
 import "./Register.css"
-import RegisterImage from "../register/images/Tree.png"
+import RegisterImage from "@/app/register/images/tree.png"
 import Image from 'next/image'
 import {RegisterSign, RegisterInputs,BackToLogin} from "@/app/register/RegisterFunctions";
 

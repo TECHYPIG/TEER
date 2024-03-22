@@ -21,7 +21,7 @@ export default async function handler(req, res) {
                 const { username } = decodedToken;
  
                 // Extract the followed username from the query parameters
-                const { followedUsername } = query;
+                const { followedUsername } = body;
  
                 // Fetch the logged-in user details
                 const user = await prisma.users.findUnique({

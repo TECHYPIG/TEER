@@ -1,0 +1,76 @@
+.profilepic {
+  width: 2rem;
+  height: 2rem;
+  margin-top: 1rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.main {
+  margin-top: 1rem;
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  color: black;
+  flex-direction: column;
+}
+.topbar {
+  width: 100%;
+  padding: 20px;
+  color: white;
+  background-color: #003b2e;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.followUserName {
+  margin-left: 1rem;
+  font-size: 1rem;
+  color: black;
+}
+.followButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #003b2e;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+.followButton:hover {
+  background-color: #002b1e;
+}
+.followsug {
+    padding: 20px;
+  margin-bottom: 0.6rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  color: black;
+  align-items: center;
+}
+.rows {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.profilepic {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 50%;
+}

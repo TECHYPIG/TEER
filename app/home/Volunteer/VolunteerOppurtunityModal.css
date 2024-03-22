@@ -1,0 +1,89 @@
+.Background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 101;
+}
+.Content {
+  width: 40%;
+  height: 70%;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+}
+.FlexForContent {
+  display: flex;
+  flex-direction: column;
+}
+.TopColumn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Delete {
+  background-color: #ff6961;
+  color:white;
+  font-size: 20px;
+  padding: 10px;
+  width: 85px;
+  cursor: pointer;
+    border-radius: 10px;
+}
+.Delete:hover {
+    background-color: #d9534f; /* Change this to the color you want on hover */
+  }
+
+  .DeleteButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.CloseAlign {
+  display: flex;
+  justify-content:space-between;
+  padding: 20px;
+}
+.Title {
+  font-size: 1.6rem;
+  padding: 10px;
+}
+.Close {
+  background-color: white;
+  padding: 10px;
+  margin-left: 0px;
+  font-size: 20px;
+  margin-top: 0px;
+  align-items: right;
+}
+.row {
+  border-bottom: 1px solid lightgrey;
+  align-items: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cell {
+  padding: 10px;
+  text-align: center;
+}
+.label {
+  font-size: 20px;
+  padding: 10px;
+}
+.data {
+  font-size: 20px;
+  padding: 10px;
+}

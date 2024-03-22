@@ -1,16 +1,17 @@
 "use client";
 /**
- * Profile page
+ * Navbar component
  *
- * This is the profile page for the application
- *
+ * This is the component that generated the navbar at the top of the page 
+ * handles the search bar where a username can be searched for
  * @author Ines Rita
+ * @author Firdaws Yasmin
  */
 
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
-import styles from "../homepage/Navbar.module.css";
-import SearchResult from "../searchResult/page";
+import styles from "@/app/navbar/Navbar.module.css";
+import SearchResult from "@/app/search/page";
 import Link from "next/link";
 
 function Navbar(props) {
@@ -19,19 +20,19 @@ function Navbar(props) {
   // State for holding the list of users
   const [users, setUsers] = useState([]);
 
+  //function to search for a username
   async function searchUsersByUsername() {
     const token = Cookies.get("accessToken");
-    //console.log(Cookies.get())
     if (!token) {
-        throw new Error('No access token found');
+      throw new Error("No access token found");
     }
     try {
       const response = await fetch(`/api/search?username=${username}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-            'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-    });
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
@@ -39,7 +40,6 @@ function Navbar(props) {
       setUsers(users);
     } catch (error) {
       console.error("Error searching users:", error);
-      throw error;
     }
   }
 
@@ -48,20 +48,20 @@ function Navbar(props) {
     setUsername(event.target.value);
   };
 
-  function testFunction() {
-    handleUsernameChange();
-    searchUsersByUsername();
-  }
+  //function to handle when search button is clicked
+  const handleSearch = () => {
+    searchUsersByUsername(username);
+  };
 
   return (
     <>
       <div className={styles.navbar}>
         <p className={styles.navtxt}>
-          <a href="/homepage">TEER</a>
+          <Link href={'/home'}>TEER</Link>
         </p>
         <div className={styles.search}>
           <div className="">
-            <div className="inline-flex flex-col justify-center relative text-gray-500">
+            <div className="inline-flex flex-col justify-center relative z-0 text-gray-500">
               <div className="relative">
                 <input
                   type="text"
@@ -70,8 +70,13 @@ function Navbar(props) {
                   style={{ width: "400px" }}
                   value={username}
                   onInput={handleUsernameChange}
-                  onChange={searchUsersByUsername}
                 />
+                <button
+                  className="p-2 ml-2 rounded-lg bg-white text-green hover:bg-yellow-600 focus:outline-none focus:bg-green-teer"
+                  onClick={handleSearch}
+                >
+                  Search
+                </button>
                 <svg
                   className="w-4 h-4 absolute left-2.5 top-3.5"
                   xmlns="http://www.w3.org/2000/svg"
@@ -87,12 +92,17 @@ function Navbar(props) {
                   />
                 </svg>
               </div>
-              {username.trim() !== "" && <SearchResult users={users} />}
+              {username.trim() !== "" && <SearchResult users={users || []} />}
             </div>
           </div>
         </div>
         <Link href="/login">
-        <h3 className={styles.navlogout} onClick={() => Cookies.set("accessToken", undefined)}>Logout</h3>
+          <h3
+            className={styles.navlogout}
+            onClick={() => Cookies.set("accessToken", undefined)}
+          >
+            Logout
+          </h3>
         </Link>
       </div>
     </>

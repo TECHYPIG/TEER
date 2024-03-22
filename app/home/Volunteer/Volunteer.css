@@ -1,0 +1,109 @@
+.MainDiv {
+  width: 90%;
+  max-height: 50vh;
+  background-color: white;
+  overflow: hidden;
+}
+.Name {
+  text-align: center;
+}
+.OpportunitiesDiv {
+  width: 95%;
+  height: 40vh;
+  overflow-y: scroll;
+}
+.VolunteerContainer {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+}
+.VolunteerTop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+  color: white;
+  background-color: #003b2e;
+}
+.Add {
+  background-color: white;
+  border-radius: 50%;
+  color: #a9a9a9;
+  cursor: pointer;
+}
+.FlexForInside {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #a9a9a9;
+  cursor: pointer;
+  padding: 20px;
+}
+.FlexForInside:hover {
+  background-color: #f0f0f0;
+}
+.CompanyInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+.CompanyName {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.CompanyLocation {
+  font-size: 0.7rem;
+}
+.Input {
+  background-color: white;
+  border: 1px solid grey;
+  color: black;
+  border-radius: 10px;
+
+  height: 40px;
+  width: 16vw;
+}
+.MarginLeft {
+  margin-left: 2vw;
+}
+
+.Flex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.Row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 3vh;
+}
+.Column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.uploadButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  margin-bottom: 10px;
+  height: 40px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #00664d;
+  color: white;
+  cursor: pointer;
+}
+.uploadButton:hover {
+  background-color: #003b2e;
+
+  color: #c8c8c8;
+}

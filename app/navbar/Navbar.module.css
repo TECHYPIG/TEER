@@ -2,10 +2,10 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 10vh;
+    min-height: 10vh;
     padding: 5px;
     align-items: center; 
-    background-color: #389668;
+    background-color: #003b2e;
   }
   .navtxt{
     margin: 1rem;
@@ -43,4 +43,14 @@
     background-color: white;
     color: black;
     border-radius: 8px;
+  }
+  .searchResults{
+    clear: both;
+    position:absolute;
+    height: 1px;
+    width: 410px;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 2px;
+    
   }

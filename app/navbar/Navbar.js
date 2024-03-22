@@ -96,7 +96,7 @@ function Navbar(props) {
             </div>
           </div>
         </div>
-        <Link href="/login">
+        <Link href="/">
           <h3
             className={styles.navlogout}
             onClick={() => Cookies.set("accessToken", undefined)}

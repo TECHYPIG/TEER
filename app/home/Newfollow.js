@@ -3,7 +3,13 @@ import Image from "next/image";
 import { IoIosAdd } from "react-icons/io";
 import Cookies from "js-cookie";
 
-export default function NewFollow({ followers, setFollowers, FollowSuccess, FollowError, FollowLoading}) {
+export default function NewFollow({
+  followers,
+  setFollowers,
+  FollowSuccess,
+  FollowError,
+  FollowLoading,
+}) {
   const handleFollow = (username) => {
     return () => {
       FollowLoading("Following user");

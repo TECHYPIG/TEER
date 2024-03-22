@@ -128,6 +128,7 @@ function Profile(props) {
             }
 
             const updatedUser = await response.json();
+            setIsFollowed(true);
             console.log('User followed successfully:', updatedUser);
         } catch (error) {
             console.error('Error following user:', error);

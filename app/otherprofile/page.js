@@ -73,7 +73,7 @@ function Profile(props) {
         try {
             // Check if userDetails is defined and contains the username
             if (!userDetails || !userDetails.Username) {
-                console.error('User details not found');
+                console.log('User details not found');
                 return;
             }
 
@@ -106,29 +106,35 @@ function Profile(props) {
         try {
             // Check if userDetails is defined and contains the username
             if (!userDetails || !userDetails.Username) {
-                console.error('User details not found');
+                console.log('User details not found');
                 return;
             }
 
-            const usernameToFollow = userDetails.Username; // Get the username from userDetails
+            const followedUsername = userDetails.Username; // Get the username from userDetails
+            console.log(followUsername);
             const token = Cookies.get("accessToken");
             if (!token) {
                 throw new Error('No access token found');
             }
 
-            const response = await fetch(`/api/following?followedUsername=${usernameToFollow}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to block user');
-            }
-
-            const updatedUser = await response.json();
-            console.log('User followed successfully:', updatedUser);
+      fetch(`/api/following`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ followedUsername: followedUsername }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            alert("Error following user");
+          }
+          FollowSuccess("User followed successfully");
+        })
+        .catch((error) => {
+          console.log("User could not be followed");
+        });
+    
         } catch (error) {
             console.error('Error following user:', error);
         }

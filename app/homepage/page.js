@@ -19,7 +19,15 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import SendIcon from "@mui/icons-material/Send";
 import CircularProgress from "@mui/material/CircularProgress";
-import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
+
+const PostToastSuccess = (e) => toast.success(e, { duration: 5000 });
+const PostToastError = (e) => toast.error(e);
+const PostToastLoading = (e) => toast.loading(e, { duration: 3000 });
+
+const VoluneerSuccess = (e) => toast.success(e, { duration: 5000 });
+const VoluneerError = (e) => toast.error(e);
+const VoluneerLoading = (e) => toast.loading(e, { duration: 3000 });
 
 export default function Home() {
   const token = Cookies.get("accessToken");
@@ -57,11 +65,12 @@ export default function Home() {
         setFollowersLoading(false);
       });
     });
-  }, [token, userDetails, router]);
+  }, [token]);
 
   return (
     <div className={styles.homecontainer}>
       <Navbar />
+      <Toaster />
       {followersLoading && postLoading && userDetailsLoading ? (
         <div className={styles.loading}>
           <CircularProgress />
@@ -75,6 +84,8 @@ export default function Home() {
               onHandleClose={handleClose}
               onHandleOpen={handleOpen}
               token={token}
+              setPosts={setPosts}
+              posts={posts}
             />
             <Newpostcontent user={userDetails} onHandleOpen={handleOpen} />
             {userDetails &&
@@ -144,7 +155,7 @@ const getPosts = async (token) => {
   }
 };
 
-function ModalCustom({ isOpen, onHandleClose, token }) {
+function ModalCustom({ isOpen, onHandleClose, token, setPosts, posts }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [uploadStatus, setUploadStatus] = useState("");
   const [modalText, setModalText] = useState("");
@@ -183,6 +194,7 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
       modalText === "undefined"
     ) {
       setUploadStatus("Please select an image and enter some text");
+      PostToastError("Select an image and enter text");
       return;
     }
 
@@ -193,16 +205,23 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
     formData.append("content", modalText);
     try {
       setUploadStatus("Uploading...");
+      PostToastLoading("Uploading...");
+
       const response = await axios.post("/api/post/createPost", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
-      setUploadStatus("upload successful");
+      getPosts(token).then((data) => {
+        setPosts(data);
+      });
+      onHandleClose();
+      setUploadStatus("Upload successful");
+      PostToastSuccess("Upload successful");
     } catch (error) {
       console.log("imageUpload" + error);
       setUploadStatus("Upload failed..");
+      PostToastError("Upload failed");
     }
   };
   const clearData = () => {
@@ -255,11 +274,8 @@ function ModalCustom({ isOpen, onHandleClose, token }) {
         </div>
         <div className={styles.images}>
           {selectedImages.length > 0 &&
-            selectedImages.map((image, index) => (
-              image.name
-            ))}
+            selectedImages.map((image, index) => image.name)}
         </div>
-        <div>{uploadStatus}</div>
         <Button
           variant="contained"
           className={styles.uploadButton}

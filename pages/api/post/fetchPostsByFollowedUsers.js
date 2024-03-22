@@ -10,7 +10,7 @@ export default async function fetchPostsByFollowedUsers(req, res) {
       try {
         const username = await getUsername(headers, res);
         const userInfo = await getUser(username, res);
-        const followedUsernames = userInfo.Following;
+        const followedUsernames = userInfo.Following.concat(username);
         const posts = await GetPosts(followedUsernames);
         res.status(200).json(posts);
       } catch (error) {

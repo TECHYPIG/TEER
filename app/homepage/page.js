@@ -26,7 +26,9 @@ export default function Home() {
   const router = useRouter();
   const [userDetails, setUserDetails] = useState([]);
   const [followers, setFollowers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [postLoading, setPostLoading] = useState(true);
+  const [userDetailsLoading, setUserDetailsLoading] = useState(true);
+  const [followersLoading, setFollowersLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
   const [open, setOpen] = useState(false);
@@ -45,12 +47,14 @@ export default function Home() {
       if (userDetails == []) {
         router.push("/login");
       }
+      setUserDetailsLoading(false);
       getPosts(token).then((data) => {
         setPosts(data);
+        setPostLoading(false);
       });
       getFollowers(token).then((data) => {
         setFollowers(data);
-        setIsLoading(false);
+        setFollowersLoading(false);
       });
     });
   }, [token, userDetails, router]);
@@ -58,7 +62,7 @@ export default function Home() {
   return (
     <div className={styles.homecontainer}>
       <Navbar />
-      {isLoading ? (
+      {followersLoading && postLoading && userDetailsLoading ? (
         <div className={styles.loading}>
           <CircularProgress />
         </div>

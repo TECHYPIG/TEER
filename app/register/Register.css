@@ -13,9 +13,10 @@
     width: 25vw;
     height: 100vh;
 }
-.RegisterSide{
+.RegisterSidee{
     width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }

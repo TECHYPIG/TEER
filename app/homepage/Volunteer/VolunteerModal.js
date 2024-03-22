@@ -72,11 +72,12 @@ export default function Modal({open,close,usernameLoggedIn})
                                 case 200:
                                     setErrorText("Your job has been added");
                                     break;
+                                case 201:
+                                    setErrorText("Your job could not be added");
+                                    break;
                             }
                         }
-
                     }
-
                         />
                     </div>
                     </div>
@@ -116,6 +117,6 @@ async function volunteerPushing(email,username,location,company,description,role
     if (response.status === 200){
         return 200;
     }else{
-
+        return 201;
     }
 }

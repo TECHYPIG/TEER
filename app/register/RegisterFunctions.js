@@ -3,11 +3,22 @@ import "./RegisterFunctions.css"
 import {useState} from "react";
 import crypto from "crypto"
 import {locations} from "./countries"
+import Link from "next/link";
 
 export function RegisterSign(){
     return(
         <div>
             <h1 className="RegisterSign">Register Here</h1>
+        </div>
+    );
+}
+
+export function BackToLogin(){
+    return(
+        <div>
+            <Link href="login">
+            <button className="BackToLoginButton">Login</button>
+            </Link>
         </div>
     );
 }
@@ -24,7 +35,7 @@ export function RegisterInputs(){
     const [dontMatch, ChangedDontMatch] = useState("")
 
     return(
-        <div className="MainFlex">
+        <div className="MainFlexx">
              <div className="Row">
                 <div className="Flex">
                     <label>Username</label>
@@ -45,12 +56,16 @@ export function RegisterInputs(){
                          {locations}
                      </select>
                  </div>
-                 <div className="Flex MarginLeft">
-                     <label>Password</label>
-                     <input type="text" className="Input" value={password}
-                            onChange ={event => onChangeFunction(event,changedPassword)}/>
-
-                 </div>
+                <div className="Flex MarginLeft">
+                    <label>Gender</label>
+                    <select className="Input" value={gender} onChange ={event => onChangeFunction(event,changedGender)}>
+                        <option key="SelectOne">Select One</option>
+                        <option key="Male">Male</option>
+                        <option key="Female">Female</option>
+                        <option key="Others">Others</option>
+                        <option key="PreferNotToSay">Prefer Not To Say</option>
+                    </select>
+                </div>
                 </div>
 
             <div className="Row">
@@ -67,15 +82,12 @@ export function RegisterInputs(){
 
             <div className="Row">
                 <div className="Flex">
-                        <label>Gender</label>
-                        <select className="Input" value={gender} onChange ={event => onChangeFunction(event,changedGender)}>
-                            <option key="SelectOne">Select One</option>
-                            <option key="Male">Male</option>
-                            <option key="Female">Female</option>
-                            <option key="Others">Others</option>
-                            <option key="PreferNotToSay">Prefer Not To Say</option>
-                        </select>
-                    </div>
+                    <label>Password</label>
+                    <input type="text" className="Input" value={password}
+                           onChange ={event => onChangeFunction(event,changedPassword)}/>
+
+                </div>
+
                 <div className="Flex MarginLeft">
                     <label>Confirm Password</label>
                     <input type="text" className="Input" value={confirmPassword}
@@ -85,7 +97,7 @@ export function RegisterInputs(){
 
             <div className="passwordsDontMatch"><h5>{dontMatch}</h5></div>
 
-       <input type="submit" onClick={async function inside (){
+       <input type="Submit" onClick={async function inside (){
            let value = await registerInformation(username,location, password,confirmPassword,birthDate,fullName,gender,email,ChangedDontMatch);
            switch (value) {
                case 0:
@@ -182,7 +194,6 @@ async function registerInformation(username,location, password,confirmPassword,b
        firstname = nameSplit[0];
         surname = nameSplit[1];
     }
-    var response;
     if (password !== confirmPassword){
         return 0;
     } else{
@@ -190,7 +201,7 @@ async function registerInformation(username,location, password,confirmPassword,b
         let hashedPassword = crypto.createHash("sha256").update(password).digest('hex')
 
             try{
-                response =  await fetch('/api/register', {
+               let response =  await fetch('/api/register', {
                     method: 'POST', // Adjust the method as needed (GET, POST, etc.)
                     'Content-Type': 'application/json',
                     body: JSON.stringify({username : username,
@@ -200,16 +211,15 @@ async function registerInformation(username,location, password,confirmPassword,b
                                                 email : email,
                                                 birthDate : birthDate,
                                                 gender : gender,
-                                                location : location})
+                                                location : location
+                    })
                 });
-
-                let x = response.json();
-                console.log(x)
-                if (x === 100){
-                    ChangedDontMatch("You have been registered succesfully")
-                }else if(x===101){
-                    ChangedDontMatch("Please change your username or email")
-                } else{
+               let responseStatus = response.status;
+                if (responseStatus === 200){
+                    ChangedDontMatch("You have been registered successfully")
+                } else if(responseStatus === 501){
+                    ChangedDontMatch("Please choose a new username or email")
+                } else if(responseStatus === 500){
                     ChangedDontMatch("There was an issue,Please try again in a bit")
                 }
             }

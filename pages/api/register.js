@@ -30,12 +30,13 @@ export default async function handler(req, res) {
             }
         });
         console.log("Register was executed")
-        return res.status(200).json(100)
+        return res.status(200).json(1)
     } catch (error){
         if (error.code === 'P2002'){
-           return res.status(401).json(101)
+            //duplicate username or email
+            console.log("Invalid Username")
+           return res.status(501).json(2)
         }
-        console.log("Error in inputting, Probably Page")
-        return res.status(401).json(102)
+        return res.status(500).json(0)
     }
 }

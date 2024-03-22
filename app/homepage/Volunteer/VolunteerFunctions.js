@@ -49,12 +49,10 @@ export function InsideVolunteer(username){
                     const initialModalStates = new Array(usernames.length).fill(false);
                     setModalStates(initialModalStates);
                 } catch (error) {
-                    console.log("Error fetching names")
                 }
             };
             fetchInformation()
         }, []);
-        console.log(id)
         const [modalStates, setModalStates] = useState([]); // Example array of modal states
         const clickedInside = (index) => {
             const updatedModalStates = modalStates.slice();

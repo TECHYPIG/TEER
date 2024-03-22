@@ -1,7 +1,7 @@
 import "./Register.css"
 import RegisterImage from "../register/images/Tree.png"
 import Image from 'next/image'
-import {RegisterSign, RegisterInputs} from "@/app/register/RegisterFunctions";
+import {RegisterSign, RegisterInputs,BackToLogin} from "@/app/register/RegisterFunctions";
 
 export function Register(){
     return(
@@ -10,7 +10,8 @@ export function Register(){
                 <Image src={RegisterImage} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                        alt="Testing" />
             </div>
-            <div className="RegisterSide">
+            <div className="RegisterSidee">
+                    <BackToLogin />
                 <RegisterSign />
                 <RegisterInputs />
             </div>

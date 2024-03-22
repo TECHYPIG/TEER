@@ -34,13 +34,13 @@ export default function Home() {
   useEffect(() => {
     if (!token) {
       router.push("/login");
+      console.log("UNDEFINED TOKEN")
     }
-    if (token == undefined) {
-      router.push("/login");
-    }
+    console.log(token)
+
     getUserDetails(token).then((data) => {
       setUserDetails(data);
-      if (userDetails == []) {
+      if (userDetails === []) {
         router.push("/login");
       }
       getPosts(token).then((data) => {
@@ -96,10 +96,7 @@ const getUserDetails = async (token) => {
     }
     if (response.status === 200) {
       return response.json();
-    }
-    if (response.status === 500) {
-      return router.push("/login");
-    } else {
+    }else{
       return router.push("/login");
     }
   } catch (error) {

@@ -1,16 +1,11 @@
 "use client";
 import styles from "./Post.module.css";
 import Image from "next/image";
-import Piggy from "./piggy.jpg";
-import Cookies from "js-cookie";
-import Vibe from "./vibe.jpeg";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { FaRegHeart } from "react-icons/fa";
-import { AiOutlineLike } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
 import { useState } from "react";
-import { Modal } from "@mui/material";
-import { ImBin } from "react-icons/im";
+import Cookies from "js-cookie";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 

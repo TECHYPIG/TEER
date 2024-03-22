@@ -1,9 +1,9 @@
 "use client";
 import styles from "./Page.module.css";
-import Navbar from "./Navbar";
+import Navbar from "@/app/navbar/Navbar";
 import Userprofile from "./Userprofile";
 import Newpostcontent from "./NewPost";
-import Post from "./Post";
+import Post from "@/app/posts/Post";
 import Voluneer from "./Volunteer/Volunteer";
 import Newfollow from "./Newfollow";
 import Cookies from "js-cookie";

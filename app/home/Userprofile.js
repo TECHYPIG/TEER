@@ -1,11 +1,17 @@
 "use client";
+import Link from "next/link";
 import styles from "./Userprofile.module.css";
 import Image from "next/image";
 
 export default function Userprofile({ user }) {
   return (
     <div className={styles.sideprofile}>
-      <UserBadge profile_url={user.profile_url} Firstname={user.Firstname} Surname={user.Surname} Username={user.Username} />
+      <UserBadge
+        profile_url={user.profile_url}
+        Firstname={user.Firstname}
+        Surname={user.Surname}
+        Username={user.Username}
+      />
       {user.Bio && <UserBio Bio={user.Bio} />}
       <UserInfo location={user.Location} role={user.Role} />
     </div>
@@ -23,13 +29,13 @@ function UserBadge(data) {
         alt="Piggy"
       />
       <div className={styles.usernames}>
-        <a href="/profile">
+        <Link href={"/profile"}>
           <h1 className={styles.h1Style}>
             {" "}
             {data.Firstname + " " + data.Surname}
           </h1>
           <h2 className={styles.h2Style}>@{data.Username}</h2>
-        </a>
+        </Link>
       </div>
     </div>
   );
@@ -46,17 +52,16 @@ function UserBio({ Bio }) {
 function UserInfo({ location, role }) {
   return (
     <div className={styles.userdetails}>
-      
-      {role?
+      {role ? (
         <div className={styles.row}>
-        <p>{role}</p>
-      </div>
-      :<div></div>
-      }
+          <p>{role}</p>
+        </div>
+      ) : (
+        <div></div>
+      )}
       <div className={styles.row}>
         <p>{location}</p>
       </div>
-      
     </div>
   );
 }

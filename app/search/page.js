@@ -7,7 +7,8 @@
  * @author Ines Rita
  */
 
-import styles from "../homepage/Navbar.module.css";
+import styles from "@/app/navbar/Navbar.module.css";
+import Link from "next/link";
 
 //function that gets list of users and displays it
 function UserList(props) {
@@ -16,7 +17,7 @@ function UserList(props) {
   return (
     <>
       <div className="bg-white border border-gray-100 w-full mt-2 rounded-xl shadow-xl">
-        <a href={`/otherprofile?username=${user.Username}`}>
+        <Link href={`/otherprofile?username=${user.Username}`}>
           <div className="pl-8 pr-2 py-1 border-b-2 border-gray-100 relative cursor-pointer hover:bg-yellow-50 hover:text-gray-900">
             <div className="mr-4">
               <svg
@@ -39,7 +40,7 @@ function UserList(props) {
               </div>
             </div>
           </div>
-        </a>
+        </Link>
       </div>
     </>
   );

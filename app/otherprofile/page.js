@@ -9,9 +9,9 @@
 
 
 import { useState, useEffect } from 'react';
-import Navbar from '../homepage/Navbar';
+import Navbar from '@/app/navbar/Navbar';
 import Cookies from 'js-cookie';
-import Post from "../homepage/Post";
+import Post from "@/app/posts/Post";
 import Image from 'next/image';
 
 

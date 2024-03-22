@@ -10,8 +10,8 @@
 
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
-import styles from "../homepage/Navbar.module.css";
-import SearchResult from "../searchResult/page";
+import styles from "@/app/navbar/Navbar.module.css";
+import SearchResult from "@/app/search/page";
 import Link from "next/link";
 
 function Navbar(props) {
@@ -57,7 +57,7 @@ function Navbar(props) {
     <>
       <div className={styles.navbar}>
         <p className={styles.navtxt}>
-          <a href="/homepage">TEER</a>
+          <Link href={'/home'}>TEER</Link>
         </p>
         <div className={styles.search}>
           <div className="">

@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  Firstname   String
+  Password    String
+  Surname     String
+  Username    String    @unique
+  Email       String    @unique
+  profile_url String    @default("https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg")
+  Role        String
+  Location    String
+  Gender      String
+  Birthday    String
+  Bio         String
+  CreateAt    DateTime  @default(now())
+  Posts       Post[]    @relation("userPosts")
+  Following   String[]  @default([])
+  Block       String[]  @default([])
+  Comments    Comment[]  @relation("userComments")
+  Likes       Like[]      @relation("userLikes")
+}
+
+model Post {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  picture_url String    @default("")
+  content     String
+  published   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  user        Users     @relation("userPosts", fields:  [Username], references: [Username])
+  Username    String
+  Comments    Comment[] @relation("postComments")
+  likes       Like[]    @relation("postLikes")
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+  user      Users     @relation("userComments", fields: [Username], references: [Username])
+  Username  String
+  post      Post     @relation("postComments", fields: [postId], references: [id],onDelete: Cascade)
+  postId    String
+}
+
+model Like {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  user      Users     @relation("userLikes", fields: [Username], references: [Username])
+  Username  String
+  post      Post   @relation("postLikes", fields: [postId], references: [id], onDelete: Cascade)
+  postId    String
+}
+
+model Volunteer {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  username    String
+  email       String
+  description String
+  role        String
+  company     String
+  location    String
+}

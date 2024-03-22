@@ -1,5 +1,5 @@
 # Base image (Choose Node.js version suitable for your Next.js app)
-FROM node:16-alpine AS base
+FROM node:18-alpine AS base
 
 # Create working directory
 WORKDIR /app

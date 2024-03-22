@@ -11,7 +11,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    flex:1;
     height: 100%;
     background-color: white;
 }
@@ -20,7 +20,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    flex:1;
     height: 100%;
     background-image: linear-gradient(140deg, rgb(43,200,144),rgb(5,130,105));
 }

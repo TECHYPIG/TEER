@@ -27,7 +27,7 @@ export function TextBoxes(){
                 changedIncorrectLogin("")
                 var returingValue =   await callAPI(userName, passWord)
                 if(returingValue === 1){
-                    router.push("/homepage");//Change this to push to homepage off course
+                    router.push("/home");//Change this to push to homepage off course
                 } else{
                     changedIncorrectLogin("Your username or password was incorrect")
                 }

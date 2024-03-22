@@ -213,4 +213,4 @@ function EditProfile() {
     );
 }
 
-export default editprofile;
+export default EditProfile;

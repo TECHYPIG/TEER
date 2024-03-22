@@ -22,6 +22,8 @@ export default async function handler(req, res) {
  
                 // Extract the followed username from the query parameters
                 const { followedUsername } = body;
+
+                console.log(followedUsername);
  
                 // Fetch the logged-in user details
                 const user = await prisma.users.findUnique({

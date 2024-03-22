@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import {locations} from "../register/countries"
 import { useRouter } from 'next/navigation'
 
-function editprofile() {
+function EditProfile() {
     const [userDetails, setUserDetails] = useState({
         Firstname: '',
         Surname: '',

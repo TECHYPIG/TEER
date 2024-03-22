@@ -96,7 +96,7 @@ export default function Home() {
               posts={posts}
             />
             <Newpostcontent user={userDetails} onHandleOpen={handleOpen} />
-            {userDetails &&
+            {userDetails && posts.length > 0 ? (
               posts.map((post, index) => (
                 <Post
                   key={index}
@@ -106,11 +106,20 @@ export default function Home() {
                   CommentError={CommentError}
                   CommentLoading={CommentLoading}
                 />
-              ))}
+              ))
+            ) : (
+              <div className={styles.noposts}>No posts found</div>
+            )}
           </div>
           <div className={styles.row3}>
             <Voluneer user={userDetails}></Voluneer>
-            <Newfollow followers={followers} setFollowers={setFollowers} FollowSuccess={FollowSuccess} FollowError={FollowError} FollowLoading={FollowLoading} />
+            <Newfollow
+              followers={followers}
+              setFollowers={setFollowers}
+              FollowSuccess={FollowSuccess}
+              FollowError={FollowError}
+              FollowLoading={FollowLoading}
+            />
           </div>
         </div>
       )}

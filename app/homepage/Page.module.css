@@ -12,6 +12,14 @@
   align-items: center;
   height: 90vh;
 }
+.noposts{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20%;
+
+}
 .innerdiv{
   display:flex;
   flex:1;

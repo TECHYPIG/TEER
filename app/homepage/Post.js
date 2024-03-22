@@ -37,13 +37,12 @@ const Post = ({
   CommentLoading,
 }) => {
   const [commentsShow, setCommentsShow] = useState(false);
-  const content = post.content;
 
   const handleCommentsShow = () => {
     setCommentsShow(!commentsShow);
   };
-
   return (
+
     <div className={styles.post}>
       <UserInfo user={post.user} />
       <div className={styles.postinfo}>

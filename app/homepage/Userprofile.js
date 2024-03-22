@@ -46,9 +46,13 @@ function UserBio({ Bio }) {
 function UserInfo({ location, role }) {
   return (
     <div className={styles.userdetails}>
-      <div className={styles.row}>
+      
+      {role?
+        <div className={styles.row}>
         <p>{role}</p>
       </div>
+      :<div></div>
+      }
       <div className={styles.row}>
         <p>{location}</p>
       </div>

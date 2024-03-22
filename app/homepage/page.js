@@ -37,7 +37,6 @@ const FollowSuccess = (e) => toast.success(e, { duration: 5000 });
 const FollowError = (e) => toast.error(e);
 const FollowLoading = (e) => toast.loading(e, { duration: 3000 });
 
-
 export default function Home() {
   const token = Cookies.get("accessToken");
   const router = useRouter();
@@ -99,12 +98,19 @@ export default function Home() {
             <Newpostcontent user={userDetails} onHandleOpen={handleOpen} />
             {userDetails &&
               posts.map((post, index) => (
-                <Post key={index} post={post} userDetails={userDetails} CommentSuccess={CommentSuccess} CommentError={CommentError} CommentLoading={CommentLoading} />
+                <Post
+                  key={index}
+                  post={post}
+                  userDetails={userDetails}
+                  CommentSuccess={CommentSuccess}
+                  CommentError={CommentError}
+                  CommentLoading={CommentLoading}
+                />
               ))}
           </div>
           <div className={styles.row3}>
             <Voluneer user={userDetails}></Voluneer>
-            <Newfollow followers={followers} setFollowers={setFollowers} />
+            <Newfollow followers={followers} setFollowers={setFollowers} FollowSuccess={FollowSuccess} FollowError={FollowError} FollowLoading={FollowLoading} />
           </div>
         </div>
       )}

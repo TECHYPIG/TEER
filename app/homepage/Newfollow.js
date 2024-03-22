@@ -3,9 +3,10 @@ import Image from "next/image";
 import { IoIosAdd } from "react-icons/io";
 import Cookies from "js-cookie";
 
-export default function NewFollow({ followers, setFollowers }) {
+export default function NewFollow({ followers, setFollowers, FollowSuccess, FollowError, FollowLoading}) {
   const handleFollow = (username) => {
     return () => {
+      FollowLoading("Following user");
       const token = Cookies.get("accessToken");
       fetch(`/api/following`, {
         method: "POST",
@@ -22,11 +23,10 @@ export default function NewFollow({ followers, setFollowers }) {
           setFollowers(
             followers.filter((follower) => follower.Username !== username)
           );
-          alert("User followed successfully");
+          FollowSuccess("User followed successfully");
         })
         .catch((error) => {
-          console.error("Error following user:", error);
-          alert("Error following user");
+          FollowError("User could not be followed");
         });
     };
   };

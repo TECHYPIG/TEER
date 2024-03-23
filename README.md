@@ -2,7 +2,7 @@ This is TEER. A Volunteering Social Media Website
 
 ## Run Development Server (NodeJs Required 18+)
 
-First download the .env file, and place it in the application root. 
+First get the .env file from blackboard, and place it in the application root. 
 
 Then, FROM THE APPLICATION ROOT, run these commands to start the development server:
 
@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Run Production Server (NodeJS Required 18+)
 
-First download the .env file, and place it in the application root. 
+First get the .env file from blackboard, and place it in the application root. 
 
 Then, FROM THE APPLICATION ROOT, run these commands to start the production server:
 

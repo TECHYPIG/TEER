@@ -22,7 +22,12 @@ npx next dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
+[Teer](http://localhost:3000) 
+[Login](http://localhost:3000)
+[Register](http://localhost:3000/register)
+[Home](http://localhost:3000/home)
+[Profile](http://localhost:3000/profile)
+[Edit-Profile](http://localhost:3000/profile/edit)
 
 ## Run Production Server (NodeJS Required 18+)
 
@@ -50,10 +55,22 @@ npx next start
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+[Teer](http://localhost:3000) 
+[Login](http://localhost:3000)
+[Register](http://localhost:3000/register)
+[Home](http://localhost:3000/home)
+[Profile](http://localhost:3000/profile)
+[Edit-Profile](http://localhost:3000/profile/edit)
+
 
 ## Go to our Production Server (Used Dockerfile)
 
 [Teer](https://equinoxapps.co.uk) 
+[Login](https://equinoxapps.co.uk)
+[Register](https://equinoxapps.co.uk/register)
+[Home](https://equinoxapps.co.uk/home)
+[Profile](https://equinoxapps.co.uk/profile)
+[Edit-Profile](https://equinoxapps.co.uk/profile/edit)
 
 
 ## Existing Users
